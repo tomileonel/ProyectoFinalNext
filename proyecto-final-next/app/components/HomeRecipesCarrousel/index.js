@@ -1,0 +1,67 @@
+import React from 'react';
+import styles from './styles.module.css';
+import CardRecipe from '../CardRecipe';
+
+const HomeRecipesCarousel = () => {
+  const recipes = [
+    {
+      bookmark: '/.../public/bookmark.png',
+      ensaladaCsar: 'Ensalada César',
+      image: '/.../public/cesarSalad.png',
+      prop: '4.5',
+      mins: '50 Mins',
+      prop1: '2500$',
+      kcal: '1500 Kcal',
+    },
+    {
+      bookmark: '/.../public/bookmark.png',
+      ensaladaCsar: 'Ensañada terishaki',
+      image: '/.../public/cesarSalad.png',
+      prop: '5.0',
+      mins: '10 Mins',
+      prop1: '1750$',
+      kcal: '750 Kcal',
+    },
+    {
+        bookmark: '/.../public/bookmark.png',
+        ensaladaCsar: 'Ensañada terishaki',
+        image: '/.../public/cesarSalad.png',
+        prop: '5.0',
+        mins: '10 Mins',
+        prop1: '1750$',
+        kcal: '750 Kcal',
+      },
+      {
+        bookmark: '/.../public/bookmark.png',
+        ensaladaCsar: 'Ensañada terishaki',
+        image: '/.../public/cesarSalad.png',
+        prop: '5.0',
+        mins: '10 Mins',
+        prop1: '1750$',
+        kcal: '750 Kcal',
+      },
+      {
+        bookmark: '/.../public/bookmark.png',
+        ensaladaCsar: 'Ensañada terishaki',
+        image: '/.../public/cesarSalad.png',
+        prop: '5.0',
+        mins: '10 Mins',
+        prop1: '1750$',
+        kcal: '750 Kcal',
+      },
+      
+    // Add more recipes as needed
+  ];
+
+  return (
+    <div className={styles.carousel}>
+      <div className={styles.cards}>
+        {recipes.map((recipe, index) => (
+          <CardRecipe key={index} {...recipe} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default HomeRecipesCarousel;
