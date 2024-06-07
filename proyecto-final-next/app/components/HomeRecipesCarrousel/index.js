@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './styles.module.css';
 import CardRecipe from '../CardRecipe';
+import img1 from '../../img/bookmark.png'
+import img2 from '../../img/cesarSalad.png'
 
 const HomeRecipesCarousel = () => {
   const recipes = [
     {
       bookmark: '/.../public/bookmark.png',
       ensaladaCsar: 'Ensalada César',
-      image: '/.../public/cesarSalad.png',
+      image: img2,
       prop: '4.5',
       mins: '50 Mins',
       prop1: '2500$',
@@ -50,7 +52,7 @@ const HomeRecipesCarousel = () => {
         kcal: '750 Kcal',
       },
       
-    // Add more recipes as needed
+    
   ];
 
   return (

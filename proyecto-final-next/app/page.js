@@ -4,7 +4,6 @@ import HomeRecipesCarousel from './components/HomeRecipesCarrousel/index'; // As
 const HomePage = () => {
   return (
     <div>
-      <h1>Recipe Carousel</h1>
       <HomeRecipesCarousel />
     </div>
   );

@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './styles.module.css';
 import Image from 'next/image';
+import bookmark from '../../img/bookmark.png'
 
-const CardRecipe = ({ bookmark, ensaladaCsar, image, prop, mins, prop1, kcal }) => {
+const CardRecipe = ({ ensaladaCsar, image, prop, mins, prop1, kcal }) => {
   return (
     <div className={styles.card}>
     <div className={styles.foodPhoto}>
+      
       <Image className={styles.image} src={image} alt={ensaladaCsar} width={150} height={100} />
       <Image className={styles.bookmarkIcon} src={bookmark} alt="bookmark" width={20} height={20} />
       <div className={styles.titleButton}>
