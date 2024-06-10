@@ -13,8 +13,9 @@ const CardRecipe = ({ ensaladaCsar, image, prop, mins, prop1, kcal }) => {
           <p className={styles.ensaladaCsar}>{ensaladaCsar}</p>
         </div>
       </div>
+      
       <div className={styles.rating}>
-        <Image className={styles.starIcon} src="/images/star1.png" alt="rating" width={10} height={10} />
+        
         <p className={styles.text}>{prop}</p>
       </div>
       <div className={styles.time}>

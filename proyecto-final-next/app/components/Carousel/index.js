@@ -11,39 +11,39 @@ const HomeRecipesCarousel = () => {
     {
       ensaladaCsar: 'Ensalada César',
       image: img2,
-      prop: '4.5',
+      prop: '⭐4.5',
       mins: '50 Mins',
       prop1: '2500$',
       kcal: '1500 Kcal',
     },
     {
       ensaladaCsar: 'Ensañada terishaki',
-      image: '/images/cesarSalad.png',
-      prop: '5.0',
+      image: img2,
+      prop: '⭐5.0',
       mins: '10 Mins',
       prop1: '1750$',
       kcal: '750 Kcal',
     },
     {
       ensaladaCsar: 'Ensañada terishaki',
-      image: '/images/cesarSalad.png',
-      prop: '5.0',
+      image: img2,
+      prop: '⭐5.0',
       mins: '10 Mins',
       prop1: '1750$',
       kcal: '750 Kcal',
     },
     {
       ensaladaCsar: 'Ensañada terishaki',
-      image: '/images/cesarSalad.png',
-      prop: '5.0',
+      image: img2,
+      prop: '⭐5.0',
       mins: '10 Mins',
       prop1: '1750$',
       kcal: '750 Kcal',
     },
     {
       ensaladaCsar: 'Ensañada terishaki',
-      image: '/images/cesarSalad.png',
-      prop: '5.0',
+      image: img2,
+      prop: '⭐5.0',
       mins: '10 Mins',
       prop1: '1750$',
       kcal: '750 Kcal',
@@ -62,5 +62,5 @@ const HomeRecipesCarousel = () => {
     </div>
   );
 };
-
+<div></div>
 export default HomeRecipesCarousel;
