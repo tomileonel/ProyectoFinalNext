@@ -50,17 +50,17 @@ const HomeRecipesCarousel = () => {
         mins: '10 Mins',
         prop1: '1750$',
         kcal: '750 Kcal',
-      },
-      
-    
+      },  
   ];
 
   return (
-    <div className={styles.carousel}>
-      <div className={styles.cards}>
-        {recipes.map((recipe, index) => (
-          <CardRecipe key={index} {...recipe} />
-        ))}
+    <div className={styles.carouselContainer}>
+      <div className={styles.carousel}>
+        <div className={styles.cards}>
+          {recipes.map((recipe, index) => (
+            <CardRecipe key={index} {...recipe} />
+          ))}
+        </div>
       </div>
     </div>
   );

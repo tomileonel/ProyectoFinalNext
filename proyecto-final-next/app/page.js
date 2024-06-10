@@ -1,5 +1,6 @@
 import React from 'react';
-import HomeRecipesCarousel from './components/HomeRecipesCarrousel/index'; // Asegúrate de que la ruta sea correcta
+  import HomeRecipesCarousel from './components/HomeRecipesCarrousel/index'; 
+  import CardRecipe  from './components/CardRecipe';
 
 const HomePage = () => {
   return (
