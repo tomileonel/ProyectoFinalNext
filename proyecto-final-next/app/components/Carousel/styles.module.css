@@ -1,5 +1,3 @@
-/* styles.module.css */
-
 .carouselContainer {
   width: 100%; 
   overflow-x: hidden; 
@@ -8,16 +6,17 @@
 .carousel {
   display: flex;
   scroll-behavior: smooth;
-  padding: 10px;
-  gap: 20px;
+  padding: 1%;
+  gap: 2%;
   flex-direction: row;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
-  
 }
+
 .carousel::-webkit-scrollbar {
   display: none; 
 }
+
 .cards {
   display: flex;
   flex-direction: row;
@@ -25,15 +24,120 @@
 
 .carousel-inner {
   display: flex;
-  justify-content: center; /* Centra las cards en el carrusel */
-  overflow: hidden; /* Evita que el contenido del carrusel se desborde */
+  justify-content: center; 
+  overflow: hidden; 
 }
+
 .carousel-item {
   display: flex;
   justify-content: center;
-  padding: 0 15px; /* Añade margen a cada lado de las cards */
+  padding: 0 1.5%;
 }
+
 .card {
-  margin: 0 10px; /* Añade margen entre las cards */
-  max-width: 100%; /* Asegura que las cards no se desborden */
+  margin: 0 1%;
+  width: 20vw; 
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: center;
+  position: relative;
+  background-color: #fff;
+  flex-shrink: 0; 
+}
+
+.foodPhoto {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.bookmarkIcon {
+  position: absolute;
+  bottom: 10px; 
+  right: 5px; 
+  width: 4vw;
+  height: 4vw;
+}
+
+.titleButton {
+  margin-top: 5px; 
+  text-align: center;
+}
+
+.ensaladaCsar {
+  margin: 0;
+  font-size: 1.8vw;
+  font-weight: bold;
+  color: #333;
+}
+
+.rating {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #FFE1B3; 
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 1.4vw;
+  color: white;
+}
+
+.starIcon {
+  width: 1vw;
+  height: auto;
+}
+
+.text {
+  margin-left: 4px;
+  font-size: 1.2vw;
+  color: black;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.tiempo {
+  font-weight: bold;
+  color: #666;
+}
+
+.mins {
+  font-weight: normal;
+  color: #333;
+}
+
+.time1, .time2, .time3 {
+  text-align: center;
+  font-size: 1.2vw;
+}
+
+.time1 p, .time2 p, .time3 p {
+  margin: 2px 0;
+}
+
+.bookmarkButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.bookmarkIcon {
+  transition: filter 0.3s ease;
+}
+
+.bookmarkIcon.bookmarked {
+  filter: brightness(1.5); 
 }

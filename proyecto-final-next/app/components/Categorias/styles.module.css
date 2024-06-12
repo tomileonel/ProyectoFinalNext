@@ -1,0 +1,33 @@
+.carouselContainer {
+    width: 100%;
+    overflow-x: hidden;
+    padding: 10px;
+  }
+  
+  .carousel {
+    display: flex;
+    scroll-behavior: smooth;
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .carousel::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  .categoryButton {
+    flex: 0 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 2,5vw;
+    cursor: pointer;
+  }
+  
+  .categoryButton:hover {
+    background-color: #45a049;
+  }
+  

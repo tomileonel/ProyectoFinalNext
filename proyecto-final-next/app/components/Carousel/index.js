@@ -1,10 +1,9 @@
-// components/HomeRecipesCarousel.js
 
 import React from 'react';
 import styles from './styles.module.css';
 import CardRecipe from '../CardRecipe';
 import img1 from '../../img/bookmark.png';
-import img2 from '../../img/cesarSalad.png'; 
+import img2 from '../../img/cesarSalad.png';
 
 const HomeRecipesCarousel = () => {
   const recipes = [
@@ -62,5 +61,5 @@ const HomeRecipesCarousel = () => {
     </div>
   );
 };
-<div></div>
+
 export default HomeRecipesCarousel;
