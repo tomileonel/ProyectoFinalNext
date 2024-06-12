@@ -12,6 +12,8 @@
   margin: 0;
   font-size: 2.5vw;
   font-weight: bold;
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 600; 
 }
 
 .searchInput {
@@ -20,7 +22,7 @@
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  font-size: 2vw;
+  font-size: 1,8vw;
 }
 @media screen and (max-width: 600px) {
   .searchInput {
@@ -29,15 +31,16 @@
 }
 
 .image {
-  width: 90%;
+  width: 70%;
   height: auto;
   border-radius: 20%;
   max-width: 100%;
   margin-top: 10px;
+  cursor: pointer;
 }
 @media screen and (max-width: 600px) {
   .image {
-    width: 45%; /* Reducir el tamaño de la imagen en dispositivos móviles */
+    width: 60%; /* Reducir el tamaño de la imagen en dispositivos móviles */
   }
 }
 

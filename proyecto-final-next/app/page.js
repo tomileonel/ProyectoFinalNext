@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from './components/BarraDeBusqueda';
 import FoodCategoriesCarousel from './components/Categorias';
 import HomeRecipesCarousel from './components/Carousel';
+import NovedadesCarousel from './components/NovedadesCarousel';
 
 const HomePage = () => {
   return (
@@ -9,6 +10,7 @@ const HomePage = () => {
       <SearchBar />
       <FoodCategoriesCarousel />
       <HomeRecipesCarousel />
+      <NovedadesCarousel />
     </div>
   );
 };

@@ -7,7 +7,9 @@ const SearchBar = () => {
   return (
     <div className={styles.header}>
       <input className={styles.searchInput} type="text" placeholder="Busca una receta" />
-      <button className={styles.botonOpciones}><Image className={styles.image} src={imgOpc} alt="Opciones" width={150} height={100} /></button>
+      <button className={styles.botonOpciones}>
+        <Image className={styles.image} src={imgOpc} alt="Opciones"  />
+        </button>
     </div>
   );
 };
