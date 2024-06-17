@@ -67,8 +67,8 @@
   position: absolute;
   bottom: 10px; 
   right: 5px; 
-  width: 40px;
-  height: 40px;
+  width: 30%;
+  height: auto;
 }
 
 .titleButton {
