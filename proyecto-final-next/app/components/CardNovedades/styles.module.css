@@ -2,10 +2,9 @@
 
 .card {
   position: relative;
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 25%; /* Ajusta el ancho de la tarjeta según tu diseño */
+  width: 350px; /* Ajusta el ancho de la tarjeta según tu diseño */
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px; /* Aumenta el padding para un mejor diseño */
@@ -13,23 +12,10 @@
   background-color: #fff;
   margin: 10px;
   transition: width 0.3s ease; /* Transición para suavizar el cambio de ancho */
+  flex-shrink: 0; 
 }
 
-@media screen and (max-width: 480px) {
-  .card {
-    flex: 0 0 75%; /* Ajusta el ancho para dispositivos móviles */
-    padding: 10px; /* Reduce el padding para pantallas pequeñas */
-  }
 
-  .foodImage {
-    position: relative;
-    top: auto; /* Reinicia la posición vertical */
-    right: auto; /* Reinicia la posición horizontal */
-    border-radius: 50%;
-    width: 99px; /* Tamaño reducido para pantallas pequeñas */
-    height: 99px; /* Tamaño reducido para pantallas pequeñas */
-    margin-right: 10px; /* Espacio entre la imagen y el texto */
-  }
 
   .name {
     font-size: 16px;
@@ -53,11 +39,7 @@
     margin-bottom: 5px; /* Espacio entre los bloques de información */
   }
 
-  .tiempo, .mins {
-    margin: 0;
-    padding: 0;
-  }
-}
+  
 
 .name {
   font-size: 18px;
@@ -84,8 +66,9 @@
 }
 
 .info {
-  font-size: 16px;
+  font-size: 12px;
   margin-right: 10px;
+  text-align: center;
 }
 
 .user {
@@ -99,18 +82,42 @@
   bottom: 10px;
   right: 10px;
   cursor: pointer;
+  width: 40px;
+  height: auto;
+}
+
+.text {
+  margin-left: 4px;
+  font-size: 1px;
+  color: black;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
 .tiempo {
   font-weight: bold;
-  margin-right: 10px;
+  color: #666;
+  font-size: 15px;
 }
 
 .mins {
-  font-size: 16px;
-  color: #666;
-  margin-right: 10px;
+  font-weight: normal;
+  color: #333;
 }
+
+.time1, .time2, .time3 {
+  text-align: center;
+  font-size: 12px;
+}
+
+.time1 p, .time2 p, .time3 p {
+  margin: 2px 0;
+}
+
 
 .userImage
 {
@@ -119,4 +126,5 @@
   right: 5px; 
   width: 30%;
   height: auto;
+  border-radius: 100%;
 }

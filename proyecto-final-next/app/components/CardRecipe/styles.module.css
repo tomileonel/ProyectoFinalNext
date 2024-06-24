@@ -1,52 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
-.body{
+.body {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-
 }
+
 .carousel {
   display: flex;
-  scroll-behavior: smooth;
+
   padding: 10px;
   gap: 20px;
-  flex-direction: row; 
-  overflow-x: scroll; 
-  -webkit-overflow-scrolling: touch; 
-  overflow-x: hidden;
+  flex-direction: row;
+  overflow-x: scroll;
+  
+
 }
 
 .carousel-container {
-  width: 100%; 
-  overflow-x: hidden; 
+  width: 100%;
+  overflow-x: hidden;
 }
+
 .carousel-inner {
   display: flex;
-  justify-content: center; 
-  overflow: hidden; 
+  justify-content: center;
+  overflow: hidden;
 }
+
 .carousel-item {
   display: flex;
   justify-content: center;
-  padding: 0 15px; 
-  overflow-x: hidden;
-}
-.card {
-  margin: 0 10px; 
-  max-width: 100%; 
+  padding: 0 15px;
   overflow-x: hidden;
 }
 
 .card {
-  width: 200px; 
+  margin: 0 10px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.card {
+  width: 200px;
+  height: 285px;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
   background-color: #fff;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .foodPhoto {
@@ -60,19 +64,16 @@
   border-radius: 10px;
 }
 
-
-
-
 .bookmarkIcon {
   position: absolute;
-  bottom: 10px; 
-  right: 5px; 
-  width: 30%;
+  bottom: 0px;
+  right: 5px;
+  width: 40px; /* Tamaño original */
   height: auto;
 }
 
 .titleButton {
-  margin-top: 5px; 
+  margin-top: -10px; /* Ajustado para subir el nombre */
   text-align: center;
 }
 
@@ -85,15 +86,16 @@
 
 .rating {
   position: absolute;
-  top: 10px;
+  top: 50px;
   right: 10px;
-  background-color: #FFE1B3; 
+  background-color: #FFE1B3;
   padding: 5px 10px;
   border-radius: 20px;
   display: flex;
   align-items: center;
   font-size: 14px;
   color: white;
+  font-weight: bold;
 }
 
 .starIcon {
@@ -110,7 +112,7 @@
 .time {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: -5px; /* Ajustado para subir la sección de tiempo, precio y calorías */
 }
 
 .tiempo {
@@ -143,7 +145,6 @@
   transition: filter 0.3s ease;
 }
 
-
 .bookmarkIcon.bookmarked {
-  filter: brightness(1.5); 
+  filter: brightness(1.5);
 }

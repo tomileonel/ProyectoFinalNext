@@ -8,7 +8,7 @@ const CardRecipe = ({ ensaladaCsar, image, prop, mins, prop1, kcal }) => {
     <div className={styles.card}>
       <div className={styles.foodPhoto}>
         <Image className={styles.image} src={image} alt={ensaladaCsar} width={150} height={100} />
-        <Image className={styles.bookmarkIcon} src={bookmark} alt="bookmark" width={20} height={20} />
+        
         <div className={styles.titleButton}>
           <p className={styles.ensaladaCsar}>{ensaladaCsar}</p>
         </div>
@@ -31,6 +31,7 @@ const CardRecipe = ({ ensaladaCsar, image, prop, mins, prop1, kcal }) => {
           <p className={styles.tiempo}>Calorías</p>
           <p className={styles.mins}>{kcal}</p>
         </div>
+        <Image className={styles.bookmarkIcon} src={bookmark} alt="bookmark" width={20} height={20} />
       </div>
     </div>
   );

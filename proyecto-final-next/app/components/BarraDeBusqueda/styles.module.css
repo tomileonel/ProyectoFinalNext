@@ -31,24 +31,22 @@
 }
 
 .image {
-  width: 60%;
+  width: 38px ;
   height: auto;
   border-radius: 20%;
   max-width: 100%;
   margin-top: 10px;
   cursor: pointer;
+  margin-left: 1%;
 }
-@media screen and (max-width: 600px) {
-  .image {
-    width: 60%; /* Reducir el tamaño de la imagen en dispositivos móviles */
-  }
-}
+
+
 
 .botonOpciones {
   border: none;
   background-color: transparent;
-  border-radius: 40%;
-  margin-left: auto; /* Mueve el botón a la derecha */
+  border-radius: 100%;
+  margin-left: 10px; /* Mueve el botón a la derecha */
   margin-right: 10px; /* Añade un espacio entre el botón y el campo de búsqueda */
 
 }

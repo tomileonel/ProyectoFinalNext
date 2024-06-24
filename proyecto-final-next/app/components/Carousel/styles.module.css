@@ -5,17 +5,15 @@
 
 .carousel {
   display: flex;
-  scroll-behavior: smooth;
+ 
   padding: 1%;
   gap: 2%;
   flex-direction: row;
   overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
+  
 }
 
-.carousel::-webkit-scrollbar {
-  display: none; 
-}
+
 
 .cards {
   display: flex;
