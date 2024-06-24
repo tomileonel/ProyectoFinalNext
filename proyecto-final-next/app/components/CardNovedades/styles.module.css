@@ -69,12 +69,14 @@
   font-size: 12px;
   margin-right: 10px;
   text-align: center;
+  
 }
 
 .user {
   font-size: 14px;
   color: #666;
   margin-top: 10px;
+  
 }
 
 .bookmark {
@@ -123,8 +125,9 @@
 {
   position: absolute;
   bottom: 10px; 
-  right: 5px; 
-  width: 30%;
-  height: auto;
-  border-radius: 100%;
+  left: 100px; 
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
 }

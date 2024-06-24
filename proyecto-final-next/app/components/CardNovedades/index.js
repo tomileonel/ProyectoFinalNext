@@ -26,7 +26,7 @@ const CardRecipe = ({ name, image, time, calories, price, user, userImage }) => 
         </div>
       </div>
       <div className={styles.user}>{user}</div>
-  
+      <Image src={PerfilImagen} alt="Perfil" className={styles.userImage} width={40} height={20} />
       <Image src={BookmarkIcon} alt="Bookmark" className={styles.bookmark} width={20} height={20} />
     </div>
   );
