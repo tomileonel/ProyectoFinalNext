@@ -38,12 +38,24 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 1%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   text-align: center;
   position: relative;
   background-color: #fff;
-  flex-shrink: 0; 
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombras originales */
 }
+
+.card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px; /* Ajusta este valor para controlar la distancia de la sombra */
+  width: 100%;
+  height: 5px; /* Ajusta este valor para controlar el tamaño de la sombra */
+  background: rgba(0, 0, 0, 0.1); /* Color y opacidad de la sombra */
+  z-index: 1; /* Asegura que esté por encima del contenido de la tarjeta */
+}
+
 
 .foodPhoto {
   position: relative;
