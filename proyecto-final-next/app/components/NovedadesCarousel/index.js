@@ -12,6 +12,12 @@ const NovedadesCarousel = () => {
     { id: 1, name: 'Ensalada César', image: cesar, time: '30 min', calories: '200 kcal', price: '$10', user: 'Usuario 1' },
     { id: 2, name: 'Pasta Carbonara', image: pasta, time: '45 min', calories: '350 kcal', price: '$12', user: 'Usuario 2' },
     { id: 3, name: 'Sushi Variado', image: sushi, time: '60 min', calories: '500 kcal', price: '$15', user: 'Usuario 3' },
+    { id: 4, name: 'Ensalada César', image: cesar, time: '30 min', calories: '200 kcal', price: '$10', user: 'Usuario 1' },
+    { id: 5, name: 'Pasta Carbonara', image: pasta, time: '45 min', calories: '350 kcal', price: '$12', user: 'Usuario 2' },
+    { id: 6, name: 'Sushi Variado', image: sushi, time: '60 min', calories: '500 kcal', price: '$15', user: 'Usuario 3' },
+    { id: 7, name: 'Ensalada César', image: cesar, time: '30 min', calories: '200 kcal', price: '$10', user: 'Usuario 1' },
+    { id: 8, name: 'Pasta Carbonara', image: pasta, time: '45 min', calories: '350 kcal', price: '$12', user: 'Usuario 2' },
+    { id: 9, name: 'Sushi Variado', image: sushi, time: '60 min', calories: '500 kcal', price: '$15', user: 'Usuario 3' },
   ];
 
   return (
