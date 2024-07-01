@@ -1,140 +1,39 @@
-
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styles from './styles.module.css';
 import CardRecipe from '../CardRecipe';
-import img1 from '../../img/bookmark.png';
-import img2 from '../../img/cesarSalad.png';
 
 const HomeRecipesCarousel = () => {
-  const recipes = [
-    {
-      ensaladaCsar: 'Ensalada César',
-      image: img2,
-      prop: '⭐4.5',
-      mins: '50 Mins',
-      prop1: '2500$',
-      kcal: '1500 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensalada César',
-      image: img2,
-      prop: '⭐4.5',
-      mins: '50 Mins',
-      prop1: '2500$',
-      kcal: '1500 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensalada César',
-      image: img2,
-      prop: '⭐4.5',
-      mins: '50 Mins',
-      prop1: '2500$',
-      kcal: '1500 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-    {
-      ensaladaCsar: 'Ensañada terishaki',
-      image: img2,
-      prop: '⭐5.0',
-      mins: '10 Mins',
-      prop1: '1750$',
-      kcal: '750 Kcal',
-    },
-  ];
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/recetas/byTag/1');
+        setRecipes(response.data);  
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
 
   return (
     <div className={styles.carouselContainer}>
       <div className={styles.carousel}>
         <div className={styles.cards}>
           {recipes.map((recipe, index) => (
-            <CardRecipe key={index} {...recipe} />
+            <CardRecipe
+              key={index}
+              ensaladaCsar={recipe.nombre || 'Recipe Name'}
+              // image={recipe.imagen || 'https://example.com/images/default_image.png'}
+              prop={`⭐${recipe.rating || 'Rating'}`}
+              mins={`${recipe.tiempoMins || 'Time'} Mins`}
+              prop1={`${recipe.precio || 'Price'}$`}
+              kcal={`${recipe.calorias || 'Calories'} Kcal`}
+            />
           ))}
         </div>
       </div>
