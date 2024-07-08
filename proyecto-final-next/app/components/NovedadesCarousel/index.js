@@ -29,20 +29,18 @@ const NovedadesCarousel = () => {
           {novedades.map((novedad) => (
             <CardRecipe
               key={novedad.id}
-              nombre={novedad.nombre}
-              imagen={novedad.imagen}
-              tiempoMins={novedad.tiempoMins}
-              calorias={novedad.calorias}
-              precio={novedad.precio}
-              imagenUsuario={novedad.imagenUsuario}
-              nombreusuario={novedad.nombreusuario}
-
+              nombre={novedad.nombre || 'Nombre de la Receta'}
+              imagen={novedad.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
+              tiempoMins={`${novedad.tiempoMins || 'Tiempo Desconocido'} Mins`}
+              calorias={`${novedad.calorias || 'Calorías Desconocidas'} Kcal`}
+              precio={novedad.precio ? `${novedad.precio}$` : 'Precio Desconocido'}
+              imagenUsuario={novedad.imagenUsuario || 'https://example.com/default-user-image.jpg'}
+              nombreusuario={novedad.nombreusuario || 'Usuario Desconocido'}
             />
-          ))}
+          ))}             
         </div>
       </div>
     </div>
   );
 };
-
 export default NovedadesCarousel;

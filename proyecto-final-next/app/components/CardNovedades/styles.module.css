@@ -61,7 +61,8 @@
 .details {
   display: flex;
   align-items: center;
-  margin-top: 120px; /* Ajusta la distancia entre la imagen y los detalles */
+  margin-top: 80px; 
+  margin-bottom: 25px;/* Ajusta la distancia entre la imagen y los detalles */
   flex-wrap: wrap; /* Permite que los detalles se ajusten en una nueva línea si es necesario */
 }
 

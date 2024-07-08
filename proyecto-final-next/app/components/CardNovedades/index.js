@@ -2,9 +2,12 @@ import React from 'react';
 import styles from './styles.module.css';
 import Image from 'next/image';
 import BookmarkIcon from '../../img/bookmark.png'; // Asumiendo que esta imagen es estática
-import PerfilImagen from '../../img/neo.jpg'; // Asumiendo que esta imagen es estática
+import pocketchef from '../../img/pocketchef.png'; // Asumiendo que esta imagen es estática
 
-const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio,imagenUsuario,nombreusuario,imagen}) => {
+const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio, imagenUsuario, nombreusuario, imagen }) => {
+  // Determina la imagen de usuario a utilizar
+  const userImage = imagenUsuario === 'pocketchef' ? pocketchef : imagenUsuario;
+
   return (
     <div className={styles.card}>
       <img src={imagen} alt={nombre} className={styles.foodImage} width={150} height={150} />
@@ -27,10 +30,17 @@ const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio,imagenUsuario,nom
       </div>
 
       <div className={styles.user}>{nombreusuario}</div>
-      <img src={imagenUsuario} alt="Perfil" className={styles.userImage} width={40} height={20} />
+
+      {/* Renderización condicional de la imagen de usuario */}
+      {imagenUsuario === 'pocketchef' ? (
+        <Image src={userImage} alt="Perfil" className={styles.userImage} width={40} height={20} />
+      ) : (
+        <img src={userImage} alt="Perfil" className={styles.userImage} width={40} height={20} />
+      )}
+
       <Image src={BookmarkIcon} alt="Bookmark" className={styles.bookmark} width={20} height={20} />
     </div>
-
-  )}
+  );
+};
 
 export default CardRecipe;
