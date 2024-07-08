@@ -3,14 +3,14 @@ import styles from './styles.module.css';
 import Image from 'next/image';
 import bookmark from '../../img/bookmark.png';
 
-const CardRecipe = ({ ensaladaCsar, image, prop, mins, prop1, kcal }) => {
+const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal }) => {
   return (
     <div className={styles.card}>
       <div className={styles.foodPhoto}>
-        <Image className={styles.image} src={image} alt={ensaladaCsar} width={150} height={100} />
+      <img src={image} alt={nombre} className={styles.image}style={{ width: '150px', height: '150px' }}  />
         
         <div className={styles.titleButton}>
-          <p className={styles.ensaladaCsar}>{ensaladaCsar}</p>
+          <p className={styles.nombre}>{nombre}</p>
         </div>
       </div>
       

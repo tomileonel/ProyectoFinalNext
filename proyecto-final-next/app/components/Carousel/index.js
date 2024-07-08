@@ -10,7 +10,7 @@ const HomeRecipesCarousel = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/recetas/byTag/1');
+        const response = await axios.get('http://localhost:3000/api/recetas/byTag/1'); //si cambiamos el 1 por id usuario cuando hagamos un login deberia funcionar
         setRecipes(response.data);  
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -27,8 +27,8 @@ const HomeRecipesCarousel = () => {
           {recipes.map((recipe, index) => (
             <CardRecipe
               key={index}
-              ensaladaCsar={recipe.nombre || 'Recipe Name'}
-              // image={recipe.imagen || 'https://example.com/images/default_image.png'}
+              nombre={recipe.nombre || 'Recipe Name'}
+              image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
               prop={`⭐${recipe.rating || 'Rating'}`}
               mins={`${recipe.tiempoMins || 'Time'} Mins`}
               prop1={`${recipe.precio || 'Price'}$`}

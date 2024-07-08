@@ -43,14 +43,14 @@
 .card {
   width: 200px;
   height: 286px;
-  border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
   background-color: #fff;
   flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra externa */
+
 }
 
 .foodPhoto {
@@ -59,25 +59,27 @@
 }
 
 .image {
-  width: 100%;
+  object-fit: cover; 
+  object-position: center;
   height: auto;
-  border-radius: 10px;
+  border-radius: 100px;
+  
 }
 
 .bookmarkIcon {
   position: absolute;
   bottom: 0px;
   right: 5px;
-  width: 40px; /* Tamaño original */
+  width: 40px; 
   height: auto;
 }
 
 .titleButton {
-  margin-top: -10px; /* Ajustado para subir el nombre */
+ 
   text-align: center;
 }
 
-.ensaladaCsar {
+.nombre {
   margin: 0;
   font-size: 18px;
   font-weight: bold;
@@ -95,7 +97,7 @@
   align-items: center;
   font-size: 14px;
   color: white;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .starIcon {
@@ -113,6 +115,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: -5px; /* Ajustado para subir la sección de tiempo, precio y calorías */
+  
 }
 
 .tiempo {
@@ -148,3 +151,4 @@
 .bookmarkIcon.bookmarked {
   filter: brightness(1.5);
 }
+

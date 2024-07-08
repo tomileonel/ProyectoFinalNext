@@ -1,24 +1,25 @@
-// NovedadesCarousel.js
+'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './styles.module.css';
-import CardRecipe from '../CardNovedades/index';
-import cesar from '../../img/cesarSalad.png';
-import pasta from '../../img/pasta.jpeg';
-import sushi from '../../img/sushi.jpg';
+import CardRecipe from '../CardNovedades';
 
 const NovedadesCarousel = () => {
-  const novedades = [
-    { id: 1, name: 'Ensalada César', image: cesar, time: '30 min', calories: '200 kcal', price: '$10', user: 'Usuario 1' },
-    { id: 2, name: 'Pasta Carbonara', image: pasta, time: '45 min', calories: '350 kcal', price: '$12', user: 'Usuario 2' },
-    { id: 3, name: 'Sushi Variado', image: sushi, time: '60 min', calories: '500 kcal', price: '$15', user: 'Usuario 3' },
-    { id: 4, name: 'Ensalada César', image: cesar, time: '30 min', calories: '200 kcal', price: '$10', user: 'Usuario 1' },
-    { id: 5, name: 'Pasta Carbonara', image: pasta, time: '45 min', calories: '350 kcal', price: '$12', user: 'Usuario 2' },
-    { id: 6, name: 'Sushi Variado', image: sushi, time: '60 min', calories: '500 kcal', price: '$15', user: 'Usuario 3' },
-    { id: 7, name: 'Ensalada César', image: cesar, time: '30 min', calories: '200 kcal', price: '$10', user: 'Usuario 1' },
-    { id: 8, name: 'Pasta Carbonara', image: pasta, time: '45 min', calories: '350 kcal', price: '$12', user: 'Usuario 2' },
-    { id: 9, name: 'Sushi Variado', image: sushi, time: '60 min', calories: '500 kcal', price: '$15', user: 'Usuario 3' },
-  ];
+  const [novedades, setNovedades] = useState([]);
+
+  useEffect(() => {
+    const fetchNovedades = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/recetas/novedades/1'); 
+        setNovedades(response.data); 
+      } catch (error) {
+        console.error('Error fetching novedades:', error);
+      }
+    };
+
+    fetchNovedades();
+  }, []); 
 
   return (
     <div className={styles.carouselContainer}>
@@ -28,12 +29,14 @@ const NovedadesCarousel = () => {
           {novedades.map((novedad) => (
             <CardRecipe
               key={novedad.id}
-              name={novedad.name}
-              image={novedad.image}
-              time={novedad.time}
-              calories={novedad.calories}
-              price={novedad.price}
-              user={novedad.user}
+              nombre={novedad.nombre}
+              imagen={novedad.imagen}
+              tiempoMins={novedad.tiempoMins}
+              calorias={novedad.calorias}
+              precio={novedad.precio}
+              imagenUsuario={novedad.imagenUsuario}
+              nombreusuario={novedad.nombreusuario}
+
             />
           ))}
         </div>
