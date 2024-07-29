@@ -25,7 +25,7 @@
     border: none;
     border-radius: 10px;
     background-color: transparent; 
-    color: #45a049;
+    color: #60AC3A;
     font-size: 2,5vw;
     cursor: pointer;
     font-family: 'Poppins', sans-serif; 
@@ -34,10 +34,10 @@
   .categoryButton:hover,
   .categoryButton:active,
   .categoryButton.active {
-    background-color: #45a049; 
+    background-color: #60AC3A; 
     color: white; 
   }
   .categoryButton:hover {
-    background-color: #45a049;
+    background-color: #60AC3A;
   }
   

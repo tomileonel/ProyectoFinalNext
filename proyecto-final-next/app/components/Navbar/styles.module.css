@@ -1,0 +1,56 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative; /* Necesario para posicionar el fondo de color */
+  }
+  
+  .icon:hover {
+    transform: scale(1.2);
+  }
+  
+  .iconImage {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px; /* Espacio entre la imagen y el texto */
+    transition: filter 0.3s ease;
+  }
+  
+  .selected .iconImage {
+    filter: brightness(0) saturate(100%) invert(21%) sepia(67%) saturate(6800%) hue-rotate(76deg) brightness(94%) contrast(96%);
+  }
+  
+  .iconLabel {
+    font-size: 12px;
+    color: #333;
+  }
+  
+  .selected .iconLabel {
+    color: #60AC3A; /* Color verde específico para el texto del icono seleccionado */
+  }
+  
+  @media (max-width: 600px) {
+    .iconImage {
+      width: 20px;
+      height: 20px;
+    }
+  
+    .iconLabel {
+      font-size: 10px;
+    }
+  }
+  

@@ -152,3 +152,112 @@
   filter: brightness(1.5);
 }
 
+@media (max-width: 600px) {
+.card {
+  width: 150px; /* Cambiado de 200px a 150px */
+  height: 207px; /* Cambiado de 276px a 207px */
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  background-color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.foodPhoto {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  height: auto;
+  border-radius: 100px;
+}
+
+.bookmarkIcon {
+  position: absolute;
+  bottom: 0px;
+  right: 5px;
+  width: 30px; /* Cambiado de 40px a 20px */
+  height: auto;
+}
+
+.titleButton {
+  text-align: center;
+}
+
+.nombre {
+  margin: 0;
+  font-size: 14px; /* Cambiado de 18px a 14px */
+  font-weight: bold;
+  color: #333;
+}
+
+.rating {
+  position: absolute;
+  top: 40px; /* Cambiado de 50px a 40px */
+  right: 10px;
+  background-color: #FFE1B3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 12px; /* Cambiado de 14px a 12px */
+  color: white;
+  font-weight: 500;
+}
+
+.starIcon {
+  width: 10px;
+  height: auto;
+}
+
+.text {
+  margin-left: 4px;
+  font-size: 10px; /* Cambiado de 12px a 10px */
+  color: black;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -5px;
+}
+
+.tiempo {
+  font-weight: bold;
+  color: #666;
+}
+
+.mins {
+  font-weight: normal;
+  color: #333;
+}
+
+.time1, .time2, .time3 {
+  text-align: center;
+  font-size: 10px; /* Cambiado de 12px a 10px */
+}
+
+.time1 p, .time2 p, .time3 p {
+  margin: 2px 0;
+}
+
+.bookmarkButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.bookmarkIcon {
+  transition: filter 0.3s ease;
+}
+
+.bookmarkIcon.bookmarked {
+  filter: brightness(1.5);
+}
+}

@@ -10,7 +10,7 @@ const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio, imagenUsuario, n
 
   return (
     <div className={styles.card}>
-      <img src={imagen} alt={nombre} className={styles.foodImage} width={150} height={150} />
+      <img src={imagen} alt={nombre} className={styles.foodImage} />
 
       <h3 className={styles.name}>{nombre}</h3>
 
@@ -33,12 +33,12 @@ const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio, imagenUsuario, n
 
       {/* Renderización condicional de la imagen de usuario */}
       {imagenUsuario === 'pocketchef' ? (
-        <Image src={userImage} alt="Perfil" className={styles.userImage} width={40} height={20} />
+        <Image src={userImage} alt="Perfil" className={styles.userImage} />
       ) : (
-        <img src={userImage} alt="Perfil" className={styles.userImage} width={40} height={20} />
+        <img src={userImage} alt="Perfil" className={styles.userImage} />
       )}
 
-      <Image src={BookmarkIcon} alt="Bookmark" className={styles.bookmark} width={20} height={20} />
+      <Image src={BookmarkIcon} alt="Bookmark" className={styles.bookmark} />
     </div>
   );
 };
