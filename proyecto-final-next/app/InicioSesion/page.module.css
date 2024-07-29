@@ -1,0 +1,73 @@
+/* styles/Home.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .logo {
+    width: 300px !important; 
+    height: auto;
+    margin-bottom: 20px;
+    
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    color: #4CAF50;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .login-button,
+  .register-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .register-button {
+    background-color: white;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 600px) {
+    .title {
+      font-size: 1.25rem;
+    }
+  
+    .description {
+      font-size: 0.875rem;
+    }
+  
+    .buttons {
+      flex-direction: column;
+    }
+  
+    .login-button,
+    .register-button {
+      width: 100%;
+    }
+  }
+  

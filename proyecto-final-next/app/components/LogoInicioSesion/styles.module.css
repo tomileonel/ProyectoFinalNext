@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+.title {
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
+    color: #60AC3A;
+    font-size: 36px; /* Ajusta esto al tamaño deseado para pantallas grandes */
+}
+
+@media screen and (max-width: 600px) {
+    .title {
+        font-size: 28px;
+    }
+    .description {
+        font-weight: 500; 
+    }
+}
+
+.description {
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 500; 
+}

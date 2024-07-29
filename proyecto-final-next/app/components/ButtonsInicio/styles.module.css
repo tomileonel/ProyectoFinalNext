@@ -1,0 +1,55 @@
+/* components/Buttons.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* Centra los botones horizontalmente */
+  margin-top: 20px; /* Ajusta el espacio superior si es necesario */
+  flex-direction: row; /* Alineación horizontal por defecto */
+}
+
+.loginButton,
+.registerButton {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none; /* Elimina los bordes */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Añade una transición suave para los cambios de color */
+  font-family: 'Poppins', sans-serif; /* Aplica la fuente Poppins */
+  font-weight: 600; /* Aplica el peso de la fuente */
+}
+
+.loginButton {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.loginButton:hover {
+  background-color: #45a049; /* Cambia de color al pasar el cursor por encima */
+}
+
+.registerButton {
+  background-color: white;
+  color: #4CAF50;
+  border: none; /* Asegúrate de que no tenga borde */
+}
+
+.registerButton:hover {
+  background-color: #f1f1f1; /* Cambia de color al pasar el cursor por encima */
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .buttons {
+    flex-direction: row; /* Alineación horizontal en pantallas pequeñas */
+    gap: 10px;
+  }
+
+  .loginButton,
+  .registerButton {
+    width: auto; /* Asegura que los botones no ocupen todo el ancho */
+    text-align: center; /* Asegura que el texto esté centrado en botones más anchos */
+  }
+}
