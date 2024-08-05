@@ -1,21 +1,41 @@
-"use client"; // Indica que este es un Client Component
+"use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importa useRouter desde next/navigation
-import styles from './page.module.css'; // Ajusta la ruta según sea necesario
+import { useRouter } from 'next/navigation';
+import styles from './page.module.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // Usa useRouter para manejar la navegación
+  const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí deberías manejar la lógica de autenticación.
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // Redirigir al usuario después del inicio de sesión exitoso
-    router.push('/home'); // Ajusta esta ruta según sea necesario
+
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password
+        }),
+      });
+
+      if (response.ok) {
+
+        router.push('/');
+      } else {
+        const result = await response.json();
+        setError(result.message || 'Credenciales incorrectas o error en el servidor.');
+      }
+    } catch (error) {
+      setError('Error en la solicitud.');
+      console.error('Error al iniciar sesión:', error);
+    }
   };
 
   return (
@@ -42,6 +62,7 @@ const LoginPage = () => {
             required
           />
         </div>
+        {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.submitButton}>Iniciar Sesión</button>
       </form>
     </div>
