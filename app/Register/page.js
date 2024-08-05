@@ -1,29 +1,49 @@
-"use client"; // Indica que este es un Client Component
+"use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Importa useRouter desde next/navigation
-import styles from './page.module.css'; // Ajusta la ruta según sea necesario
+import { useRouter } from 'next/navigation';
+import styles from './page.module.css'; 
 
 const RegisterPage = () => {
+  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const router = useRouter(); // Usa useRouter para manejar la navegación
 
-  const handleSubmit = (e) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí deberías manejar la lógica de registro.
+
     if (password !== confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
     }
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // Redirigir al usuario después del registro exitoso
-    router.push('/home'); // Ajusta esta ruta según sea necesario
+
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, name, lastName, phone, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        router.push('/'); 
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error en el registro:', error);
+      alert('Error en el registro. Intenta nuevamente.');
+    }
   };
 
   return (
@@ -31,12 +51,42 @@ const RegisterPage = () => {
       <h1>Registrarse</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
+          <label htmlFor="username">Nombre de Usuario:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
           <label htmlFor="name">Nombre:</label>
           <input
             type="text"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="lastName">Apellido:</label>
+          <input
+            type="text"
+            id="lastName"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="phone">Teléfono:</label>
+          <input
+            type="text"
+            id="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             required
           />
         </div>
@@ -70,17 +120,7 @@ const RegisterPage = () => {
             required
           />
         </div>
-        <div className={styles.formGroup}>
-          <label>
-            <input
-              type="checkbox"
-              checked={termsAccepted}
-              onChange={(e) => setTermsAccepted(e.target.checked)}
-              required
-            />
-            Acepto los términos y condiciones
-          </label>
-        </div>
+        
         <button type="submit" className={styles.submitButton}>Registrarse</button>
       </form>
     </div>
