@@ -1,18 +1,15 @@
+"use client";
 import React from 'react';
-import SearchBar from './components/BarraDeBusqueda';
-import FoodCategoriesCarousel from './components/Categorias';
-import HomeRecipesCarousel from './components/Carousel';
-import NovedadesCarousel from './components/NovedadesCarousel';
-import styles from "./page.module.css"
-const HomePage = () => {
+import Logo from './components/LogoInicioSesion/index'
+import styles from './page.module.css';
+import Buttons from './components/ButtonsInicio/index'
+const InicioSesion = () => {
   return (
-    <div className={styles.main}>
-      <SearchBar />
-      <FoodCategoriesCarousel />
-      <HomeRecipesCarousel />
-      <NovedadesCarousel />
+    <div className={styles.container}>
+    <Logo/>  
+    <Buttons/>
     </div>
   );
 };
 
-export default HomePage;
+export default InicioSesion;

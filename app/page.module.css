@@ -1,32 +1,22 @@
-.main {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
-  min-height: 100vh;
-  background-color: white;
+.title {
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
+    color: #60AC3A;
+    font-size: 36px; /* Ajusta esto al tamaño deseado para pantallas grandes */
 }
 
-
-/* Tablet and Smaller Desktop */
-@media (min-width: 701px) and (max-width: 1120px) {
-  .grid {
-    grid-template-columns: repeat(2, 50%);
-  }
+@media screen and (max-width: 600px) {
+    .title {
+        font-size: 28px;
+    }
+    .description {
+        font-weight: 500; 
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  .vercelLogo {
-    filter: invert(1);
-  }
-
-  .logo {
-    filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);
-  }
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
+.description {
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 500; 
 }
