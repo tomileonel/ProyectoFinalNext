@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import Image from 'next/image';
-import bookmark from '../../img/bookmark.png';
+import Bookmark from '../AgregarFavoritos';
 
 const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -43,7 +43,8 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal }) => {
           <p className={styles.tiempo}>Calorías</p>
           <p className={styles.mins}>{kcal}</p>
         </div>
-        <Image className={styles.bookmarkIcon} src={bookmark} alt="bookmark" width={20} height={20} />
+        <Bookmark nombre={nombre}/>
+        
       </div>
     </div>
   );

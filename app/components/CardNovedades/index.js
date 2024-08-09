@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import Image from 'next/image';
-import BookmarkIcon from '../../img/bookmark.png'; // Asumiendo que esta imagen es estática
+import Bookmark from '../AgregarFavoritos'
 import pocketchef from '../../img/pocketchef.png'; // Asumiendo que esta imagen es estática
 
 const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio, imagenUsuario, nombreusuario, imagen }) => {
@@ -37,8 +37,7 @@ const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio, imagenUsuario, n
       ) : (
         <img src={userImage} alt="Perfil" className={styles.userImage} />
       )}
-
-      <Image src={BookmarkIcon} alt="Bookmark" className={styles.bookmark} />
+ <Bookmark nombre={nombre}/>
     </div>
   );
 };

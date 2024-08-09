@@ -19,6 +19,7 @@
   transition: background-color 0.3s, color 0.3s; /* Añade una transición suave para los cambios de color */
   font-family: 'Poppins', sans-serif; /* Aplica la fuente Poppins */
   font-weight: 600; /* Aplica el peso de la fuente */
+  margin-top: 25px;
 }
 
 .loginButton {
@@ -45,11 +46,13 @@
   .buttons {
     flex-direction: row; /* Alineación horizontal en pantallas pequeñas */
     gap: 10px;
+    
   }
 
   .loginButton,
   .registerButton {
     width: auto; /* Asegura que los botones no ocupen todo el ancho */
     text-align: center; /* Asegura que el texto esté centrado en botones más anchos */
+   
   }
 }

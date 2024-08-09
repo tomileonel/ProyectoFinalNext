@@ -27,7 +27,7 @@ const LoginPage = () => {
 
       if (response.ok) {
 
-        router.push('/');
+        router.push('/Inicio');
       } else {
         const result = await response.json();
         setError(result.message || 'Credenciales incorrectas o error en el servidor.');

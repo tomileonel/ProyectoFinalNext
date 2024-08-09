@@ -21,29 +21,29 @@ const Navbar = () => {
   return (
     <div className={styles.navbar}>
       <div
-        className={`${styles.icon} ${selected === '/' ? styles.selected : ''}`}
-        onClick={() => handleIconClick('')}
+        className={`${styles.icon} ${selected === '/Inicio' ? styles.selected : ''}`}
+        onClick={() => handleIconClick('Inicio')}
       >
         <Image src={searchIcon} alt="Search" className={styles.iconImage} width={24} height={24} />
         <p className={styles.iconLabel}>Buscar</p>
       </div>
       <div
-        className={`${styles.icon} ${selected === '/cart' ? styles.selected : ''}`}
-        onClick={() => handleIconClick('cart')}
+        className={`${styles.icon} ${selected === '/Cart' ? styles.selected : ''}`}
+        onClick={() => handleIconClick('Cart')}
       >
         <Image src={cartIcon} alt="Cart" className={styles.iconImage} width={24} height={24} />
         <p className={styles.iconLabel}>Cesta</p>
       </div>
       <div
-        className={`${styles.icon} ${selected === '/favorites' ? styles.selected : ''}`}
-        onClick={() => handleIconClick('favorites')}
+        className={`${styles.icon} ${selected === '/Favorites' ? styles.selected : ''}`}
+        onClick={() => handleIconClick('Favorites')}
       >
         <Image src={favoritesIcon} alt="Favorites" className={styles.iconImage} width={24} height={24} />
         <p className={styles.iconLabel}>Favoritos</p>
       </div>
       <div
-        className={`${styles.icon} ${selected === '/profile' ? styles.selected : ''}`}
-        onClick={() => handleIconClick('profile')}
+        className={`${styles.icon} ${selected === '/Profile' ? styles.selected : ''}`}
+        onClick={() => handleIconClick('Profile')}
       >
         <Image src={profileIcon} alt="Profile" className={styles.iconImage} width={24} height={24} />
         <p className={styles.iconLabel}>Perfil</p>
