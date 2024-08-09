@@ -1,9 +1,11 @@
 import styles from "./page.module.css"
+import React from 'react';
+
 const Favorites = () => {
     return (
-      <div styles={styles.title}>
-       Tus Favoritos:
-      </div>
+      <div className={styles.main}>
+     <p className={styles.title}>Tus favoritos:</p>
+     </div>
     );
   };
   

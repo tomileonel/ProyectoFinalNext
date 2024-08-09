@@ -1,6 +1,10 @@
+/* styles/page.module.css */
 .title{
     color: #60AC3A;
-    font-size: 2,5vw;
+    font-size: 2.10vw;
     font-family: 'Poppins', sans-serif; 
     font-weight: 600; 
+}
+.main{
+    
 }
