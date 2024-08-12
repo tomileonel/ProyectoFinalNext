@@ -1,8 +1,9 @@
-// pages/profile.js
-import Header from '../components/Header';
-import ProfileForm from '../components/ProfileForm';
+"use client";
+
+import ProfileHeader from '../components/HeaderProfile/Header.js';
 import { useEffect, useState } from 'react';
-import jwt from 'jsonwebtoken';
+import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import imgDefault from '../img/default.jpg';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -10,15 +11,18 @@ const ProfilePage = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const decoded = jwt.verify(token, 'your_secret_key');
-      setUserData(decoded);
+      try {
+        const decoded = jwtDecode(token); // Decodificar el token
+        setUserData(decoded);
+      } catch (error) {
+        console.error('Token inválido', error);
+      }
     }
   }, []);
 
   return (
     <div>
-      <Header />
-      {userData && <ProfileForm userData={userData} />}
+      <ProfileHeader image={imgDefault} name={userData ? userData.name : "Nombre por defecto"} />
     </div>
   );
 };
