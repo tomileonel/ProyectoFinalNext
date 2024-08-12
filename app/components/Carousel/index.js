@@ -1,24 +1,33 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './styles.module.css';
 import CardRecipe from '../CardRecipe';
 
-const HomeRecipesCarousel = () => {
+const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/recetas/byTag/1'); //si cambiamos el 1 por id usuario cuando hagamos un login deberia funcionar
-        setRecipes(response.data);  
+        let url;
+        if (selectedCategory == null || selectedCategory === 0) {
+          // Special case for category "Todas" or if selectedCategory is null/undefined
+          url = `http://localhost:3000/api/recetas/byTag/${userId}`;
+        } else {
+          url = `http://localhost:3000/api/recetas/recipesByTag/${selectedCategory}/${userId}`;
+        }
+
+        const response = await axios.get(url);
+        setRecipes(response.data);
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
     };
 
     fetchRecipes();
-  }, []);
+  }, [selectedCategory, userId]);
 
   return (
     <div className={styles.carouselContainer}>
