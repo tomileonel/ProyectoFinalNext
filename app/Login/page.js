@@ -1,4 +1,3 @@
-// pages/login.js
 "use client";
 
 import React, { useState } from 'react';
@@ -20,10 +19,7 @@ const LoginPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email,
-          password
-        }),
+        body: JSON.stringify({ email, password }),
       });
   
       const data = await response.json();
