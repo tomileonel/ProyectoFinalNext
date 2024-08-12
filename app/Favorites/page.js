@@ -3,10 +3,11 @@ import React from 'react';
 import FavoritesCarousel from "../components/CarouselFavoritos";
 
 const Favorites = () => {
-    return (
+  const userId = 1;  
+  return (
       <div className={styles.main}>
      <p className={styles.title}>Tus favoritos:</p>
-     <FavoritesCarousel/>
+     <FavoritesCarousel userId={userId}/>
      </div>
 
     );
