@@ -17,12 +17,12 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (password !== confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
     }
-
+  
     try {
       const response = await fetch('http://localhost:3000/api/auth/register', {
         method: 'POST',
@@ -31,12 +31,15 @@ const RegisterPage = () => {
         },
         body: JSON.stringify({ username, name, lastName, phone, email, password }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
+        // Almacena el token
+        localStorage.setItem('token', data.token);
+  
         alert(data.message);
-        router.push('/'); 
+        router.push('/Inicio'); 
       } else {
         alert(data.message);
       }
