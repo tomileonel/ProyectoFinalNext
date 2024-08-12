@@ -1,3 +1,4 @@
+// pages/login.js
 "use client";
 
 import React, { useState } from 'react';
@@ -12,7 +13,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
@@ -24,13 +25,14 @@ const LoginPage = () => {
           password
         }),
       });
-
+  
+      const data = await response.json();
+  
       if (response.ok) {
-
+        localStorage.setItem('token', data.token);
         router.push('/Inicio');
       } else {
-        const result = await response.json();
-        setError(result.message || 'Credenciales incorrectas o error en el servidor.');
+        setError(data.message || 'Credenciales incorrectas o error en el servidor.');
       }
     } catch (error) {
       setError('Error en la solicitud.');
