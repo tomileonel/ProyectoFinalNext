@@ -5,28 +5,28 @@ import axios from 'axios';
 import styles from './styles.module.css';
 import CardRecipe from '../CardNovedades';
 
-const NovedadesCarousel = () => {
-  const [novedades, setNovedades] = useState([]);
+const PopularesCarousel = () => {
+  const [populares, setPopulares] = useState([]);
 
   useEffect(() => {
-    const fetchNovedades = async () => {
+    const fetchPopulares = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/recetas/novedades/1'); 
-        setNovedades(response.data); 
+        setPopulares(response.data); 
       } catch (error) {
         console.error('Error fetching novedades:', error);
       }
     };
 
-    fetchNovedades();
+    fetchPopulares();
   }, []); 
 
   return (
     <div className={styles.carouselContainer}>
-      <h2 className={styles.carouselTitle}>Novedades</h2>
+      <h2 className={styles.carouselTitle}>Mas populares</h2>
       <div className={styles.carousel}>
         <div className={styles.cards}>
-          {novedades.map((novedad) => (
+          {populares.map((novedad) => ( 
             <CardRecipe
               key={novedad.id}
               nombre={novedad.nombre || 'Nombre de la Receta'}
@@ -43,4 +43,4 @@ const NovedadesCarousel = () => {
     </div>
   );
 };
-export default NovedadesCarousel;
+export default PopularesCarousel;

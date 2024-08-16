@@ -1,0 +1,263 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+.body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.carousel {
+  display: flex;
+
+  padding: 10px;
+  gap: 20px;
+  flex-direction: row;
+  overflow-x: scroll;
+  
+
+}
+
+.carousel-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-item {
+  display: flex;
+  justify-content: center;
+  padding: 0 15px;
+  overflow-x: hidden;
+}
+
+.card {
+  margin: 0 10px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.card {
+  width: 200px;
+  height: 286px;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  background-color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra externa */
+
+}
+
+.foodPhoto {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.image {
+  object-fit: cover; 
+  object-position: center;
+  height: auto;
+  border-radius: 100px;
+  
+}
+
+.bookmarkIcon {
+  position: absolute;
+  bottom: 0px;
+  right: 5px;
+  width: 40px; 
+  height: auto;
+}
+
+.titleButton {
+ 
+  text-align: center;
+}
+
+.nombre {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.rating {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: #FFE1B3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
+}
+
+.starIcon {
+  width: 10px;
+  height: auto;
+}
+
+.text {
+  margin-left: 4px;
+  font-size: 12px;
+  color: black;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -5px; /* Ajustado para subir la sección de tiempo, precio y calorías */
+  
+}
+
+.tiempo {
+  font-weight: bold;
+  color: #666;
+}
+
+.mins {
+  font-weight: normal;
+  color: #333;
+}
+
+.time1, .time2, .time3 {
+  text-align: center;
+  font-size: 12px;
+}
+
+.time1 p, .time2 p, .time3 p {
+  margin: 2px 0;
+}
+
+.bookmarkButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.bookmarkIcon {
+  transition: filter 0.3s ease;
+}
+
+.bookmarkIcon.bookmarked {
+  filter: brightness(1.5);
+}
+
+@media (max-width: 600px) {
+.card {
+  width: 150px; /* Cambiado de 200px a 150px */
+  height: 207px; /* Cambiado de 276px a 207px */
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  background-color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.foodPhoto {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  height: auto;
+  border-radius: 100px;
+}
+
+.bookmarkIcon {
+  position: absolute;
+  bottom: 0px;
+  right: 5px;
+  width: 30px; /* Cambiado de 40px a 20px */
+  height: auto;
+}
+
+.titleButton {
+  text-align: center;
+}
+
+.nombre {
+  margin: 0;
+  font-size: 14px; /* Cambiado de 18px a 14px */
+  font-weight: bold;
+  color: #333;
+}
+
+.rating {
+  position: absolute;
+  top: 40px; /* Cambiado de 50px a 40px */
+  right: 10px;
+  background-color: #FFE1B3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 12px; /* Cambiado de 14px a 12px */
+  color: white;
+  font-weight: 500;
+}
+
+.starIcon {
+  width: 10px;
+  height: auto;
+}
+
+.text {
+  margin-left: 4px;
+  font-size: 10px; /* Cambiado de 12px a 10px */
+  color: black;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -5px;
+}
+
+.tiempo {
+  font-weight: bold;
+  color: #666;
+}
+
+.mins {
+  font-weight: normal;
+  color: #333;
+}
+
+.time1, .time2, .time3 {
+  text-align: center;
+  font-size: 10px; /* Cambiado de 12px a 10px */
+}
+
+.time1 p, .time2 p, .time3 p {
+  margin: 2px 0;
+}
+
+.bookmarkButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.bookmarkIcon {
+  transition: filter 0.3s ease;
+}
+
+.bookmarkIcon.bookmarked {
+  filter: brightness(1.5);
+}
+}
