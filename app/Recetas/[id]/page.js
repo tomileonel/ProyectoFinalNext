@@ -1,43 +1,48 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
 
-const DetalleReceta = ({params}) => {
-  const router = useRouter();
-  const { id } = params|| {};  // Asegúrate de que `id` sea undefined si `router.query` no está disponible
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import RecipeHeader from "../../components/RecipeHeader/index";
+import RecipeSwitch from "../../components/RecipeSwitch/index";
+
+const DetalleReceta = () => {
+  const { id } = useParams(); // Obtén el ID directamente de los params
   const [receta, setReceta] = useState(null);
 
   useEffect(() => {
     if (id) {
-      // Aquí iría tu lógica para obtener la receta con el `id`
       const fetchReceta = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/api/recetas/${id}`);
+          const response = await fetch(`http://localhost:3000/api/recetas/fullrecipe/${id}`);
           const data = await response.json();
           setReceta(data);
         } catch (error) {
-          console.error('Error al obtener la receta:', error);
+          console.error("Error al obtener la receta:", error);
         }
       };
 
       fetchReceta();
     }
-  }, [id]); // Dependencia de `id`, el efecto solo se ejecutará cuando `id` esté disponible
+  }, [id]);
 
-  if (!id) {
-    return <div>Cargando...</div>; // Puedes mostrar un mensaje de carga mientras se obtiene el ID
+  if (!receta) {
+    return <div>Cargando receta...</div>;
   }
 
   return (
     <div>
-      {receta ? (
-        <div>
-          <h1>{receta.nombre}</h1>
-          {/* Aquí puedes mostrar los detalles de la receta */}
-        </div>
-      ) : (
-        <div>Cargando receta...</div>
-      )}
+      <RecipeHeader 
+        nombre={receta.nombre}
+        imagen={receta.imagen}
+        kcal={receta.calorias}
+        minutos={receta.tiempoMins}
+        precio={receta.precio}
+        creador={receta.creador}
+      />
+      <RecipeSwitch 
+        ingredientes={receta.ingredientes}
+        pasos={receta.pasos}
+      />
     </div>
   );
 };
