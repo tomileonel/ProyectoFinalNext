@@ -34,6 +34,7 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
         <div className={styles.cards}>
           {recipes.map((recipe, index) => (
             <CardRecipe
+            id={recipe.id}
               key={index}
               nombre={recipe.nombre || 'Recipe Name'}
               image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}

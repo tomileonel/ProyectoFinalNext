@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; // Importa useRouter
 import styles from './styles.module.css';
-import Image from 'next/image';
 import Bookmark from '../AgregarFavoritos';
 
-const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal }) => {
+const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const router = useRouter(); // Mueve useRouter dentro del componente
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -12,10 +13,13 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleCardClick = () => {
+    router.push(`/Recetas/${id}`); // Navega a la página de detalles de la receta
+  };
   const imageSize = windowWidth > 600 ? { width: '150px', height: '150px' } : { width: '100px', height: '100px' };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card } onClick={handleCardClick}>
       <div className={styles.foodPhoto}>
         <img 
           src={image} 
