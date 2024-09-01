@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import bookmark from '../../img/bookmark.png';
 import bookmarked from '../../img/bookmarked.png';
@@ -8,12 +8,42 @@ import styles from './styles.module.css';
 const Bookmark = ({ nombre }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [id, setId] = useState(null);
+    const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            const token = localStorage.getItem('token'); // Obtén el token del localStorage
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:3000/api/auth/getUserProfile', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`, // Agrega el token en el encabezado Authorization
+                        },
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUserId(data.id); // Establece el ID del usuario desde el perfil
+                    } else {
+                        console.error('Error al obtener el perfil del usuario');
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud:', error);
+                }
+            } else {
+                console.error('Token no encontrado');
+            }
+        };
+
+        fetchUserProfile();
     }, []);
 
     useEffect(() => {
@@ -36,29 +66,31 @@ const Bookmark = ({ nombre }) => {
                 // Cargar estado desde localStorage
                 const storedFavorite = localStorage.getItem('favorites');
                 const favorites = storedFavorite ? JSON.parse(storedFavorite) : {};
-                
+
                 if (fetchedId in favorites) {
                     setIsFavorite(favorites[fetchedId]);
                 } else {
-                    try {
-                        const response = await axios.get(`http://localhost:3000/api/favoritos/getFavourites/1/${fetchedId}`);
-                        const isFavorite = response.data.isFavorite;
-                        setIsFavorite(isFavorite);
-                        favorites[fetchedId] = isFavorite;
-                        localStorage.setItem('favorites', JSON.stringify(favorites));
-                    } catch (error) {
-                        console.error('No se pudo verificar el favorito:', error);
+                    if (userId !== null) { // Asegúrate de que userId esté definido
+                        try {
+                            const response = await axios.get(`http://localhost:3000/api/favoritos/getFavourites/${userId}/${fetchedId}`);
+                            const isFavorite = response.data.isFavorite;
+                            setIsFavorite(isFavorite);
+                            favorites[fetchedId] = isFavorite;
+                            localStorage.setItem('favorites', JSON.stringify(favorites));
+                        } catch (error) {
+                            console.error('No se pudo verificar el favorito:', error);
+                        }
                     }
                 }
             }
         };
 
         inicializarFavorito();
-    }, [nombre]);
+    }, [nombre, userId]); // Dependencia añadida para userId
 
     const handleFavoriteClick = async () => {
-        if (!id) {
-            console.error('ID no disponible, no se puede cambiar el favorito');
+        if (!id || userId === null) {
+            console.error('ID no disponible o userId no definido, no se puede cambiar el favorito');
             return;
         }
 
@@ -71,13 +103,13 @@ const Bookmark = ({ nombre }) => {
                 setIsFavorite(false);
                 delete favorites[id];
                 localStorage.setItem('favorites', JSON.stringify(favorites));
-                await axios.delete(`http://localhost:3000/api/favoritos/Borrar/1/${id}`);
+                await axios.delete(`http://localhost:3000/api/favoritos/Borrar/${userId}/${id}`);
             } else {
                 // Cambiar el estado inmediatamente
                 setIsFavorite(true);
                 favorites[id] = true;
                 localStorage.setItem('favorites', JSON.stringify(favorites));
-                await axios.post(`http://localhost:3000/api/favoritos/Insertar/1/${id}`);
+                await axios.post(`http://localhost:3000/api/favoritos/Insertar/${userId}/${id}`);
             }
 
             // Emitir evento para notificar a otros componentes
