@@ -35,6 +35,7 @@ const FoodCategoriesCarousel = ({ onCategorySelect, userId }) => {
     if (userId !== undefined) {
       fetchRecipesByCategory(activeCategory);
     }
+    console.log(activeCategory)
   }, [activeCategory, userId]);
 
   const fetchRecipesByCategory = async (categoryId) => {
