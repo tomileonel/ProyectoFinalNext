@@ -13,7 +13,11 @@ const RecipeHeader = ({ nombre, kcal, minutos, precio, creador ,imagen}) => {
         <p>Precio: ${precio}</p>
       </div>
       <div className={styles.creator}>
+<<<<<<< HEAD
         
+=======
+        {/* <img src={creador.imagen} alt={creador.nombreusuario} className={styles.creadorFoto} /> */}
+>>>>>>> c2031855928cc15670f72b9b3d6523f70d7eddb2
         <p>Creado por: {creador.nombreusuario}</p>
       </div>
       <Bookmark recetaId={creador.id} /> {/* Suponiendo que el ID de la receta se pasa aquí */}

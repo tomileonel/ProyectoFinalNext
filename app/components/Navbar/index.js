@@ -42,8 +42,8 @@ const Navbar = () => {
         <p className={styles.iconLabel}>Favoritos</p>
       </div>
       <div
-        className={`${styles.icon} ${selected === '/Profile' ? styles.selected : ''}`}
-        onClick={() => handleIconClick('Profile')}
+        className={`${styles.icon} ${selected === '/Perfil' ? styles.selected : ''}`}
+        onClick={() => handleIconClick('Perfil')}
       >
         <Image src={profileIcon} alt="Profile" className={styles.iconImage} width={24} height={24} />
         <p className={styles.iconLabel}>Perfil</p>
