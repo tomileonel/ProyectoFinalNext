@@ -42,6 +42,7 @@ const DetalleReceta = () => {
       <RecipeSwitch 
         ingredientes={receta.ingredientes}
         pasos={receta.pasos}
+        idreceta = {id}
       />
     </div>
   );

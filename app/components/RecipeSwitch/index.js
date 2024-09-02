@@ -1,7 +1,9 @@
+'use client';
 import React, { useState } from "react";
+import Timer from "../Timer";
 import styles from './styles.module.css';
 
-const RecipeSwitch = ({ ingredientes, pasos }) => {
+const RecipeSwitch = ({ ingredientes, pasos, idreceta }) => {
   const [activeTab, setActiveTab] = useState("ingredientes");
 
   return (
@@ -32,6 +34,8 @@ const RecipeSwitch = ({ ingredientes, pasos }) => {
           </ul>
         )}
         {activeTab === "pasos" && (
+          <div>
+          <Timer id={idreceta}/>
           <ol>
             {pasos.map((paso, index) => (
               <li key={index}>
@@ -39,6 +43,7 @@ const RecipeSwitch = ({ ingredientes, pasos }) => {
               </li>
             ))}
           </ol>
+          </div>
         )}
       </div>
     </div>
