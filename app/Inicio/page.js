@@ -57,10 +57,9 @@ const HomePage = () => {
     <div className={styles.main}>
       <SearchBar />
       <FoodCategoriesCarousel onCategorySelect={handleCategorySelect} />
-      <HomeRecipesCarousel selectedCategory={selectedCategory} userId={userProfile?.id} />
+      <HomeRecipesCarousel selectedCategory={selectedCategory} userId={userProfile?.id || 1} />
       <PopularesCarousel />
-      <h1>{userProfile.nombreusuario}</h1>
-      <h1>{userProfile.id}</h1>
+      <h1>{userProfile?.nombreusuario || 'No registrado'}</h1>
     </div>
   );
 };
