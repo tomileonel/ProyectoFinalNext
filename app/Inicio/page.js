@@ -60,6 +60,7 @@ const HomePage = () => {
       <HomeRecipesCarousel selectedCategory={selectedCategory} userId={userProfile?.id} />
       <PopularesCarousel />
       <h1>{userProfile.nombreusuario}</h1>
+      <h1>{userProfile.id}</h1>
     </div>
   );
 };
