@@ -19,7 +19,8 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
   const imageSize = windowWidth > 600 ? { width: '150px', height: '150px' } : { width: '100px', height: '100px' };
 
   return (
-    <div className={styles.card } onClick={handleCardClick}>
+    <div className={styles.card } >
+      <div onClick={handleCardClick}>
       <div className={styles.foodPhoto}>
         <img 
           src={image} 
@@ -49,6 +50,7 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
         </div>
         <Bookmark nombre={nombre}/>
         
+      </div>
       </div>
       <Bookmark nombre={nombre}/>
     </div>

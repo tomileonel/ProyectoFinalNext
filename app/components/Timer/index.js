@@ -5,36 +5,33 @@ import axios from "axios";
 import styles from "./styles.module.css";
 
 const Timer = ({ id }) => {
-  const [seconds, setSeconds] = useState(300); // Valor inicial predeterminado
+  const [seconds, setSeconds] = useState(null); // Valor inicial predeterminado
+  const [reset, setReset] = useState(null);
   const [isActive, setIsActive] = useState(false);
-    console.log(id)
+ 
   useEffect(() => {
     const fetchTime = async () => {
       try {
         let counter = 0;
         console.log("Fetching pasos with their times..."); // Depuración
-
         // URL para obtener todos los pasos con sus tiempos en minutos
         const url = `http://localhost:3000/api/recetas/getPasosCount/${id}`;
         const response = await axios.get(url);
+        for(let i = 0; i<response.data.length; i++){
+          counter += response.data[i].duracionMin*60;
+        }
         
-
-        // Recorremos los pasos y acumulamos los tiempos
-        response.data.forEach((paso) => {
-          console.log(`Paso ${paso.id}: ${paso.tiempo} minutos`); // Depuración
-          counter += paso.tiempo * 60; // Convertir minutos a segundos y acumular
-        });
-
-        console.log("Total seconds calculated:", counter); // Depuración
-        setSeconds(counter); // Establecer el tiempo acumulado en segundos
+        console.log("Total seconds calculated:", counter); 
+        setSeconds(counter); 
+        setReset(counter)
       } catch (error) {
         console.error("Error fetching steps and times:", error);
       }
     };
-
+    
     fetchTime(); // Llamada a la función dentro del useEffect
   }, [id]); // Dependencia en `id` para recargar si cambia
-
+  
   useEffect(() => {
     let interval = null;
 
@@ -51,7 +48,7 @@ const Timer = ({ id }) => {
 
   const resetTimer = () => {
     setIsActive(false);
-    setSeconds(300); // Restablecer a un valor fijo, o modificar según lo necesites
+    setSeconds(reset); // Restablecer a un valor fijo, o modificar según lo necesites
   };
 
   const minutes = Math.floor(seconds / 60);
@@ -66,10 +63,10 @@ const Timer = ({ id }) => {
         className={styles.playButton}
         onClick={() => setIsActive(!isActive)}
       >
-        {isActive ? "⏸️" : "▶️"}
+        {isActive ? "Pausar" : "Iniciar"}
       </button>
       <button className={styles.resetButton} onClick={resetTimer}>
-        🔄️
+        Reiniciar
       </button>
     </div>
   );
