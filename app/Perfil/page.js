@@ -1,32 +1,29 @@
-"use client";
-
-import ProfileHeader from '../components/HeaderProfile/Header.js';
+ "use client"; 
+import { useRouter } from 'next/navigation'; // Usa next/navigation en lugar de next/router
 import { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import ProfileHeader from '../components/HeaderProfile/Header.js';
 import imgDefault from '../img/default.jpg';
 
 const ProfilePage = () => {
-  const [userProfile, setUserProfile] = useState(null); // Estado para el perfil del usuario
+  const [userProfile, setUserProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = localStorage.getItem('token'); // Obtén el token del localStorage
-
+      const token = localStorage.getItem('token');
       if (token) {
         try {
           const response = await fetch('http://localhost:3000/api/auth/getUserProfile', {
             method: 'GET',
             headers: {
-              'Authorization': `Bearer ${token}`, // Agrega el token en el encabezado Authorization
+              'Authorization': `Bearer ${token}`,
             },
           });
 
           if (response.ok) {
             const data = await response.json();
             setUserProfile(data);
-            // Decodifica el token para obtener datos adicionales del usuario si es necesario
-            const decoded = jwtDecode(token);
-            setUserData(decoded);
           } else {
             console.error('Error al obtener el perfil del usuario');
           }
@@ -44,12 +41,18 @@ const ProfilePage = () => {
     fetchUserProfile();
   }, []);
 
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  const handleAddRecipeClick = () => {
+    router.push('/CrearReceta'); // Redirigir a la página para agregar receta
+  };
 
   return (
     <div>
-      <ProfileHeader
-      user={userProfile||1}
-      />
+      <ProfileHeader user={userProfile || { nombre: 'Usuario', imagen: imgDefault }} />
+      <button onClick={handleAddRecipeClick}>Agregar nueva receta</button>
     </div>
   );
 };

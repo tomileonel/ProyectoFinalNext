@@ -1,10 +1,13 @@
 // next.config.mjs
-
-const nextConfig = {
-    images: {
-      domains: ['example.com', 'anotherdomain.com'],
-    },
-  };
-  
-  export default nextConfig;
-  
+export default {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        port: '',
+        pathname: '**',
+      },
+    ],
+  },
+};
