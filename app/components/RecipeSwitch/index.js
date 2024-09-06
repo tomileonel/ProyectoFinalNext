@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import Timer from "../Timer";
+import PasosReceta from "../PasosReceta";
 import styles from './styles.module.css';
 
 const RecipeSwitch = ({ ingredientes, pasos, idreceta }) => {
@@ -9,41 +9,50 @@ const RecipeSwitch = ({ ingredientes, pasos, idreceta }) => {
   return (
     <div className={styles.switchContainer}>
       <div className={styles.tabs}>
-        <button
-          className={activeTab === "ingredientes" ? styles.activeTab : ""}
-          onClick={() => setActiveTab("ingredientes")}
-        >
-          Ingredientes
-        </button>
-        <button
-          className={activeTab === "pasos" ? styles.activeTab : ""}
-          onClick={() => setActiveTab("pasos")}
-        >
-          Pasos
-        </button>
+      <button
+        className={`${styles.categoryButton} ${
+        activeTab === "ingredientes" ? styles.active : ""
+        }`}
+        onClick={() => setActiveTab("ingredientes")}>
+      Ingredientes
+    </button>
+    <button
+        className={`${styles.categoryButton} ${
+        activeTab === "pasos" ? styles.active : ""
+        }`}
+        onClick={() => setActiveTab("pasos")}>
+      Pasos
+      </button>
       </div>
       <div className={styles.content}>
-        {activeTab === "ingredientes" && (
-          <ul>
-            {ingredientes.map((ing, index) => (
-              <li key={index}>
-                <img src={ing.imagen} alt={ing.nombre} className={styles.ingredienteFoto} />
-                <p>{ing.nombre} - {ing.cant}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-        {activeTab === "pasos" && (
-          <div>
-          <Timer id={idreceta}/>
-          <ol>
-            {pasos.map((paso, index) => (
-              <li key={index}>
-                <p>{paso.descripcion}</p>
-              </li>
-            ))}
-          </ol>
+  {activeTab === "ingredientes" && (
+    <ul>
+      {ingredientes.map((ing, index) => (
+        <li key={index} className={styles.ingrediente}>
+          <div className={styles.container1}>
+            <div className={styles.image}>
+              <div className={styles.maskGroup}>
+                <div
+                  className={styles.rectangle650}
+                  style={{ backgroundImage: `url(${ing.imagen})` }}
+                />
+              </div>
+            </div>
+            <div className={styles.texto}>
+              {ing.nombre}
+            </div>
           </div>
+          <div className={styles.unidad}>
+            {ing.cant} - {ing.precio}$ - {ing.kcal}Kcal
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+
+        {activeTab === "pasos" && (
+        <PasosReceta id={idreceta}
+         pasos={pasos}/>
         )}
       </div>
     </div>

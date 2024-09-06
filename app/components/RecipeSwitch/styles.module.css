@@ -1,10 +1,33 @@
+
 .switchContainer {
     /* estilos para el contenedor del switch */
   }
-  
+
   .tabs {
     display: flex;
     justify-content: space-around;
+    
+  }
+  .categoryButton {
+    flex: 0 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    margin:10px;
+    color: #60AC3A;
+    font-size: 1vw; /* Cambiado de '2,5vw' a '2.5vw' (formato correcto) */
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+  }
+  
+  .categoryButton:hover,
+  .categoryButton:active,
+  .categoryButton.active {
+    background-color: #60AC3A;
+    color: white;
   }
   
   .activeTab {
@@ -12,13 +35,75 @@
     border-bottom: 2px solid #000;
   }
   
-  .content {
-    margin-top: 1rem;
+  .content ul {
+    list-style-type: none;
+    padding: 0;
   }
   
-  .ingredienteFoto {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+  .ingrediente {
+    border-radius: 12px;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16.1px 20px 16.1px 20.1px;
+    box-sizing: border-box;
+    margin-bottom: 10px; /* Añadido para espacio entre los elementos */
+    border: 2px solid #e0e0e0; /* Aquí se agrega el borde */
+  }
+  
+  
+  .ingrediente .container1 {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+  }
+  
+  .ingrediente .texto {
+    margin: 22.8px 0 23px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #121212;
+  }
+  
+  .ingrediente .image {
+    border-radius: 10px;
+    background: #FFFFFF;
+    position: relative;
+    margin-right: 20.1px;
+    display: flex;
+    padding: 8.1px 8px;
+    width: 69.8px;
+    height: 69.8px;
+    box-sizing: border-box;
+  }
+  
+  .ingrediente .maskGroup {
+    border-radius: 10px;
+    display: flex;
+    width: 69.8px;
+    height: 69.8px;
+    box-sizing: border-box;
+  }
+  
+  .ingrediente .rectangle650 {
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    width: 53.7px;
+    height: 53.7px;
+  }
+  
+  .ingrediente .unidad {
+    margin: 26.9px 0 27.9px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #959595;
   }
   

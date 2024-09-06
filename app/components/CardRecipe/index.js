@@ -48,7 +48,7 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
           <p className={styles.tiempo}>Calorías</p>
           <p className={styles.mins}>{kcal}</p>
         </div>
-        <Bookmark nombre={nombre}/>
+        
         
       </div>
       </div>

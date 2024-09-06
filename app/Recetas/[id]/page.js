@@ -24,7 +24,7 @@ const DetalleReceta = () => {
       fetchReceta();
     }
   }, [id]);
-
+  
   if (!receta) {
     return <div>Cargando receta...</div>;
   }
@@ -38,6 +38,7 @@ const DetalleReceta = () => {
         minutos={receta.tiempoMins}
         precio={receta.precio}
         creador={receta.creador}
+        rating={receta.rating}
       />
       <RecipeSwitch 
         ingredientes={receta.ingredientes}
