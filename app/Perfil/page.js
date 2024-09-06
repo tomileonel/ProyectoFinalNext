@@ -2,11 +2,12 @@
 
 import ProfileHeader from '../components/HeaderProfile/Header.js';
 import { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode'; // Importar jwt-decode
+import * as jwtDecode from 'jwt-decode';
 import imgDefault from '../img/default.jpg';
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState(null); // Estado para el perfil del usuario
+  const [loading, setLoading] = useState(true); // Estado para controlar la carga
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -26,29 +27,33 @@ const ProfilePage = () => {
             setUserProfile(data);
             // Decodifica el token para obtener datos adicionales del usuario si es necesario
             const decoded = jwtDecode(token);
-            setUserData(decoded);
+            // setUserData(decoded); // Parece que setUserData no está definido en el código proporcionado
           } else {
             console.error('Error al obtener el perfil del usuario');
           }
         } catch (error) {
           console.error('Error en la solicitud:', error);
         } finally {
-          setLoading(false);
+          setLoading(false); // Marca la carga como finalizada
         }
       } else {
         console.error('Token no encontrado');
-        setLoading(false);
+        setLoading(false); // Marca la carga como finalizada incluso si no hay token
       }
     };
 
     fetchUserProfile();
   }, []);
 
+  // Puedes mostrar un mensaje de carga o un spinner mientras `loading` es true
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
       <ProfileHeader
-      user={userProfile||1}
+        user={userProfile || { nombre: 'Usuario', imagen: imgDefault }}
       />
     </div>
   );
