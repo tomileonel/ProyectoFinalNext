@@ -197,3 +197,16 @@
   background-color: #60AC3A;
   color: white;
 }
+.star{
+  font-size: 40px;
+  color: white; /* Color del texto */
+  text-shadow:
+    -1px -1px 0 gold, /* Sombra hacia arriba izquierda */
+     1px -1px 0 gold, /* Sombra hacia arriba derecha */
+    -1px  1px 0 gold, /* Sombra hacia abajo izquierda */
+     1px  1px 0 gold; /* Sombra hacia abajo derecha */
+}
+.star:hover,
+.star:active{
+  color: gold;
+}
