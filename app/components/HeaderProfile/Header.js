@@ -7,8 +7,12 @@ const ProfileHeader = ({ user }) => {
       <div className={styles.headerContent}>
         <h2>Perfil</h2>
         <div className={styles.profileImage}>
-         
-          <Image src={user.imagen || '../../img/default.jpg'} alt="Profile image" width={100} height={100} />
+          <Image
+            src={user.imagen || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7tyEA8rRXZabfLf_AwxDy-vQ91ecjMJjxVw&s'}
+            alt="Profile image"
+            width={100}
+            height={100}
+          />
         </div>
         <p className={styles.profileName}>{user.nombre}</p>
       </div>

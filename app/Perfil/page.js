@@ -1,8 +1,8 @@
- "use client"; 
+"use client";
 import { useRouter } from 'next/navigation'; // Usa next/navigation en lugar de next/router
 import { useEffect, useState } from 'react';
+import Image from 'next/image'; // Importa el componente Image
 import ProfileHeader from '../components/HeaderProfile/Header.js';
-import imgDefault from '../img/default.jpg';
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
@@ -51,7 +51,9 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <ProfileHeader user={userProfile || { nombre: 'Usuario', imagen: imgDefault }} />
+      <ProfileHeader 
+        user={userProfile || { nombre: 'Usuario', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7tyEA8rRXZabfLf_AwxDy-vQ91ecjMJjxVw&s' }} 
+      />
       <button onClick={handleAddRecipeClick}>Agregar nueva receta</button>
     </div>
   );
