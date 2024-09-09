@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import RecipeHeader from "../../components/RecipeHeader/index";
 import RecipeSwitch from "../../components/RecipeSwitch/index";
-
+import styles from "./page.module.css"
 const DetalleReceta = () => {
   const { id } = useParams(); // Obtén el ID directamente de los params
   const [receta, setReceta] = useState(null);
@@ -30,8 +30,9 @@ const DetalleReceta = () => {
   }
 
   return (
-    <div>
+    <div className={styles.maincontent}>
       <RecipeHeader 
+        id = {id}
         nombre={receta.nombre}
         imagen={receta.imagen}
         kcal={receta.calorias}

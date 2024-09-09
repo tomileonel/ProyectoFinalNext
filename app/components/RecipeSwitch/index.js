@@ -5,7 +5,6 @@ import styles from './styles.module.css';
 
 const RecipeSwitch = ({ ingredientes, pasos, idreceta }) => {
   const [activeTab, setActiveTab] = useState("ingredientes");
-
   return (
     <div className={styles.switchContainer}>
       <div className={styles.tabs}>
@@ -43,7 +42,7 @@ const RecipeSwitch = ({ ingredientes, pasos, idreceta }) => {
             </div>
           </div>
           <div className={styles.unidad}>
-            {ing.cant} - {ing.precio}$ - {ing.kcal}Kcal
+            {ing.cant}g - {ing.precio * (ing.cant/100)}$ - {ing.calorias * (ing.cant/100)}kcal 
           </div>
         </li>
       ))}

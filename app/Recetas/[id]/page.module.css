@@ -1,0 +1,6 @@
+.maincontent {
+    height: calc(100vh - 130px); /* Restar la altura de la navbar */
+    overflow-y: auto; /* Habilitar scroll vertical */
+    padding: 20px; /* Opcional, según el diseño */
+    position: relative;
+  }

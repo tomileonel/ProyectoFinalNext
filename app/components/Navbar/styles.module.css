@@ -9,15 +9,11 @@
   bottom: 0;
   width: 100%;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 9999; /* Asegúrate de que esté encima de todo */
+  z-index: 9999;
 }
 
-/* Asegúrate de que todo el contenido tenga un margen adecuado para no quedar tapado por la navbar */
-.main-content {
-  margin-bottom: 70px; /* Ajusta esto según la altura de la navbar */
-  position: relative; /* Asegúrate de que el contenido no interfiera con el contexto de la navbar */
-  z-index: 1; /* Asegura que el contenido esté debajo de la navbar */
-}
+/* Contenedor principal para el contenido con scroll */
+
 
 /* Otras clases que ya tienes */
 .icon {

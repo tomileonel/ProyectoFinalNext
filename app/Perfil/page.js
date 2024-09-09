@@ -5,9 +5,9 @@ import ProfileHeader from '../components/HeaderProfile/Header.js';
 import imgDefault from '../img/default.jpg';
 
 const ProfilePage = () => {
-  const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {

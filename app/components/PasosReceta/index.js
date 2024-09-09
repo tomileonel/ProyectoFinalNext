@@ -79,7 +79,9 @@ const PasosReceta = ({ id, pasos }) => {
   
 
   return (
-    <div>
+    
+    <div className="spaceNavbar">
+      
       <div className={styles.timerContainer}>
         <div className={styles.time}>
           {Math.floor(seconds / 60)} : {seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60}
