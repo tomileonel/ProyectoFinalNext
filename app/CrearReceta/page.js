@@ -7,7 +7,7 @@ import StepsList from '../components/StepInput/StepInput'; // Cambia la importac
 
 const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]); // Inicializa como array vacío
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredientes, setIngredients] = useState([]);
   const [steps, setSteps] = useState(['']); // Inicializa con un paso vacío
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
@@ -30,7 +30,7 @@ const CrearReceta = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/recetas', {
+      const response = await fetch('http://localhost:3000/api/recetas/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -2,32 +2,57 @@
 
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
-const IngredientSelector = ({ ingredientOptions, onIngredientsChange }) => {
+const IngredientSelector = ({ onIngredientsChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(''); 
 
   useEffect(() => {
-    // Verifica que ingredientOptions es un array antes de usar filter
-    if (Array.isArray(ingredientOptions)) {
-      setFilteredOptions(
-        ingredientOptions.filter(option =>
-          option.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
+    if (searchTerm) {
+      const fetchIngredients = async () => {
+        setLoading(true);
+        try {
+          const params = { search: searchTerm };
+          const response = await axios.get(`http://localhost:3000/api/ingredientes/`, { params });
+          setFilteredOptions(response.data);
+        } catch (error) {
+          console.error('Error al buscar ingredientes:', error);
+        }
+        setLoading(false);
+      };
+      
+      const debounceTimeout = setTimeout(fetchIngredients, 300);
+
+      return () => clearTimeout(debounceTimeout);
+    } else {
+      setFilteredOptions([]);
     }
-  }, [searchTerm, ingredientOptions]);
+  }, [searchTerm]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleQuantityChange = (event) => {
+    setQuantity(event.target.value);
+  };
+
   const handleAddIngredient = (ingredient) => {
-    if (!selectedIngredients.some(item => item.id === ingredient.id)) {
-      const updatedSelectedIngredients = [...selectedIngredients, ingredient];
-      setSelectedIngredients(updatedSelectedIngredients);
-      onIngredientsChange(updatedSelectedIngredients);
+    if (quantity.trim()) {
+      const ingredientWithQuantity = { ...ingredient, quantity: `${quantity} g` };
+      if (!selectedIngredients.some(item => item.id === ingredient.id)) {
+        const updatedSelectedIngredients = [...selectedIngredients, ingredientWithQuantity];
+        setSelectedIngredients(updatedSelectedIngredients);
+        onIngredientsChange(updatedSelectedIngredients);
+      }
+      setSearchTerm('');
+      setQuantity('');
+    } else {
+      alert('Por favor, ingrese una cantidad.');
     }
   };
 
@@ -48,24 +73,44 @@ const IngredientSelector = ({ ingredientOptions, onIngredientsChange }) => {
           placeholder="Buscar ingrediente"
         />
       </label>
-      <div>
+
+      <label>
+        Cantidad (g):
+        <input
+          type="number"
+          value={quantity}
+          onChange={handleQuantityChange}
+          placeholder="Cantidad"
+        />
+      </label>
+
+      {loading && <p>Buscando ingredientes...</p>}
+
+      <div style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid #ccc', marginTop: '5px' }}>
         <h3>Opciones:</h3>
         <ul>
-          {Array.isArray(filteredOptions) && filteredOptions.map(option => (
-            <li key={option.id}>
-              <button type="button" onClick={() => handleAddIngredient(option)}>
-                Agregar {option.name}
-              </button>
-            </li>
-          ))}
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map(option => (
+              <li key={option.id}>
+                <button type="button" onClick={() => handleAddIngredient(option)}>
+                  Agregar {option.nombre}
+                </button>
+              </li>
+            ))
+          ) : (
+            searchTerm && !loading && (
+              <li>No se encontraron ingredientes.</li>
+            )
+          )}
         </ul>
       </div>
-      <div>
+
+      <div style={{ marginTop: '20px' }}>
         <h3>Ingredientes Seleccionados:</h3>
         <ul>
-          {Array.isArray(selectedIngredients) && selectedIngredients.map(ingredient => (
+          {selectedIngredients.map(ingredient => (
             <li key={ingredient.id}>
-              {ingredient.name}
+              {ingredient.nombre} - {ingredient.quantity}
               <button type="button" onClick={() => handleRemoveIngredient(ingredient)}>
                 Eliminar
               </button>
@@ -78,12 +123,6 @@ const IngredientSelector = ({ ingredientOptions, onIngredientsChange }) => {
 };
 
 IngredientSelector.propTypes = {
-  ingredientOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
   onIngredientsChange: PropTypes.func.isRequired,
 };
 
