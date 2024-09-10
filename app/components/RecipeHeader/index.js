@@ -1,17 +1,20 @@
 // index.js
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Bookmark from "../BookmarkFavoritos";
 import styles from './styles.module.css';
+import ShareComponent from "../CompartirModal";
+import RatingComponent from "../RatingModal";
 
-const DropdownMenu = ({ isOpen, onClose, openShareModal, openRatingModal }) => {
+const DropdownMenu = ({ isOpen, onClose, openShare, openRating }) => {
   if (!isOpen) return null;
 
   return (
     <div className={styles.dropdown}>
-      <div className={styles.dropdownItem} onClick={openShareModal}>
+      <div className={styles.dropdownItem} onClick={openShare}>
         <span>↗</span> Compartir
       </div>
-      <div className={styles.dropdownItem} onClick={openRatingModal}>
+      <div className={styles.dropdownItem} onClick={openRating}>
         <span>★</span> Calificar
       </div>
       <div className={styles.dropdownItem}>
@@ -21,104 +24,14 @@ const DropdownMenu = ({ isOpen, onClose, openShareModal, openRatingModal }) => {
   );
 };
 
-const ShareModal = ({ onClose }) => {
-  const url = window.location.href;
-
-  return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        <h2 className={styles.textoModal}>Compartir receta</h2>
-        <p className={styles.descripcionModal}>
-          Copie el enlace de la receta y comparta el enlace de su receta con amigos y familiares.
-        </p>
-        <input className={styles.enlaceModal} type="text" value={url} readOnly />
-        <div className={styles.modalActions}>
-          <button className={styles.botonModal} onClick={onClose}>Cerrar</button>
-          <button className={styles.botonModal} onClick={() => navigator.clipboard.writeText(url)}>Copiar enlace</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const RatingModal = ({ onClose, onRate, currentRating }) => {
-  const [rating, setRating] = useState(currentRating);
-  const [hoveredRating, setHoveredRating] = useState(0);
-
-  const handleStarClick = (clickedRating) => {
-    setRating(clickedRating);
-    onRate(clickedRating);
-    onClose();
-  };
-
-  return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        <h2 className={styles.textoModal}>Califica la receta</h2>
-        <div className={styles.starRating}>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span
-              key={star}
-              className={`${styles.star} ${star <= (hoveredRating || rating) ? styles.starFilled : styles.starEmpty}`}
-              onClick={() => handleStarClick(star)}
-              onMouseEnter={() => setHoveredRating(star)}
-              onMouseLeave={() => setHoveredRating(0)}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-        <button className={styles.botonModal} onClick={onClose}>Cancelar</button>
-      </div>
-    </div>
-  );
-};
-
-const RecipeHeader = ({ nombre, kcal, minutos, precio, creador, imagen, rating: initialRating, id }) => {
+const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rating}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
-  const [rating, setRating] = useState(initialRating);
-  const [userProfile, setUserProfile] = useState(null);
+  const [showShareComponent, setShowShareComponent] = useState(false);
+  const [showRatingComponent, setShowRatingComponent] = useState(false);
+ 
+
   const dropdownRef = useRef(null);
-
-  // Retrieve the stored rating from localStorage
-  useEffect(() => {
-    const savedRating = localStorage.getItem(`recipe_${id}_rating`);
-    if (savedRating) {
-      setRating(parseInt(savedRating, 10));
-    }
-  }, [id]);
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const response = await fetch('http://localhost:3000/api/auth/getUserProfile', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            setUserProfile(data);
-          } else {
-            console.error('Error al obtener el perfil del usuario');
-          }
-        } catch (error) {
-          console.error('Error en la solicitud:', error);
-        }
-      } else {
-        console.error('Token no encontrado');
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
-
+  console.log(id)
   const handleGoBack = () => {
     window.history.back();
   };
@@ -128,37 +41,14 @@ const RecipeHeader = ({ nombre, kcal, minutos, precio, creador, imagen, rating: 
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const openShareModal = () => {
-    setIsShareModalOpen(true);
-    setIsDropdownOpen(false);
+  const openShare = () => {
+    setShowShareComponent(true);
+    setShowRatingComponent(false); // Ocultar el componente de calificación si se abre compartir
   };
 
-  const openRatingModal = () => {
-    setIsRatingModalOpen(true);
-    setIsDropdownOpen(false);
-  };
-
-  const handleRate = async (newRating) => {
-    if (!userProfile) {
-      console.error('Perfil de usuario no disponible');
-      return;
-    }
-
-    const url = rating === 0
-      ? `http://localhost:3000/api/recetas/rate/${newRating}/${id}/${userProfile.id}`
-      : `http://localhost:3000/api/updaterating/rate/${newRating}/${id}/${userProfile.id}`;
-
-    try {
-      const response = await fetch(url, { method: 'POST' });
-      if (response.ok) {
-        setRating(newRating);
-        localStorage.setItem(`recipe_${id}_rating`, newRating); // Save rating to localStorage
-      } else {
-        console.error('Error al calificar la receta');
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-    }
+  const openRating = () => {
+    setShowRatingComponent(true);
+    setShowShareComponent(false); // Ocultar compartir si se abre calificar
   };
 
   useEffect(() => {
@@ -167,6 +57,7 @@ const RecipeHeader = ({ nombre, kcal, minutos, precio, creador, imagen, rating: 
         setIsDropdownOpen(false);
       }
     };
+    
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -182,9 +73,8 @@ const RecipeHeader = ({ nombre, kcal, minutos, precio, creador, imagen, rating: 
           <h1 onClick={toggleDropdown} style={{ cursor: 'pointer' }}>⋮</h1>
           <DropdownMenu
             isOpen={isDropdownOpen}
-            onClose={() => setIsDropdownOpen(false)}
-            openShareModal={openShareModal}
-            openRatingModal={openRatingModal}
+            openShare={openShare}
+            openRating={openRating}
           />
         </div>
       </div>
@@ -208,18 +98,14 @@ const RecipeHeader = ({ nombre, kcal, minutos, precio, creador, imagen, rating: 
         <p>Creado por: {creador.nombreusuario}</p>
       </div>
 
-      {isShareModalOpen && (
-        <ShareModal
-          onClose={() => setIsShareModalOpen(false)}
-        />
+      {showShareComponent && (
+        // Mostrar el componente ShareComponent directamente
+        <ShareComponent />
       )}
 
-      {isRatingModalOpen && (
-        <RatingModal
-          onClose={() => setIsRatingModalOpen(false)}
-          onRate={handleRate}
-          currentRating={rating}
-        />
+      {showRatingComponent && (
+        // Mostrar el componente RatingComponent directamente
+        <RatingComponent idReceta={id} modalState={true}/>
       )}
     </div>
   );
