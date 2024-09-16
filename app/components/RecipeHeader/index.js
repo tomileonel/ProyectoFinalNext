@@ -24,14 +24,13 @@ const DropdownMenu = ({ isOpen, onClose, openShare, openRating }) => {
   );
 };
 
-const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rating}) => {
+const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rating }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showShareComponent, setShowShareComponent] = useState(false);
   const [showRatingComponent, setShowRatingComponent] = useState(false);
- 
 
   const dropdownRef = useRef(null);
-  console.log(id)
+  console.log(id);
   const handleGoBack = () => {
     window.history.back();
   };
@@ -51,13 +50,16 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
     setShowShareComponent(false); // Ocultar compartir si se abre calificar
   };
 
+  const closeRating = () => {
+    setShowRatingComponent(false); // Cerrar el modal de calificación
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
       }
     };
-    
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -105,7 +107,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
 
       {showRatingComponent && (
         // Mostrar el componente RatingComponent directamente
-        <RatingComponent idReceta={id} modalState={true}/>
+        <RatingComponent idReceta={id} modalState={showRatingComponent} closeModal={closeRating} />
       )}
     </div>
   );
