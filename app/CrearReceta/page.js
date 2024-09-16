@@ -29,6 +29,7 @@ const CrearReceta = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('Form submitted');
     try {
       const response = await fetch('http://localhost:3000/api/recetas/create', {
         method: 'POST',

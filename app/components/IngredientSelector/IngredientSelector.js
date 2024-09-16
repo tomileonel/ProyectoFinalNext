@@ -24,9 +24,9 @@ const IngredientSelector = ({ onIngredientsChange }) => {
         }
         setLoading(false);
       };
-      
+  
       const debounceTimeout = setTimeout(fetchIngredients, 300);
-
+  
       return () => clearTimeout(debounceTimeout);
     } else {
       setFilteredOptions([]);
