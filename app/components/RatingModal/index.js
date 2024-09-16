@@ -19,15 +19,15 @@ const RatingComponent = ({ idReceta, modalState, closeModal }) => {
               'Authorization': `Bearer ${token}`,
             },
           });
-          
+
           if (response.ok) {
             const data = await response.json();
             setUserProfile(data);
-            
+
             const ratingResponse = await fetch(`http://localhost:3000/api/recetas/getrating/${idReceta}/${data.id}`);
+            const ratingData = await ratingResponse.json();
             if (ratingResponse.ok) {
-              const { rating } = await ratingResponse.json();
-              setRating(rating); // Establecer el rating actual del usuario
+              setRating(ratingData.recordset[0]?.rating || null); // Establecer el rating actual del usuario
             } else {
               console.error('Error al obtener la calificación del usuario');
             }
@@ -53,9 +53,20 @@ const RatingComponent = ({ idReceta, modalState, closeModal }) => {
   const handleStarClick = async (clickedRating) => {
     if (userProfile) {
       try {
-        const url = `http://localhost:3000/api/recetas/rate/${clickedRating}/${idReceta}/${userProfile.id}`;
+        let url;
+        let method;
+
+        // Verificar si hay una calificación existente para decidir el método HTTP
+        if (rating !== null) {
+          url = `http://localhost:3000/api/recetas/updaterating/${clickedRating}/${idReceta}/${userProfile.id}`;
+          method = 'PUT';
+        } else {
+          url = `http://localhost:3000/api/recetas/rate/${clickedRating}/${idReceta}/${userProfile.id}`;
+          method = 'POST';
+        }
+
         const response = await fetch(url, {
-          method: 'POST',
+          method,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -65,7 +76,8 @@ const RatingComponent = ({ idReceta, modalState, closeModal }) => {
           setRating(clickedRating); // Actualizar la calificación localmente
           closeModal(); // Cerrar el modal después de calificar
         } else {
-          console.error('Error al enviar la calificación');
+          const errorDetails = await response.text(); // Obtener detalles del error
+          console.error('Error al actualizar o enviar la calificación:', errorDetails);
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);
