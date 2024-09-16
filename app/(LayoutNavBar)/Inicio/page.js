@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import SearchBar from '../components/BarraDeBusqueda';
-import FoodCategoriesCarousel from '../components/Categorias';
-import HomeRecipesCarousel from '../components/Carousel';
-import PopularesCarousel from '../components/PopularesCarousel';
+import SearchBar from '../../components/BarraDeBusqueda';
+import FoodCategoriesCarousel from '../../components/Categorias';
+import HomeRecipesCarousel from '../../components/Carousel';
+import PopularesCarousel from '../../components/PopularesCarousel';
 import styles from "./page.module.css";
 
 const HomePage = () => {

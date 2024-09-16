@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import SearchBar from '../components/BarraDeBusqueda';
-import CardRecipe from '../components/CardRecipe';  // Importa el componente CardRecipe
+import SearchBar from '../../components/BarraDeBusqueda';
+import CardRecipe from '../../components/CardRecipe';  // Importa el componente CardRecipe
 import styles from './styles.module.css';
 
 const SearchPage = () => {

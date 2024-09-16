@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import IngredientSelector from '../components/IngredientSelector/IngredientSelector';
-import StepsList from '../components/StepInput/StepInput'; // Cambia la importación a StepsList
+import IngredientSelector from '../../components/IngredientSelector/IngredientSelector';
+import StepsList from '../../components/StepInput/StepInput'; // Cambia la importación a StepsList
 
 const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]); // Inicializa como array vacío
