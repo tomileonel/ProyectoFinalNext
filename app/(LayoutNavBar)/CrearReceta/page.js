@@ -30,6 +30,18 @@ const CrearReceta = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted');
+  
+    // Obtener el ID del usuario desde localStorage
+    const idCreador = localStorage.getItem('idUsuario');
+    
+    // Verificar si devuelve el ID correctamente
+    console.log('ID del Usuario:', idCreador);
+  
+    if (!idCreador) {
+      console.error("ID del usuario no encontrado");
+      return;
+    }
+  
     try {
       const response = await fetch('http://localhost:3000/api/recetas/create', {
         method: 'POST',
@@ -41,19 +53,24 @@ const CrearReceta = () => {
           descripcion: description,
           ingredientes,
           pasos: steps,
-          tags: [], // Puedes agregar la lógica para manejar tags si es necesario
+          tags: [],
+          idcreador: idCreador,
         }),
       });
-
+  
+      const data = await response.json();
       if (response.ok) {
-        router.push('/'); // Redirige a la página deseada después de crear la receta
+        console.log('Recipe created successfully', data);
       } else {
-        console.error('Error al crear la receta');
+        console.error('Error creating recipe', data);
       }
     } catch (error) {
-      console.error('Error en la solicitud:', error);
+      console.error('Error:', error);
     }
   };
+  
+  
+  
 
   return (
     <div>
