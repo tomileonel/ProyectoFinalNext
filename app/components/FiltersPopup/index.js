@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styles from './styles.module.css';
 
 const FiltersPopup = ({ onClose, onApplyFilters }) => {
+  const searchParams = useSearchParams(); // Hook para obtener los parámetros de la URL
+
+  // Estado inicial basado en los parámetros de la URL
   const [selectedFilters, setSelectedFilters] = useState({
     category: '',
-    minTime: '',
     maxTime: '',
     calories: '',
   });
+
+  // Efecto para actualizar los filtros basados en la URL cuando el componente se monta
+  useEffect(() => {
+    const category = searchParams.get('category') || '';
+    const maxTime = searchParams.get('maxTime') || '';
+    const calories = searchParams.get('calories') || '';
+
+    setSelectedFilters({
+      category,
+      maxTime,
+      calories,
+    });
+  }, [searchParams]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,15 +49,6 @@ const FiltersPopup = ({ onClose, onApplyFilters }) => {
             value={selectedFilters.category} 
             onChange={handleInputChange} 
             type="text" 
-          />
-        </div>
-        <div className={styles.filterItem}>
-          <label>Tiempo Mínimo (min)</label>
-          <input 
-            name="minTime" 
-            value={selectedFilters.minTime} 
-            onChange={handleInputChange} 
-            type="number" 
           />
         </div>
         <div className={styles.filterItem}>

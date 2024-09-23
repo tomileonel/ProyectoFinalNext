@@ -9,21 +9,39 @@ import styles from './styles.module.css';
 const SearchPage = () => {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState({
+    category: '',
+    maxTime: '',
+    calories: '',
+  });
   const [recipes, setRecipes] = useState([]); // Inicializar el estado recipes
 
+  // Cargar los valores iniciales desde la URL
   useEffect(() => {
-    // Obtén el query de la URL
     const initialQuery = searchParams.get('query') || '';
-    setSearchQuery(initialQuery);   
+    const initialCategory = searchParams.get('category') || '';
+    const initialMaxTime = searchParams.get('maxTime') || '';
+    const initialCalories = searchParams.get('calories') || '';
+
+    setSearchQuery(initialQuery);
+    setFilters({
+      category: initialCategory,
+      maxTime: initialMaxTime,
+      calories: initialCalories,
+    });
   }, [searchParams]);
 
+  // Función para obtener recetas desde la API
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        // Modifica la URL de la solicitud dependiendo del valor de searchQuery
-        const url = searchQuery ? 
-          `http://localhost:3000/api/recetas/recipes?search=${searchQuery}` :
-          'http://localhost:3000/api/recetas/recipes'; // Traer todas las recetas si searchQuery está vacío
+        console.log(filters)
+        // Construir la URL con los parámetros de búsqueda y filtros
+        let url = `http://localhost:3000/api/recetas/recipes?search=${searchQuery}`;
+        if (filters.category) url += `&tags=${filters.category}`;
+        if (filters.maxTime) url += `&tiempoMax=${filters.maxTime}`;
+        if (filters.calories) url += `&caloriasMax=${filters.calories}`;
+
         const response = await fetch(url);
         const data = await response.json();
         setRecipes(data);
@@ -33,17 +51,26 @@ const SearchPage = () => {
     };
 
     fetchRecipes();
-  }, [searchQuery]);
+  }, [searchQuery, filters]);
 
+  // Actualizar los filtros y la URL
   const handleSearchChange = (newQuery) => {
     setSearchQuery(newQuery);
-    // Actualiza la URL para reflejar el nuevo query
+
+    // Actualizar la URL con el nuevo query y filtros
     const url = new URL(window.location);
     if (newQuery.trim()) {
       url.searchParams.set('query', newQuery);
     } else {
       url.searchParams.delete('query');
     }
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        url.searchParams.set(key, value);
+      } else {
+        url.searchParams.delete(key);
+      }
+    });
     window.history.pushState({}, '', url);
   };
 
