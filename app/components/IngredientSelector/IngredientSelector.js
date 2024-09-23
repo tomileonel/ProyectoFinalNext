@@ -16,16 +16,16 @@ const IngredientSelector = ({ onIngredientsChange }) => {
       const fetchIngredients = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3000/api/ingredientes`, {
-            params: { search: searchTerm } // Correcto uso de params
+          const response = await axios.get('http://localhost:3000/api/ingredientes', {
+            params: { search: searchTerm } // Pasa searchTerm como query param
           });
-          setFilteredOptions(response.data);
+          setFilteredOptions(response.data); // Actualiza las opciones filtradas
         } catch (error) {
           console.error('Error al buscar ingredientes:', error);
         }
         setLoading(false);
       };
-  
+      
       const debounceTimeout = setTimeout(fetchIngredients, 300);
   
       return () => clearTimeout(debounceTimeout);
@@ -33,6 +33,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
       setFilteredOptions([]);
     }
   }, [searchTerm]);
+  
   
 
   const handleSearchChange = (event) => {

@@ -15,6 +15,13 @@ const RegisterPage = () => {
 
   const router = useRouter();
 
+  // Función para decodificar el token JWT y extraer el payload
+  const decodeJWT = (token) => {
+    const payloadBase64 = token.split('.')[1];  // El payload es la segunda parte del token
+    const decodedPayload = atob(payloadBase64); // Decodifica de base64 a string
+    return JSON.parse(decodedPayload);         // Convierte el string en objeto JSON
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -37,7 +44,13 @@ const RegisterPage = () => {
       if (response.ok) {
         // Almacena el token
         localStorage.setItem('token', data.token);
-  
+
+        // Decodificar el token para extraer el idUsuario
+        const decodedToken = decodeJWT(data.token);
+        const idUsuario = decodedToken.id; // Extraer el ID del payload
+        localStorage.setItem('idUsuario', idUsuario); // Guardar el ID en localStorage
+        console.log('ID del Usuario guardado:', idUsuario);
+
         alert(data.message);
         router.push('/Inicio'); 
       } else {
