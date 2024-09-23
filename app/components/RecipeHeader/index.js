@@ -5,8 +5,10 @@ import Bookmark from "../BookmarkFavoritos";
 import styles from './styles.module.css';
 import ShareComponent from "../CompartirModal";
 import RatingComponent from "../RatingModal";
+import { useRouter } from 'next/navigation';
+import { Router } from "lucide-react";
 
-const DropdownMenu = ({ isOpen, onClose, openShare, openRating }) => {
+const DropdownMenu = ({ isOpen, onClose, openShare, openRating, openReviews }) => {
   if (!isOpen) return null;
 
   return (
@@ -17,7 +19,7 @@ const DropdownMenu = ({ isOpen, onClose, openShare, openRating }) => {
       <div className={styles.dropdownItem} onClick={openRating}>
         <span>★</span> Calificar
       </div>
-      <div className={styles.dropdownItem}>
+      <div className={styles.dropdownItem} onClick={openReviews}>
         <span>💬</span> Comentar
       </div>
     </div>
@@ -28,6 +30,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showShareComponent, setShowShareComponent] = useState(false);
   const [showRatingComponent, setShowRatingComponent] = useState(false);
+  const router = useRouter();
 
   const dropdownRef = useRef(null);
   console.log(id);
@@ -49,10 +52,14 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
     setShowRatingComponent(true);
     setShowShareComponent(false); // Ocultar compartir si se abre calificar
   };
+  const openReviews = () => {
+    router.push(`${id}/Reviews`)
+  };
 
   const closeRating = () => {
     setShowRatingComponent(false); // Cerrar el modal de calificación
   };
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -77,6 +84,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
             isOpen={isDropdownOpen}
             openShare={openShare}
             openRating={openRating}
+            openReviews={openReviews}
           />
         </div>
       </div>
