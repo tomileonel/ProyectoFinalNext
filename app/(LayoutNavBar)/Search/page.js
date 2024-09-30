@@ -84,11 +84,11 @@ const SearchPage = () => {
             key={recipe.id}
             id={recipe.id}
             nombre={recipe.nombre}
-            image={recipe.image}  // Asegúrate de que 'image' exista en el objeto recipe
+            image={recipe.imagen}  // Asegúrate de que 'image' exista en el objeto recipe
             prop={recipe.rating}  // Asegúrate de que 'rating' exista en el objeto recipe
-            mins={recipe.mins}    // Asegúrate de que 'mins' exista en el objeto recipe
-            prop1={recipe.prop1}  // Asegúrate de que 'prop1' exista en el objeto recipe
-            kcal={recipe.kcal}    // Asegúrate de que 'kcal' exista en el objeto recipe
+            mins={recipe.tiempoMins}    // Asegúrate de que 'mins' exista en el objeto recipe
+            prop1={recipe.precio}  // Asegúrate de que 'prop1' exista en el objeto recipe
+            kcal={recipe.calorias}    // Asegúrate de que 'kcal' exista en el objeto recipe
           />
         ))}
       </div>
