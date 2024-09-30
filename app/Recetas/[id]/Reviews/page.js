@@ -196,51 +196,6 @@ const ComentarioIndividual = ({ comentario, usuario }) => {
 
 
 
-  // Función para obtener likes y dislikes
-  const fetchCommentId = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/recetas/getCommentIdByText/${encodeURIComponent(comentario.comentario)}`);
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error al obtener el ID del comentario:', errorText);
-        throw new Error('Error al obtener el ID del comentario');
-      }
-
-      const data = await response.json();
-      setCommentId(data); // Suponiendo que la API retorna solo el ID del comentario
-    } catch (error) {
-      console.error('Error en fetchCommentId:', error);
-    }
-  };
-
-  // Llamar a fetchCommentId al montar el componente
-  useEffect(() => {
-    fetchCommentId();
-  }, [comentario.comentario]);
-
-  // Lógica para contar likes
-  const fetchLikeCount = async () => {
-    if (!commentId) return; // Esperar a que commentId esté disponible
-
-    try {
-      const response = await fetch(`http://localhost:3000/api/recetas/countLikes/${commentId}?like=true`, {
-        method: 'GET',
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error en la respuesta de la API:', errorText);
-        throw new Error('Error al contar likes y dislikes');
-      }
-
-      const data = await response.json();
-      setLikes(data.likesCount || 0);
-      setDislikes(data.dislikesCount || 0);
-    } catch (error) {
-      console.error('Error al contar likes:', error);
-    }
-  };
 
   return (
     <div className={styles.comment}>
