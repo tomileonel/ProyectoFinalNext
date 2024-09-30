@@ -192,109 +192,53 @@ const ComentarioIndividual = ({ comentario, usuario }) => {
   const [dislikes, setDislikes] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
   const [hasDisliked, setHasDisliked] = useState(false);
+  const [commentId, setCommentId] = useState(null); 
 
-  useEffect(() => {
-    // Obtener la cantidad de likes y dislikes
-    const fetchLikeDislikeCounts = async (commentId) => {
-      try {
-        // Puedes enviar un objeto con el valor de like que necesitas
-        const response = await fetch(`http://localhost:3000/api/recetas/countLikes/${commentId}`, {
-          method: 'POST', // Asegúrate de usar POST si es necesario para la API
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ like: true }), // Envía el valor like que deseas
-        });
-    
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-    
-        const data = await response.json();
-        return data; // Asegúrate de que la respuesta sea un JSON válido
-      } catch (error) {
-        console.error('Error al obtener los conteos de likes/dislikes:', error);
-        return null; // Devuelve null o un valor por defecto
-      }
-    };
-    
 
-    // Verificar el estado actual de like/dislike del usuario
-    const fetchUserLikeStatus = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/recetas/getLikes/${comentario.id}/${usuario.id}`);
-        const data = await response.json();
-        
-        if (data) {
-          setHasLiked(data.like === true);
-          setHasDisliked(data.like === false);
-        }
-      } catch (error) {
-        console.error('Error verificando el estado del like:', error);
-      }
-    };
 
-    fetchLikeDislikeCounts();
-    fetchUserLikeStatus();
-  }, [comentario.id, usuario.id]);
-
-  const handleLike = async () => {
+  // Función para obtener likes y dislikes
+  const fetchCommentId = async () => {
     try {
-      if (hasLiked) {
-        // Si ya ha dado like, lo elimina
-        await fetch(`http://localhost:3000/api/recetas/deleteLike/${comentario.id}/${usuario.id}`, {
-          method: 'DELETE',
-        });
-        setLikes(likes - 1);
-        setHasLiked(false);
-      } else {
-        // Si no ha dado like, agrega un like
-        await fetch(`http://localhost:3000/api/recetas/likeComment/${comentario.id}/${usuario.id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ like: true }),
-        });
-        setLikes(likes + 1);
-        if (hasDisliked) {
-          setDislikes(dislikes - 1);
-          setHasDisliked(false);
-        }
-        setHasLiked(true);
+      const response = await fetch(`http://localhost:3000/api/recetas/getCommentIdByText/${encodeURIComponent(comentario.comentario)}`);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error al obtener el ID del comentario:', errorText);
+        throw new Error('Error al obtener el ID del comentario');
       }
+
+      const data = await response.json();
+      setCommentId(data); // Suponiendo que la API retorna solo el ID del comentario
     } catch (error) {
-      console.error('Error al procesar el like:', error);
+      console.error('Error en fetchCommentId:', error);
     }
   };
 
-  const handleDislike = async () => {
+  // Llamar a fetchCommentId al montar el componente
+  useEffect(() => {
+    fetchCommentId();
+  }, [comentario.comentario]);
+
+  // Lógica para contar likes
+  const fetchLikeCount = async () => {
+    if (!commentId) return; // Esperar a que commentId esté disponible
+
     try {
-      if (hasDisliked) {
-        // Si ya ha dado dislike, lo elimina
-        await fetch(`http://localhost:3000/api/recetas/deleteLike/${comentario.id}/${usuario.id}`, {
-          method: 'DELETE',
-        });
-        setDislikes(dislikes - 1);
-        setHasDisliked(false);
-      } else {
-        // Si no ha dado dislike, agrega un dislike
-        await fetch(`http://localhost:3000/api/recetas/likeComment/${comentario.id}/${usuario.id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ like: false }),
-        });
-        setDislikes(dislikes + 1);
-        if (hasLiked) {
-          setLikes(likes - 1);
-          setHasLiked(false);
-        }
-        setHasDisliked(true);
+      const response = await fetch(`http://localhost:3000/api/recetas/countLikes/${commentId}?like=true`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error en la respuesta de la API:', errorText);
+        throw new Error('Error al contar likes y dislikes');
       }
+
+      const data = await response.json();
+      setLikes(data.likesCount || 0);
+      setDislikes(data.dislikesCount || 0);
     } catch (error) {
-      console.error('Error al procesar el dislike:', error);
+      console.error('Error al contar likes:', error);
     }
   };
 
@@ -306,10 +250,10 @@ const ComentarioIndividual = ({ comentario, usuario }) => {
         <p className={styles.fecha}>{comentario.fecha}</p>
         <p>{comentario.comentario}</p>
         <div className={styles.actions}>
-          <button onClick={handleLike} className={styles.likeButton}>
+          <button  className={styles.likeButton} disabled={hasLiked}>
             👍 {likes} {hasLiked ? '(Tú has dado like)' : ''}
           </button>
-          <button onClick={handleDislike} className={styles.dislikeButton}>
+          <button  className={styles.dislikeButton} disabled={hasDisliked}>
             👎 {dislikes} {hasDisliked ? '(Tú has dado dislike)' : ''}
           </button>
         </div>
@@ -317,4 +261,8 @@ const ComentarioIndividual = ({ comentario, usuario }) => {
     </div>
   );
 };
+
+
+
+
 
