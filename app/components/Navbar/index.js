@@ -28,8 +28,8 @@ const Navbar = () => {
         <p className={styles.iconLabel}>Buscar</p>
       </div>
       <div
-        className={`${styles.icon} ${selected === '/Cart' ? styles.selected : ''}`}
-        onClick={() => handleIconClick('Cart')}
+        className={`${styles.icon} ${selected === '/Carrito' ? styles.selected : ''}`}
+        onClick={() => handleIconClick('Carrito')}
       >
         <Image src={cartIcon} alt="Cart" className={styles.iconImage} width={24} height={24} />
         <p className={styles.iconLabel}>Cesta</p>

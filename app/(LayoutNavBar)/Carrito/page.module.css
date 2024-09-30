@@ -1,0 +1,14 @@
+.body {
+    height: 100vh; /* Altura total de la ventana */
+    display: flex; /* Usamos flexbox para centrar */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    margin: 0; /* Elimina el margen por defecto */
+}
+.text {
+    text-align: center; /* Centra el texto dentro del div */
+    color: #60AC3A;
+    font-size: 3vw;
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600;
+}
