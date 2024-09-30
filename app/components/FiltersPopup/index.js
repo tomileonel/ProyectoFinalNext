@@ -1,18 +1,20 @@
+// FiltersPopup.js
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './styles.module.css';
+import TagSelector from '../TagSelector'; // Importa el TagSelector
 
 const FiltersPopup = ({ onClose, onApplyFilters }) => {
-  const searchParams = useSearchParams(); // Hook para obtener los parámetros de la URL
+  const searchParams = useSearchParams();
 
-  // Estado inicial basado en los parámetros de la URL
   const [selectedFilters, setSelectedFilters] = useState({
     category: '',
     maxTime: '',
     calories: '',
   });
 
-  // Efecto para actualizar los filtros basados en la URL cuando el componente se monta
+  const [tags, setTags] = useState([]);
+
   useEffect(() => {
     const category = searchParams.get('category') || '';
     const maxTime = searchParams.get('maxTime') || '';
@@ -34,7 +36,7 @@ const FiltersPopup = ({ onClose, onApplyFilters }) => {
   };
 
   const handleApplyFilters = () => {
-    onApplyFilters(selectedFilters);
+    onApplyFilters({ ...selectedFilters, tags });
     onClose();
   };
 
@@ -44,31 +46,32 @@ const FiltersPopup = ({ onClose, onApplyFilters }) => {
         <h2>Filtrar recetas</h2>
         <div className={styles.filterItem}>
           <label>Categoría</label>
-          <input 
-            name="category" 
-            value={selectedFilters.category} 
-            onChange={handleInputChange} 
-            type="text" 
+          <input
+            name="category"
+            value={selectedFilters.category}
+            onChange={handleInputChange}
+            type="text"
           />
         </div>
         <div className={styles.filterItem}>
           <label>Tiempo Máximo (min)</label>
-          <input 
-            name="maxTime" 
-            value={selectedFilters.maxTime} 
-            onChange={handleInputChange} 
-            type="number" 
+          <input
+            name="maxTime"
+            value={selectedFilters.maxTime}
+            onChange={handleInputChange}
+            type="number"
           />
         </div>
         <div className={styles.filterItem}>
           <label>Calorías</label>
-          <input 
-            name="calories" 
-            value={selectedFilters.calories} 
-            onChange={handleInputChange} 
-            type="number" 
+          <input
+            name="calories"
+            value={selectedFilters.calories}
+            onChange={handleInputChange}
+            type="number"
           />
         </div>
+        <TagSelector onTagsChange={setTags} /> {/* Añadir el TagSelector */}
         <button className={styles.applyButton} onClick={handleApplyFilters}>Aplicar</button>
         <button className={styles.closeButton} onClick={onClose}>Cerrar</button>
       </div>

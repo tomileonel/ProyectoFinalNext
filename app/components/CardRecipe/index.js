@@ -17,7 +17,6 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
     router.push(`/Recetas/${id}`); // Navega a la página de detalles de la receta
   };
   const imageSize = windowWidth > 600 ? { width: '150px', height: '150px' } : { width: '100px', height: '100px' };
-
   return (
     <div className={styles.card } >
       <div onClick={handleCardClick}>
