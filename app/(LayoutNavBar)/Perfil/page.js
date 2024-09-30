@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'; // Usa next/navigation en lugar de next/router
 import { useEffect, useState } from 'react';
 import Image from 'next/image'; // Importa el componente Image
-import ProfileHeader from '../components/HeaderProfile/Header.js';
+import ProfileHeader from '../../components/HeaderProfile/Header.js';
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
