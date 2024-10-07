@@ -24,13 +24,16 @@ const SearchPage = () => {
     const initialMaxTime = searchParams.get('maxTime') || '';
     const initialCalories = searchParams.get('calories') || '';
     const initialTags = searchParams.get('tags') ? searchParams.get('tags').split(',') : []; // Obtener tags
+    const initialIngredients = searchParams.get('ingredients') ? searchParams.get('ingredients').split(',') : []; // Obtener tags
+
 
     setSearchQuery(initialQuery);
     setFilters({
       category: initialCategory,
       maxTime: initialMaxTime,
       calories: initialCalories,
-      tags: initialTags, // Asignar tags al estado
+      tags: initialTags,
+      ingredients: initialIngredients // Asignar tags al estado
     });
   }, [searchParams]);
 
@@ -44,6 +47,7 @@ const SearchPage = () => {
         if (filters.tags.length > 0) url += `&tags=${filters.tags.join(',')}`; // Agregar tags
         if (filters.maxTime) url += `&tiempoMax=${filters.maxTime}`;
         if (filters.calories) url += `&caloriasMax=${filters.calories}`;
+        if(filters.ingredients) url += `&ingredientes=${filters.ingredients}`
 
         const response = await fetch(url);
         const data = await response.json();

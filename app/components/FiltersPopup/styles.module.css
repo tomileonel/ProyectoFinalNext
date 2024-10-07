@@ -1,1 +1,151 @@
-    
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.applyButton {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+}
+
+.scrollContainer {
+    max-height: 3000px;
+    overflow-y: auto;
+}
+
+.filterItem {
+    margin-bottom: 15px;
+}
+
+.filterLabel {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.description {
+    margin-bottom: 5px;
+    font-size: 0.9rem; /* Smaller font for description */
+    color: #999; /* Gray color for inactive description */
+}
+
+.rangeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the elements */
+    position: relative;
+    padding-top: 40px; /* Padding for the range */
+}
+
+.range {
+    width: 100%;
+    height: 10px;
+    background: transparent !important;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    accent-color: #60AC3A;
+    color: rgb(255, 255, 255);
+
+}
+
+.range::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ffffff; /* Color of the slider thumb */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #60AC3A;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #60AC3A 0%, #60AC3A calc(var(--value) * 1%), #ddd calc(var(--value) * 1%), #ddd 100%);
+}
+
+.selectedValue {
+    position: absolute;
+    top: 0px; /* Position the selected value above the slider */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Center it accurately */
+    font-size: 1.5rem; /* Highlight selected value */
+    color: #60AC3A; /* Color for selected value */
+}
+
+.rangeLimits {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem; /* Size for limits text */
+    color: #666; /* Softer color for limits */
+}
+
+.removeText {
+    color: #ff4c4c;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 10px;
+}
+
+.selectedTime, .selectedCalories {
+    margin-bottom: 5px;
+    font-size: 0.9rem; /* Smaller font for description */
+    color: #999; /* Gray color for inactive description */
+}
+
+.applyButton {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #fff; /* White text color */
+    background-color: #60AC3A; /* Green background */
+    border: none;
+    margin-top: 10px;
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px 10px; /* Padding for better size */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    text-align: center;
+    width: 100%; /* Full width */
+}
+
+.applyButton:hover {
+    background-color: #4a8f2a; /* Darker green on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.applyButton:active {
+    transform: translateY(0); /* Reset lift effect when clicked */
+}

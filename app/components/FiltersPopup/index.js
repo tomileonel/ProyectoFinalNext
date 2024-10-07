@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './styles.module.css';
 import TagSelector from '../TagSelector';
-import IngredientSelector from '../IngredientSelectorSearch'; // Asegúrate de importar el nuevo componente
+import IngredientSelector from '../IngredientSelectorSearch';
 
 const FiltersPopup = ({ onClose, onApplyFilters }) => {
   const searchParams = useSearchParams();
@@ -24,26 +24,20 @@ const FiltersPopup = ({ onClose, onApplyFilters }) => {
     const tagsParam = searchParams.get('tags') ? searchParams.get('tags').split(',').map(Number) : [];
     const ingredientsParam = searchParams.get('ingredients') ? searchParams.get('ingredients').split(',').map(Number) : [];
 
-    setSelectedFilters({
-      category,
-      maxTime,
-      calories,
-    });
+    setSelectedFilters({ category, maxTime, calories });
     setTags(tagsParam);
-    setIngredients(ingredientsParam); // Almacenar los IDs de ingredientes
+    setIngredients(ingredientsParam);
   }, [searchParams]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSelectedFilters({
-      ...selectedFilters,
-      [name]: value,
-    });
+  const handleFilterSelect = (filterType) => {
+    setActiveFilter((prev) => (prev === filterType ? '' : filterType));
   };
 
-  const handleApplyFilters = () => {
-    onApplyFilters({ ...selectedFilters, tags, ingredients }); // Incluir ingredientes en los filtros aplicados
-    onClose();
+  const handleInputChange = (filterType, value) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      [filterType]: value,
+    }));
   };
 
   const handleRemoveFilter = (filterType) => {
@@ -51,11 +45,14 @@ const FiltersPopup = ({ onClose, onApplyFilters }) => {
       ...prev,
       [filterType]: '',
     }));
-    setActiveFilter('');
+    if (filterType === activeFilter) {
+      setActiveFilter('');
+    }
   };
 
-  const handleToggleFilter = (filterType) => {
-    setActiveFilter(activeFilter === filterType ? '' : filterType);
+  const handleApplyFilters = () => {
+    onApplyFilters({ ...selectedFilters, tags, ingredients });
+    onClose();
   };
 
   return (
@@ -64,66 +61,141 @@ const FiltersPopup = ({ onClose, onApplyFilters }) => {
         <button className={styles.closeButton} onClick={onClose}>✖</button>
         <h2>Filtrar recetas</h2>
         <div className={styles.scrollContainer}>
+          {/* Filtro de Tiempo Máximo */}
           <div className={styles.filterItem}>
-            <label>Tiempo Máximo</label>
-            <button 
-              className={styles.timeButton} 
-              onClick={() => handleToggleFilter('maxTime')}
+            <label 
+              className={styles.filterLabel} 
+              onClick={() => handleFilterSelect('maxTime')}
             >
-              {activeFilter === 'maxTime' ? "Ocultar" : "Seleccionar"}
-            </button>
-            {activeFilter === 'maxTime' && (
-              <>
-                <input
-                  type="range"
-                  min="1"
-                  max="180" // 3 horas
-                  value={selectedFilters.maxTime}
-                  onChange={handleInputChange}
-                  name="maxTime"
-                  className={styles.range}
-                />
-                <span>{selectedFilters.maxTime} min</span>
+              <strong>Tiempo Máximo</strong>
+              {selectedFilters.maxTime && (
                 <span 
                   className={styles.removeText} 
-                  onClick={() => handleRemoveFilter('maxTime')}
+                  onClick={(e) => { e.stopPropagation(); handleRemoveFilter('maxTime'); }}
                 >
                   Quitar
                 </span>
+              )}
+            </label>
+            {activeFilter === 'maxTime' ? (
+              <>
+                {selectedFilters.maxTime && (
+                  <p className={styles.description}>
+                    Mostra recetas en el rango seleccionado (menor a {selectedFilters.maxTime} minutos)
+                  </p>
+                )}
+                <div className={styles.rangeContainer}>
+                  <input
+                    type="range"
+                    min="1"
+                    max="120"
+                    value={selectedFilters.maxTime || 1}
+                    onChange={(e) => handleInputChange('maxTime', e.target.value)}
+                    className={styles.range}
+                    style={{ backgroundSize: `${(selectedFilters.maxTime || 1) * (100 / 120)}% 100%` }}
+                  />
+                  <span className={styles.selectedValue}>{selectedFilters.maxTime || 1} min</span>
+                </div>
+                <div className={styles.rangeLimits}>
+                  <span>1 min</span>
+                  <span>120 min</span>
+                </div>
               </>
+            ) : (
+              <span className={styles.selectedTime}>{selectedFilters.maxTime || 'Selecciona un tiempo'} min</span>
             )}
           </div>
+
+          {/* Filtro de Calorías */}
           <div className={styles.filterItem}>
-            <label>Calorías</label>
-            <button 
-              className={styles.caloriesButton} 
-              onClick={() => handleToggleFilter('calories')}
+            <label 
+              className={styles.filterLabel} 
+              onClick={() => handleFilterSelect('calories')}
             >
-              {activeFilter === 'calories' ? "Ocultar" : "Seleccionar"}
-            </button>
-            {activeFilter === 'calories' && (
-              <>
-                <input
-                  type="range"
-                  min="1"
-                  max="2000"
-                  value={selectedFilters.calories}
-                  onChange={handleInputChange}
-                  name="calories"
-                  className={styles.range}
-                />
-                <span>{selectedFilters.calories} kcal</span>
+              <strong>Calorías</strong>
+              {selectedFilters.calories && (
                 <span 
                   className={styles.removeText} 
-                  onClick={() => handleRemoveFilter('calories')}
+                  onClick={(e) => { e.stopPropagation(); handleRemoveFilter('calories'); }}
                 >
                   Quitar
                 </span>
+              )}
+            </label>
+            {activeFilter === 'calories' ? (
+              <>
+                {selectedFilters.calories && (
+                  <p className={styles.description}>
+                    Mostra recetas en el rango seleccionado por porción (menor a {selectedFilters.calories} calorías)
+                  </p>
+                )}
+                <div className={styles.rangeContainer}>
+                  <input
+                    type="range"
+                    min="1"
+                    max="400"
+                    value={selectedFilters.calories || 1}
+                    onChange={(e) => handleInputChange('calories', e.target.value)}
+                    className={styles.range}
+                    style={{ backgroundSize: `${(selectedFilters.calories || 1) * (100 / 400)}% 100%` }}
+                  />
+                  <span className={styles.selectedValue}>{selectedFilters.calories || 1} kcal</span>
+                </div>
+                <div className={styles.rangeLimits}>
+                  <span>1 kcal</span>
+                  <span>400 kcal</span>
+                </div>
               </>
+            ) : (
+              <span className={styles.selectedCalories}>{selectedFilters.calories || 'Selecciona calorías'} kcal</span>
             )}
           </div>
-          <TagSelector onTagsChange={setTags} selectedTags={tags} />
-          <IngredientSelector onIngredientsChange={setIngredients} /> {/* Integrar el selector de ingredientes */}
+
+          {/* Selector de Etiquetas */}
+          <div className={styles.filterItem}>
+            <label 
+              className={styles.filterLabel} 
+              onClick={() => handleFilterSelect('tags')}
+            >
+              <strong>Categorías</strong>
+              {tags.length > 0 && (
+                <span 
+                  className={styles.removeText} 
+                  onClick={(e) => { e.stopPropagation(); setTags([]); }}
+                >
+                  Quitar
+                </span>
+              )}
+            </label>
+            {activeFilter === 'tags' && (
+              <div>
+                <TagSelector onTagsChange={setTags} selectedTags={tags} />
+              </div>
+            )}
+          </div>
+
+          {/* Selector de Ingredientes */}
+          <div className={styles.filterItem}>
+            <label 
+              className={styles.filterLabel} 
+              onClick={() => handleFilterSelect('ingredients')}
+            >
+              <strong>Ingredientes</strong>
+              {ingredients.length > 0 && (
+                <span 
+                  className={styles.removeText} 
+                  onClick={(e) => { e.stopPropagation(); setIngredients([]); }}
+                >
+                  Quitar
+                </span>
+              )}
+            </label>
+            {activeFilter === 'ingredients' && (
+              <div>
+                <IngredientSelector onIngredientsChange={setIngredients} selectedIngredients={ingredients} />
+              </div>
+            )}
+          </div>
         </div>
         <button className={styles.applyButton} onClick={handleApplyFilters}>Aplicar</button>
       </div>

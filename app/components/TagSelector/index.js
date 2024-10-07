@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
+import styles from './styles.module.css'; // Asegúrate de crear este archivo CSS
 
 const TagSelector = ({ onTagsChange }) => {
   const searchParams = useSearchParams();
@@ -14,9 +15,8 @@ const TagSelector = ({ onTagsChange }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Obtener los IDs de tags desde la URL y convertirlos a números
     const tagsParam = searchParams.get('tags') ? searchParams.get('tags').split(',').map(Number) : [];
-    setSelectedTags(tagsParam); // Almacenar solo los IDs
+    setSelectedTags(tagsParam);
   }, [searchParams]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const TagSelector = ({ onTagsChange }) => {
       try {
         const response = await axios.get('http://localhost:3000/api/tags');
         setAllTags(response.data);
-        setFilteredOptions(response.data); // Inicializar las opciones filtradas
+        setFilteredOptions(response.data);
       } catch (error) {
         console.error('Error al cargar tags:', error);
       }
@@ -49,7 +49,7 @@ const TagSelector = ({ onTagsChange }) => {
         }
         setLoading(false);
       } else {
-        setFilteredOptions(allTags); // Mostrar todos los tags si no hay búsqueda
+        setFilteredOptions(allTags);
       }
     };
 
@@ -78,65 +78,58 @@ const TagSelector = ({ onTagsChange }) => {
   };
 
   return (
-    <div>
-      <label>
+    <div className={styles.tagSelector}>
+      <label className={styles.label}>
         Buscar Tag:
         <input
           type="text"
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder="Buscar tag"
+          className={styles.searchInput}
         />
       </label>
 
-      {loading && <p>Buscando tags...</p>}
+      {loading && <p className={styles.loading}>Buscando tags...</p>}
 
-      <div style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid #ccc', marginTop: '5px' }}>
+      <div className={styles.selectedTagsContainer}>
         <h3>Tags Seleccionados:</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '10px' }}>
-          {selectedTags.map(tagId => {
-            const tag = allTags.find(option => option.id === tagId);
-            return (
-              tag && (
-                <div key={tag.id} style={{ margin: '5px' }}>
-                  <span>{tag.nombre}</span>
-                  <button type="button" onClick={() => handleRemoveTag(tag.id)} style={{ color: 'red' }}>
-                    Eliminar
-                  </button>
-                </div>
-              )
-            );
-          })}
-        </div>
-
-        <h3>Opciones:</h3>
-        <ul>
-          {filteredOptions.length > 0 ? (
-            filteredOptions.map(option => (
-              <li key={option.id}>
-                <button
-                  type="button"
-                  onClick={() => handleToggleTag(option)}
-                  style={{
-                    backgroundColor: selectedTags.includes(option.id) ? 'green' : 'lightgray',
-                    color: 'white',
-                    border: 'none',
-                    padding: '5px 10px',
-                    margin: '5px',
-                    cursor: 'pointer',
-                    borderRadius: '4px',
-                  }}
-                >
-                  {option.nombre}
-                </button>
-              </li>
-            ))
+        <p className={styles.description}>
+          Haz clic en "Eliminar" para quitar un tag de la selección.
+        </p>
+        <div className={styles.selectedTags}>
+          {selectedTags.length > 0 ? (
+            selectedTags.map(tagId => {
+              const tag = allTags.find(option => option.id === tagId);
+              return (
+                tag && (
+                  <div key={tag.id} className={styles.tagItem}>
+                    <span className={styles.tagName}>{tag.nombre}</span>
+                    <button type="button" onClick={() => handleRemoveTag(tag.id)} className={styles.removeButton}>
+                      Eliminar
+                    </button>
+                  </div>
+                )
+              );
+            })
           ) : (
-            searchTerm && !loading && (
-              <li>No se encontraron tags.</li>
-            )
+            <p>No se han seleccionado tags.</p>
           )}
-        </ul>
+        </div>
+      </div>
+
+      <h3>Opciones:</h3>
+      <div className={styles.optionsContainer}>
+        {filteredOptions.map(option => (
+          <button
+            key={option.id}
+            type="button"
+            onClick={() => handleToggleTag(option)}
+            className={`${styles.optionButton} ${selectedTags.includes(option.id) ? styles.selected : ''}`}
+          >
+            {option.nombre}
+          </button>
+        ))}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
+import styles from './styles.module.css'; // Asegúrate de crear este archivo CSS
 
 const IngredientSelector = ({ onIngredientsChange }) => {
     const searchParams = useSearchParams();
@@ -14,11 +15,9 @@ const IngredientSelector = ({ onIngredientsChange }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Obtener los IDs de ingredientes desde la URL y convertirlos a números
         const ingredientsParam = searchParams.get('ingredients') ? searchParams.get('ingredients').split(',').map(Number) : [];
-        setSelectedIngredients(ingredientsParam); // Almacenar solo los IDs
+        setSelectedIngredients(ingredientsParam);
 
-        // Inicializar las opciones filtradas para incluir ingredientes seleccionados
         const selectedIngredientsDetails = allIngredients.filter(ingredient => ingredientsParam.includes(ingredient.id));
         setFilteredOptions(prev => [...prev, ...selectedIngredientsDetails]);
     }, [searchParams, allIngredients]);
@@ -29,7 +28,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
             try {
                 const response = await axios.get('http://localhost:3000/api/ingredientes');
                 setAllIngredients(response.data);
-                setFilteredOptions(response.data); // Inicializar las opciones filtradas
+                setFilteredOptions(response.data);
             } catch (error) {
                 console.error('Error al cargar ingredientes:', error);
             }
@@ -49,7 +48,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
                     });
                     setFilteredOptions(response.data);
                 } else {
-                    setFilteredOptions(allIngredients); // Mostrar todos los ingredientes si no hay búsqueda
+                    setFilteredOptions(allIngredients);
                 }
             } catch (error) {
                 console.error('Error al buscar ingredientes:', error);
@@ -72,75 +71,68 @@ const IngredientSelector = ({ onIngredientsChange }) => {
             : [...selectedIngredients, ingredient.id];
 
         setSelectedIngredients(updatedSelectedIngredients);
-        onIngredientsChange(updatedSelectedIngredients); // Propagar el cambio
+        onIngredientsChange(updatedSelectedIngredients);
     };
 
     const handleRemoveIngredient = (ingredientId) => {
         const updatedSelectedIngredients = selectedIngredients.filter(id => id !== ingredientId);
         setSelectedIngredients(updatedSelectedIngredients);
-        onIngredientsChange(updatedSelectedIngredients); // Propagar el cambio
+        onIngredientsChange(updatedSelectedIngredients);
     };
 
     return (
-        <div>
-            <label>
+        <div className={styles.ingredientSelector}>
+            <label className={styles.label}>
                 Buscar Ingrediente:
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={handleSearchChange}
                     placeholder="Buscar ingrediente"
+                    className={styles.searchInput}
                 />
             </label>
 
-            {loading && <p>Buscando ingredientes...</p>}
+            {loading && <p className={styles.loading}>Buscando ingredientes...</p>}
 
-            <div style={{ maxHeight: '150px', overflowY: 'auto', border: '1px solid #ccc', marginTop: '5px' }}>
+            <div className={styles.selectedIngredientsContainer}>
                 <h3>Ingredientes Seleccionados:</h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '10px' }}>
-                    {selectedIngredients.map(ingredientId => {
-                        const ingredient = allIngredients.find(option => option.id === ingredientId);
-                        return (
-                            ingredient && (
-                                <div key={ingredient.id} style={{ margin: '5px' }}>
-                                    <span>{ingredient.name}</span> {/* Cambiado a ingredient.name */}
-                                    <button type="button" onClick={() => handleRemoveIngredient(ingredient.id)} style={{ color: 'red' }}>
-                                        Eliminar
-                                    </button>
-                                </div>
-                            )
-                        );
-                    })}
-                </div>
-
-                <h3>Opciones:</h3>
-                <ul>
-                    {filteredOptions.length > 0 ? (
-                        filteredOptions.map(option => (
-                            <li key={option.id}>
-                                <button
-                                    type="button"
-                                    onClick={() => handleToggleIngredient(option)}
-                                    style={{
-                                        backgroundColor: selectedIngredients.includes(option.id) ? 'green' : 'lightgray',
-                                        color: 'white',
-                                        border: 'none',
-                                        padding: '5px 10px',
-                                        margin: '5px',
-                                        cursor: 'pointer',
-                                        borderRadius: '4px',
-                                    }}
-                                >
-                                    {option.name} {/* Cambiado a option.name */}
-                                </button>
-                            </li>
-                        ))
+                <p className={styles.description}>
+                    Haz clic en "Eliminar" para quitar un ingrediente de la selección.
+                </p>
+                <div className={styles.selectedIngredients}>
+                    {selectedIngredients.length > 0 ? (
+                        selectedIngredients.map(ingredientId => {
+                            const ingredient = allIngredients.find(option => option.id === ingredientId);
+                            return (
+                                ingredient && (
+                                    <div key={ingredient.id} className={styles.ingredientItem}>
+                                        <span className={styles.ingredientName}>{ingredient.name}</span>
+                                        <button type="button" onClick={() => handleRemoveIngredient(ingredient.id)} className={styles.removeButton}>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                )
+                            );
+                        })
                     ) : (
-                        searchTerm && !loading && (
-                            <li>No se encontraron ingredientes.</li>
-                        )
+                        <p>No se han seleccionado ingredientes.</p>
                     )}
-                </ul>
+                </div>
+            </div>
+
+            <h3>Opciones:</h3>
+            <div className={styles.optionsContainer}>
+                {filteredOptions.map(option => (
+                    <button
+                        key={option.id}
+                        type="button"
+                        onClick={() => handleToggleIngredient(option)}
+                        className={`${styles.optionButton} ${selectedIngredients.includes(option.id) ? styles.selected : ''}`}
+                    >
+                        {option.name}
+                    </button>
+                ))}
             </div>
         </div>
     );
