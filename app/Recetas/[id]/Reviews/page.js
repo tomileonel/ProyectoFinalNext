@@ -2,10 +2,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "next/navigation";
 import styles from './page.module.css';
-import { Utensils } from 'lucide-react';
+import { Utensils, Edit, Trash2 } from 'lucide-react';
 
 export default function Review() {
   const [comentarios, setComentarios] = useState([]);
+  
   const { id } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -97,6 +98,53 @@ export default function Review() {
       }
     ]);
   };
+  const handleDeleteComment = async (comment) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/recetas/deleteComment/${comment}/${userProfile.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        
+      });
+
+      if (response.ok) {
+        setComentarios(prevComentarios => prevComentarios.filter(c => c.id !== comment.id));
+      } else {
+        console.error('Error al borrar el comentario');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud de borrado:', error);
+    }
+  };
+
+  const handleUpdateComment = async (comment, newText) => {
+    console.log(newText);
+    
+    try {
+        const response = await fetch(`http://localhost:3000/api/recetas/updateComment/${comment}/${userProfile.id}`, { // Asegúrate de usar comment.comentario aquí
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ msg: newText }),
+        });
+
+        if (response.ok) {
+            // Actualiza el estado de comentarios sin necesidad de refrescar la página
+            setComentarios(prevComentarios => 
+                prevComentarios.map(c => 
+                    c.comentario === comment.comentario ? { ...c, comentario: newText } : c
+                )
+            );
+        } else {
+            console.error('Error al actualizar el comentario');
+        }
+    } catch (error) {
+        console.error('Error en la solicitud de actualización:', error);
+    }
+};
+
 
   return (
     <div className={styles.container}>
@@ -114,14 +162,21 @@ export default function Review() {
         <FormularioComentario agregarComentario={agregarComentario} usuario={userProfile} recipeId={id} />
         
         <div className={styles.commentList}>
-  {comentarios.length > 0 ? (
-    comentarios.map((comentario) => (
-      <ComentarioIndividual key={comentario.id} comentario={comentario} usuario={userProfile} />
-    ))
-  ) : (
-    <p>Aun no hay comentarios</p>
-  )}
-</div>
+        {comentarios.length > 0 ? (
+          comentarios.map((comentario) => (
+            <ComentarioIndividual 
+              key={comentario.id} 
+              comentario={comentario}
+              idComentario = {comentario.id[0]} 
+              usuario={userProfile} 
+              onDelete={handleDeleteComment}
+              onUpdate={handleUpdateComment}
+            />
+          ))
+        ) : (
+          <p>Aun no hay comentarios</p>
+        )}
+      </div>
 
       </div>
     </div>
@@ -187,15 +242,53 @@ const FormularioComentario = ({ agregarComentario, usuario, recipeId }) => {
   );
 };
 
-const ComentarioIndividual = ({ comentario, usuario }) => {
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
-  const [hasLiked, setHasLiked] = useState(false);
-  const [hasDisliked, setHasDisliked] = useState(false);
-  const [commentId, setCommentId] = useState(null); 
+const ComentarioIndividual = ({ comentario, usuario, idComentario, onDelete, onUpdate }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(comentario.comentario);
+  const [comentarioId, setComentarioId] = useState(null);
 
+  useEffect(() => {
+    const fetchIdComentario = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/api/recetas/getCommentIdByText/${comentario.comentario}`, {
+            method: 'GET',
+          });
 
+          if (response.ok) {
+            const data = await response.json();
+            setComentarioId(data);
+            
+          } else {
+            console.error('Error al obtener el perfil del usuario');
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
+        }
+        }
+    fetchIdComentario();
+  }, []);
 
+  const handleEdit = () => {
+    setIsEditing(true);
+    
+  };
+
+  const handleSave = () => {
+    onUpdate(comentario.comentario, editedText);
+    setIsEditing(false);
+    window.location.reload();
+  };
+
+  const handleCancel = () => {
+    setEditedText(comentario.comentario);
+    setIsEditing(false);
+  };
+  const handleDelete = (comentario) => {
+    onDelete(comentario);
+    window.location.reload();
+  };
+console.log("datos comentario", comentario)
+console.log(comentarioId, )
 
   return (
     <div className={styles.comment}>
@@ -203,16 +296,30 @@ const ComentarioIndividual = ({ comentario, usuario }) => {
       <div className={styles.commentContent}>
         <h3>{comentario.nombreusuario}</h3>
         <p className={styles.fecha}>{comentario.fecha}</p>
-        <p>{comentario.comentario}</p>
-        <div className={styles.actions}>
-          <button  className={styles.likeButton} disabled={hasLiked}>
-            👍 {likes} {hasLiked ? '(Tú has dado like)' : ''}
+        {isEditing ? (
+          <div>
+            <textarea
+              value={editedText}
+              onChange={(e) => setEditedText(e.target.value)}
+              className={styles.editTextarea}
+            />
+            <button onClick={handleSave} className={styles.saveButton}>Guardar</button>
+            <button onClick={handleCancel} className={styles.cancelButton}>Cancelar</button>
+          </div>
+        ) : (
+          <p>{comentario.comentario}</p>
+        )}
+      </div>
+      {usuario && usuario.nombreusuario === comentario.nombreusuario  && !isEditing && (
+        <div className={styles.commentActions}>
+          <button onClick={handleEdit} className={styles.button}>
+            <Edit size={16} />
           </button>
-          <button  className={styles.dislikeButton} disabled={hasDisliked}>
-            👎 {dislikes} {hasDisliked ? '(Tú has dado dislike)' : ''}
+          <button onClick={() => handleDelete(comentario.comentario)} className={styles.button}>
+            <Trash2 size={16} />
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };
