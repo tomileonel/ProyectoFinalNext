@@ -57,10 +57,14 @@
     padding: 10px;
     font-size: 16px;
     background-color: #28a745;
+    margin: 2.5px;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+  }
+  .button:hover{
+    background-color: #1c9138;
   }
   
   .commentList {
@@ -94,22 +98,5 @@
     color: #6c757d;
   }
   
-  .actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .likeButton, .dislikeButton {
-    cursor: pointer;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-  }
-  
-  .dislikeButton {
-    background-color: #dc3545;
-  }
+
   
