@@ -1,0 +1,49 @@
+.searchContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Espaciado inferior */
+  }
+  
+  .backButton {
+    background: none;
+    border: none;
+    font-size: 30px; /* Tamaño de la fuente */
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px; /* Espacio entre el botón y la barra de búsqueda */
+    color: #60AC3A; /* Color del texto */
+  }
+  
+  .backButton:hover {
+    color: #60AC3A; /* Color al pasar el mouse */
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .recipeList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Alinear a la izquierda */
+    margin: -10px; /* Compensar el margen de las tarjetas */
+  }
+  
+  .card { /* Asegúrate de que tu CardRecipe tenga esta clase */
+    flex: 1 1 calc(25% - 20px); /* Ajusta el tamaño de cada tarjeta */
+    margin:10px; /* Espaciado entre las tarjetas */
+    box-sizing: border-box; /* Para incluir el padding y el border en el tamaño total */
+    
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      flex: 1 1 calc(50% - 20px); /* 2 en una fila en pantallas más pequeñas */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      flex: 1 1 100%; /* 1 en una fila en pantallas muy pequeñas */
+    }
+  }
