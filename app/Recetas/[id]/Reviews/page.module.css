@@ -72,6 +72,14 @@
     flex-direction: column;
     gap: 15px;
   }
+  .editTextarea{
+    width: 440px;
+    height: 50px;
+    font: bold;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
   
   .comment {
     display: flex;

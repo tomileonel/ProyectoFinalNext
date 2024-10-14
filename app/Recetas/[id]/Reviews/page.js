@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from "next/navigation";
 import styles from './page.module.css';
 import { Utensils, Edit, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import pfp from '../../../img/pfp.png'
 
 export default function Review() {
   const [comentarios, setComentarios] = useState([]);
@@ -127,7 +129,7 @@ export default function Review() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ msg: newText }),
+            body: JSON.stringify({ msg: newText}),
         });
 
         if (response.ok) {
@@ -274,9 +276,14 @@ const ComentarioIndividual = ({ comentario, usuario, idComentario, onDelete, onU
   };
 
   const handleSave = () => {
-    onUpdate(comentario.comentario, editedText);
-    setIsEditing(false);
-    window.location.reload();
+    if (editedText.trim() !== '') {
+      onUpdate(comentario.comentario, editedText.trim());
+      setIsEditing(false);
+      window.location.reload();
+    } else {
+    
+      console.error('El comentario no puede estar vacío');
+    }
   };
 
   const handleCancel = () => {
@@ -289,10 +296,14 @@ const ComentarioIndividual = ({ comentario, usuario, idComentario, onDelete, onU
   };
 console.log("datos comentario", comentario)
 console.log(comentarioId, )
+const profilepic = comentario.imagen == null ? pfp : comentario.comentario;
 
   return (
     <div className={styles.comment}>
-      <img src={comentario.imagen} alt="avatar" className={styles.avatar} />
+      <Image
+      src={profilepic} 
+      alt="avatar" 
+      className={styles.avatar} />
       <div className={styles.commentContent}>
         <h3>{comentario.nombreusuario}</h3>
         <p className={styles.fecha}>{comentario.fecha}</p>
@@ -303,8 +314,8 @@ console.log(comentarioId, )
               onChange={(e) => setEditedText(e.target.value)}
               className={styles.editTextarea}
             />
-            <button onClick={handleSave} className={styles.saveButton}>Guardar</button>
-            <button onClick={handleCancel} className={styles.cancelButton}>Cancelar</button>
+            <button onClick={handleSave} className={styles.button}>Guardar</button>
+            <button onClick={handleCancel} className={styles.button}>Cancelar</button>
           </div>
         ) : (
           <p>{comentario.comentario}</p>
