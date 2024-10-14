@@ -41,41 +41,34 @@ const IngredientSelector = ({ onIngredientsChange }) => {
     setQuantity(event.target.value);
   };
 
-  const handleAddIngredient = async (ingredient) => {
-    console.log('Agregando ingrediente:', ingredient); // Mensaje de depuración
+  const handleAddIngredient = (ingredient) => {
     if (quantity.trim()) {
       const quantityValue = parseInt(quantity, 10);
       if (isNaN(quantityValue) || quantityValue <= 0) {
         alert('Por favor, ingrese una cantidad válida.');
         return;
       }
-  
-      try {
-        const response = await axios.post('http://localhost:3000/api/calcular-nutricion', {
-          ingredientId: ingredient.id,
-          quantity: quantityValue
-        });
-  
-        console.log('Respuesta del servidor:', response.data); // Mensaje de depuración
-  
-        const ingredientWithCalculatedNutrition = response.data;
-  
-        if (!selectedIngredients.some(item => item.id === ingredient.id)) {
-          const updatedSelectedIngredients = [...selectedIngredients, ingredientWithCalculatedNutrition];
-          setSelectedIngredients(updatedSelectedIngredients);
-          onIngredientsChange(updatedSelectedIngredients);
-        }
-  
-        setSearchTerm('');
-        setQuantity('');
-      } catch (error) {
-        console.error('Error al calcular la información nutricional:', error);
+
+      const ingredientWithQuantity = {
+        ...ingredient,
+        quantity: quantityValue,
+      };
+
+      // Evita duplicados
+      if (!selectedIngredients.some(item => item.id === ingredient.id)) {
+        const updatedSelectedIngredients = [...selectedIngredients, ingredientWithQuantity];
+        setSelectedIngredients(updatedSelectedIngredients);
+        onIngredientsChange(updatedSelectedIngredients);
       }
+
+      // Resetea campos
+      setSearchTerm('');
+      setQuantity('');
     } else {
       alert('Por favor, ingrese una cantidad.');
     }
   };
-  // Eliminar un ingrediente seleccionado
+
   const handleRemoveIngredient = (ingredient) => {
     const updatedSelectedIngredients = selectedIngredients.filter(item => item.id !== ingredient.id);
     setSelectedIngredients(updatedSelectedIngredients);
@@ -109,8 +102,8 @@ const IngredientSelector = ({ onIngredientsChange }) => {
       <ul>
         {filteredOptions.map((ingredient) => (
           <li key={ingredient.id}>
-            {ingredient.nombre} - {ingredient.calorias} cal/100g
-            <button onClick={() => handleAddIngredient(ingredient)}>Agregar</button>
+            {ingredient.name} - {ingredient.calorias} cal/100g
+            <button type="button" onClick={() => handleAddIngredient(ingredient)}>Agregar</button>
           </li>
         ))}
       </ul>
@@ -119,8 +112,8 @@ const IngredientSelector = ({ onIngredientsChange }) => {
       <ul>
         {selectedIngredients.map((ingredient) => (
           <li key={ingredient.id}>
-            {ingredient.nombre} - {ingredient.quantity} g - {ingredient.calorias} cal
-            <button onClick={() => handleRemoveIngredient(ingredient)}>Eliminar</button>
+            {ingredient.name} - {ingredient.quantity} g
+            <button type="button" onClick={() => handleRemoveIngredient(ingredient)}>Eliminar</button>
           </li>
         ))}
       </ul>

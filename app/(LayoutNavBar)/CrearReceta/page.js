@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import IngredientSelector from '../../components/IngredientSelector/IngredientSelector';
+import IngredientSelector from '../../components/IngredientSelector';
 import StepsList from '../../components/StepInput/StepInput'; // Cambia la importación a StepsList
 
 const CrearReceta = () => {
-  const [ingredientOptions, setIngredientOptions] = useState([]); // Inicializa como array vacío
+  const [ingredientOptions, setIngredientOptions] = useState([]);
   const [ingredientes, setIngredients] = useState([]);
-  const [steps, setSteps] = useState(['']); // Inicializa con un paso vacío
+  const [steps, setSteps] = useState(['']);
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
   const router = useRouter();
@@ -30,18 +30,16 @@ const CrearReceta = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted');
-  
-    // Obtener el ID del usuario desde localStorage
+
     const idCreador = localStorage.getItem('idUsuario');
-    
-    // Verificar si devuelve el ID correctamente
+
     console.log('ID del Usuario:', idCreador);
-  
+
     if (!idCreador) {
       console.error("ID del usuario no encontrado");
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:3000/api/recetas/create', {
         method: 'POST',
@@ -57,10 +55,11 @@ const CrearReceta = () => {
           idcreador: idCreador,
         }),
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         console.log('Recipe created successfully', data);
+        // Redirigir o realizar alguna acción después de crear la receta
       } else {
         console.error('Error creating recipe', data);
       }
@@ -68,9 +67,6 @@ const CrearReceta = () => {
       console.error('Error:', error);
     }
   };
-  
-  
-  
 
   return (
     <div>
@@ -98,7 +94,6 @@ const CrearReceta = () => {
           </label>
         </div>
         <IngredientSelector
-          ingredientOptions={ingredientOptions}
           onIngredientsChange={setIngredients}
         />
         <StepsList steps={steps} setSteps={setSteps} />
