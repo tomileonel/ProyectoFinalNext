@@ -1,0 +1,110 @@
+.profileContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profileImage {
+    border-radius: 50%;
+    border: 2px solid #ccc;
+  }
+  
+  .userName {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .description {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  
+  .moreButton {
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .moreButton:hover {
+    background-color: #005bb5;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .tabButton {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tabButton:hover {
+    background-color: #ddd;
+  }
+  
+  .activeTab {
+    background-color: #0070f3;
+    color: white;
+  }
+  
+  .tabContent {
+    margin-top: 20px;
+  }
+  
+  .addButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .addButton:hover {
+    background-color: #005bb5;
+  }
+  
+  .recetasContainer {
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 10px;
+  }
+  
+  .recetaCard {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .recetaCard h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .recetaCard p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
