@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import IngredientSelector from '../../components/IngredientSelector';
 import StepsList from '../../components/StepInput/StepInput';
+import styles from './page.module.css';  // Importar el archivo CSS modular
 
 const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [ingredientes, setIngredients] = useState([]);
-  const [steps, setSteps] = useState([{ numero: 1, titulo: '', descripcion: '', duracionMin: 0 }]); // Pasos con estructura inicial
+  const [steps, setSteps] = useState([{ numero: 1, titulo: '', descripcion: '', duracionMin: 0 }]);
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // Estado para manejar mensajes de error
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   // Fetch de ingredientes
@@ -50,7 +51,7 @@ const CrearReceta = () => {
       ingredientes,
       pasos: steps,
       tags: [], // Si hay tags, añádelos aquí
-      idcreador: parseInt(idCreador), // Asegúrate de que sea un número
+      idcreador: parseInt(idCreador),
     };
 
     try {
@@ -65,7 +66,7 @@ const CrearReceta = () => {
       const data = await response.json();
       if (response.ok) {
         console.log('Recipe created successfully', data);
-        router.push('/Inicio'); // Redirigir a una página de recetas o éxito
+        router.push('/Inicio');
       } else {
         console.error('Error creating recipe', data);
         setErrorMessage('Error al crear la receta. Por favor, intenta de nuevo.');
@@ -77,37 +78,33 @@ const CrearReceta = () => {
   };
 
   return (
-    <div>
+    <div className={styles.formContainer}>
       <h1>Crear Receta</h1>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Nombre:
-            <input
-              type="text"
-              value={recipeName}
-              onChange={(e) => setRecipeName(e.target.value)}
-              required
-            />
-          </label>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <label>Nombre:</label>
+          <input
+            type="text"
+            value={recipeName}
+            onChange={(e) => setRecipeName(e.target.value)}
+            required
+          />
         </div>
-        <div>
-          <label>
-            Descripción:
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </label>
+        <div className={styles.formGroup}>
+          <label>Descripción:</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
         </div>
         <IngredientSelector
           options={ingredientOptions}
           onIngredientsChange={setIngredients}
         />
         <StepsList steps={steps} setSteps={setSteps} />
-        <button type="submit">Publicar Receta</button>
+        <button type="submit" className={styles.submitButton}>Publicar Receta</button>
       </form>
     </div>
   );

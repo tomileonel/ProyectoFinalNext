@@ -52,6 +52,7 @@ const ProfilePage = () => {
     const fetchRecetas = async () => {
       if (userProfile?.id) {
         try {
+          console.log(userProfile.id)
           const response = await fetch(`http://localhost:3000/api/recetas/byUser/${userProfile.id}`);
           if (response.ok) {
             const data = await response.json();
