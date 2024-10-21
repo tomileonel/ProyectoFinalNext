@@ -8,12 +8,12 @@ const ProfileHeader = ({ user }) => {
       <div className={styles.headerContent}>
         <h2>Perfil</h2>
         <div className={styles.profileImage}>
-          <Image
+          {/* <Image
             src={user.imagen || profilepic}
             alt="Profile image"
             width={100}
             height={100}
-          />
+          /> */}
         </div>
         <p className={styles.profileName}>{user.nombre}</p>
       </div>

@@ -9,8 +9,9 @@ const IngredientSelector = ({ onIngredientsChange }) => {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [quantity, setQuantity] = useState('');
+  const [cantidad, setCantidad] = useState('');  // Cambié 'quantity' por 'cantidad' para consistencia
 
+  // Fetch de ingredientes según término de búsqueda
   useEffect(() => {
     if (searchTerm) {
       const fetchIngredients = async () => {
@@ -37,33 +38,33 @@ const IngredientSelector = ({ onIngredientsChange }) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleQuantityChange = (event) => {
-    setQuantity(event.target.value);
+  const handleCantidadChange = (event) => {
+    setCantidad(event.target.value);  // Cambié 'quantity' por 'cantidad'
   };
 
   const handleAddIngredient = (ingredient) => {
-    if (quantity.trim()) {
-      const quantityValue = parseInt(quantity, 10);
-      if (isNaN(quantityValue) || quantityValue <= 0) {
+    if (cantidad.trim()) {
+      const cantidadValue = parseFloat(cantidad);  // Asegúrate de convertir a float
+      if (isNaN(cantidadValue) || cantidadValue <= 0) {
         alert('Por favor, ingrese una cantidad válida.');
         return;
       }
 
-      const ingredientWithQuantity = {
+      const ingredientWithCantidad = {
         ...ingredient,
-        quantity: quantityValue,
+        cantidad: cantidadValue,  // Cambié 'quantity' por 'cantidad'
       };
 
       // Evita duplicados
       if (!selectedIngredients.some(item => item.id === ingredient.id)) {
-        const updatedSelectedIngredients = [...selectedIngredients, ingredientWithQuantity];
+        const updatedSelectedIngredients = [...selectedIngredients, ingredientWithCantidad];
         setSelectedIngredients(updatedSelectedIngredients);
-        onIngredientsChange(updatedSelectedIngredients);
+        onIngredientsChange(updatedSelectedIngredients);  // Pasar la lista actualizada al componente padre
       }
 
       // Resetea campos
       setSearchTerm('');
-      setQuantity('');
+      setCantidad('');
     } else {
       alert('Por favor, ingrese una cantidad.');
     }
@@ -72,7 +73,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
   const handleRemoveIngredient = (ingredient) => {
     const updatedSelectedIngredients = selectedIngredients.filter(item => item.id !== ingredient.id);
     setSelectedIngredients(updatedSelectedIngredients);
-    onIngredientsChange(updatedSelectedIngredients);
+    onIngredientsChange(updatedSelectedIngredients);  // Pasar la lista actualizada al componente padre
   };
 
   return (
@@ -91,8 +92,8 @@ const IngredientSelector = ({ onIngredientsChange }) => {
         Cantidad (g):
         <input
           type="number"
-          value={quantity}
-          onChange={handleQuantityChange}
+          value={cantidad}  // Cambié 'quantity' por 'cantidad'
+          onChange={handleCantidadChange}
           placeholder="Cantidad"
         />
       </label>
@@ -112,7 +113,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
       <ul>
         {selectedIngredients.map((ingredient) => (
           <li key={ingredient.id}>
-            {ingredient.name} - {ingredient.quantity} g
+            {ingredient.name} - {ingredient.cantidad} g  {/* Mostrar 'cantidad' */}
             <button type="button" onClick={() => handleRemoveIngredient(ingredient)}>Eliminar</button>
           </li>
         ))}

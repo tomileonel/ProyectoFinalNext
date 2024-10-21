@@ -6,7 +6,7 @@ const StepInput = ({ step, onStepChange, onRemove }) => {
   return (
     <div>
       <textarea
-        value={step}
+        value={"Escribe el primer paso"}
         onChange={(e) => onStepChange(e.target.value)}
         placeholder="Paso"
       />
@@ -33,7 +33,6 @@ const StepsList = ({ steps, setSteps }) => {
   };
 
   if (!Array.isArray(steps)) {
-    // Asegúrate de que steps sea un array
     console.error('steps debe ser un array');
     return null;
   }
