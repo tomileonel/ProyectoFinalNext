@@ -55,7 +55,7 @@ const RatingComponent = ({ idReceta, modalState, closeModal }) => {
       try {
         let url;
         let method;
-
+  
         // Verificar si hay una calificación existente para decidir el método HTTP
         if (rating !== null) {
           url = `http://localhost:3000/api/recetas/updaterating/${clickedRating}/${idReceta}/${userProfile.id}`;
@@ -64,26 +64,43 @@ const RatingComponent = ({ idReceta, modalState, closeModal }) => {
           url = `http://localhost:3000/api/recetas/rate/${clickedRating}/${idReceta}/${userProfile.id}`;
           method = 'POST';
         }
-
+        
+        // Hacer la primera solicitud PUT o POST
         const response = await fetch(url, {
           method,
           headers: {
             'Content-Type': 'application/json',
           },
         });
-
+  
         if (response.ok) {
-          setRating(clickedRating); // Actualizar la calificación localmente
-          closeModal(); // Cerrar el modal después de calificar
+          // Si PUT o POST es exitoso, hacer la solicitud 
+          console.log(idReceta)
+          const patchUrl = `http://localhost:3000/api/recetas/ratingreceta/${idReceta}`;
+          const patchResponse = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+  
+          if (patchResponse.ok) {
+            setRating(clickedRating); // Actualizar la calificación localmente
+            closeModal(); // Cerrar el modal después de calificar
+          } else {
+            const errorDetails = await patchResponse.text();
+            console.error('Error al hacer el PATCH:', errorDetails);
+          }
         } else {
-          const errorDetails = await response.text(); // Obtener detalles del error
-          console.error('Error al actualizar o enviar la calificación:', errorDetails);
+          const errorDetails = await response.text();
+          console.error('Error al hacer el PUT o POST:', errorDetails);
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);
       }
     }
   };
+  
 
   return (
     <>
