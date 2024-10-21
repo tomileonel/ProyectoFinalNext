@@ -7,8 +7,10 @@
   
   .header {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
+    position: relative; /* Necesario para que el dropdown se posicione relativo a este contenedor */
+    padding: 20px; /* Espacio alrededor del header */
   }
   
   .profileImage {
@@ -106,5 +108,39 @@
   .recetaCard p {
     margin: 5px 0;
     font-size: 14px;
+  }
+  
+  /* Estilos para el botón del menú (tres puntos) */
+  .menuButton {
+    background: none;
+    border: none;
+    font-size: 24px; /* Aumenta el tamaño del ícono */
+    cursor: pointer;
+    color: #333; /* Cambia a tu color preferido */
+    padding: 5px; /* Espacio alrededor del botón */
+  }
+  
+  /* Estilos para el dropdown */
+  .dropdownMenu {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .menuItem {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .menuItem:hover {
+    background-color: #f0f0f0;
   }
   

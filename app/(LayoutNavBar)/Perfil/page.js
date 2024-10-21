@@ -1,8 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import ProfileHeader from '../../components/HeaderProfile/Header.js';
 import img from '../../img/pfp.png';
 import styles from './page.module.css'; // Archivo CSS
 
@@ -12,6 +11,8 @@ const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState('recetas');
   const [userProfile, setUserProfile] = useState(null);
   const [recetas, setRecetas] = useState([]);
+  const [showMenu, setShowMenu] = useState(false); // Estado para mostrar el menú
+  const menuRef = useRef(null); // Referencia al menú
   const router = useRouter();
 
   // Fetch user profile
@@ -52,7 +53,7 @@ const ProfilePage = () => {
     const fetchRecetas = async () => {
       if (userProfile?.id) {
         try {
-          console.log(userProfile.id)
+          console.log(userProfile.id);
           const response = await fetch(`http://localhost:3000/api/recetas/byUser/${userProfile.id}`);
           if (response.ok) {
             const data = await response.json();
@@ -71,6 +72,19 @@ const ProfilePage = () => {
     }
   }, [userProfile, selectedTab]);
 
+  // Cerrar menú cuando se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   if (loading) {
     return <div>Cargando...</div>;
   }
@@ -87,6 +101,15 @@ const ProfilePage = () => {
     setSelectedTab(tab);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    router.push('/');
+  };
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
     <div className={styles.profileContainer}>
       <div className={styles.header}>
@@ -98,8 +121,22 @@ const ProfilePage = () => {
           height={150}
         />
         <h2 className={styles.userName}>{userProfile?.nombre || 'Usuario'}</h2>
+        
+        {/* Botón para mostrar el menú de opciones */}
+        <div className={styles.menuContainer} ref={menuRef}>
+          <button onClick={toggleMenu} className={styles.menuButton}>
+            ⋮
+          </button>
+          {showMenu && (
+            <div className={styles.dropdownMenu}>
+              <button onClick={() => router.push('/config')} className={styles.menuItem}>Config</button>
+              <button onClick={() => router.push('/editarPerfil')} className={styles.menuItem}>Editar Perfil</button>
+              <button onClick={handleLogout} className={styles.menuItem}>Cerrar Sesión</button>
+            </div>
+          )}
+        </div>
       </div>
-      
+
       <div className={styles.description}>
         {userProfile?.descripcion ? (
           <>
