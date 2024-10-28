@@ -39,49 +39,46 @@ const CrearReceta = () => {
   };
 
   // Función para manejar el envío del formulario
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    // Verificar si el ID de usuario está en localStorage
-    const idCreador = localStorage.getItem('idUsuario');
-    if (!idCreador) {
-      console.error("ID del usuario no encontrado");
-      setErrorMessage("Por favor, inicia sesión para crear una receta.");
-      return;
+  const idCreador = localStorage.getItem('idUsuario');
+  if (!idCreador) {
+    console.error("ID del usuario no encontrado");
+    setErrorMessage("Por favor, inicia sesión para crear una receta.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('nombre', recipeName);
+  formData.append('descripcion', description);
+  formData.append('idcreador', parseInt(idCreador));
+  formData.append('ingredientes', JSON.stringify(ingredientes));
+  formData.append('pasos', JSON.stringify(steps));
+  formData.append('tags', JSON.stringify([]));  // Si tienes tags, añádelos aquí
+  if (imageFile) {
+    formData.append('imagen', imageFile);  // Añadir el archivo de imagen seleccionado
+  }
+
+  try {
+    const response = await fetch('http://localhost:3000/api/recetas/create', {
+      method: 'POST',
+      body: formData,  // Enviar FormData, no JSON
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log('Receta creada con éxito', data);
+      router.push('/Inicio');
+    } else {
+      console.error('Error al crear la receta', data);
+      setErrorMessage('Error al crear la receta. Por favor, intenta de nuevo.');
     }
-
-    // Crear un objeto FormData para manejar el archivo y los demás datos
-    const formData = new FormData();
-    formData.append('nombre', recipeName);
-    formData.append('descripcion', description);
-    formData.append('idcreador', parseInt(idCreador));
-    formData.append('ingredientes', JSON.stringify(ingredientes));  // Convertimos ingredientes a JSON
-    formData.append('pasos', JSON.stringify(steps));  // Convertimos pasos a JSON
-    formData.append('tags', JSON.stringify([]));  // Si hay tags, añádelos aquí
-
-    if (imageFile) {
-      formData.append('imagen', imageFile);  // Agregar la imagen si fue seleccionada
-    }
-
-    try {
-      const response = await fetch('http://localhost:3000/api/recetas/create', {
-        method: 'POST',
-        body: formData,  // Enviar FormData, no JSON
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log('Recipe created successfully', data);
-        router.push('/Inicio');
-      } else {
-        console.error('Error creating recipe', data);
-        setErrorMessage('Error al crear la receta. Por favor, intenta de nuevo.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('Ocurrió un error al crear la receta. Por favor, intenta más tarde.');
-    }
-  };
+  } catch (error) {
+    console.error('Error:', error);
+    setErrorMessage('Ocurrió un error al crear la receta. Por favor, intenta más tarde.');
+  }
+};
 
   return (
     <div className={styles.formContainer}>
