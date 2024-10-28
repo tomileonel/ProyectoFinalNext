@@ -7,6 +7,7 @@ import img from '../../img/pfp.png';
 import styles from './page.module.css'; // Archivo CSS
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import axios from 'axios';
 
 
 const ProfilePage = () => {
@@ -57,18 +58,19 @@ const ProfilePage = () => {
 
 
   
-    useEffect(() => {
-      const fetchEventos = async () => {
-        try {
-          const response = await axios.get('http://localhost:3000/api/eventos');
-          setEventos(response.data);
-        } catch (error) {
-          console.error('Error al obtener eventos', error);
-        }
-      };
+  useEffect(() => {
+    const fetchEventos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/eventos');
+        console.log('Eventos:', response.data); // Agrega esta línea para verificar
+        setEventos(response.data);
+      } catch (error) {
+        console.error('Error al obtener eventos', error);
+      }
+    };
   
-      fetchEventos();
-    }, []);
+    fetchEventos();
+  }, []);
   
     const eventosPorFecha = eventos.filter(evento => {
       const fechaEvento = new Date(evento.fecha);
