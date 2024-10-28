@@ -1,9 +1,12 @@
+
 "use client";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import img from '../../img/pfp.png';
 import styles from './page.module.css'; // Archivo CSS
+
+
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
@@ -16,6 +19,7 @@ const ProfilePage = () => {
   const router = useRouter();
 
   // Fetch user profile
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -136,7 +140,7 @@ const ProfilePage = () => {
           )}
         </div>
       </div>
-
+  
       <div className={styles.description}>
         {userProfile?.descripcion ? (
           <>
@@ -157,7 +161,7 @@ const ProfilePage = () => {
           </p>
         )}
       </div>
-
+  
       <div className={styles.tabs}>
         <button 
           className={`${styles.tabButton} ${selectedTab === 'recetas' ? styles.activeTab : ''}`} 
@@ -178,32 +182,44 @@ const ProfilePage = () => {
           Eventos
         </button>
       </div>
-
+  
       <div className={styles.tabContent}>
         {selectedTab === 'recetas' && (
           <div className={styles.recetasContainer}>
             {recetas.length > 0 ? (
-              recetas.map((receta) => (
-                <div key={receta.id} className={styles.recetaCard}>
-                  <h3>{receta.titulo}</h3>
-                  <p>{receta.descripcion.slice(0, 100)}...</p>
-                  {/* Puedes agregar más campos según los datos disponibles */}
-                </div>
-              ))
+              <div className={styles.recetasScroll}>
+                {recetas.slice(0, 3).map((receta) => (
+                  <div key={receta.id} className={styles.recetaCard}>
+                    <div className={styles.buttonContainer}>
+                      <div className={styles.buttonBackground}></div>
+                      <button onClick={() => handleEditRecipe(receta.id)} className={styles.editButton}>
+                        🖉 {/* Icono de edición */}
+                      </button>
+                      <button onClick={() => handleDeleteRecipe(receta.id)} className={styles.deleteButton}>
+                        🗑️ {/* Icono de eliminación */}
+                      </button>
+                    </div>
+                    <img src={receta.imagen} alt={receta.titulo} className={styles.recetaImagen} />
+                    <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
+                      {receta.nombre}
+                    </h3>
+                    <p>{receta.descripcion.length > 100 ? `${receta.descripcion.slice(0, 100)}...` : receta.descripcion}</p>
+                  </div>
+                ))}
+              </div>
             ) : (
               <p>No tienes recetas disponibles.</p>
             )}
+            <button onClick={handleAddRecipeClick} className={styles.addButton}>
+              Agregar nueva receta
+            </button>
           </div>
         )}
         {selectedTab === 'notificaciones' && <div>Contenido de Notificaciones</div>}
         {selectedTab === 'eventos' && <div>Contenido de Eventos</div>}
       </div>
-
-      <button onClick={handleAddRecipeClick} className={styles.addButton}>
-        Agregar nueva receta
-      </button>
     </div>
   );
-};
-
+            }  
+          
 export default ProfilePage;

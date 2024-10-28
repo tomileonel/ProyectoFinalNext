@@ -30,7 +30,7 @@
   }
   
   .moreButton {
-    background-color: #0070f3;
+    background-color:#60ac3a;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -40,7 +40,7 @@
   }
   
   .moreButton:hover {
-    background-color: #005bb5;
+    background-color: #60ac3a;
   }
   
   .tabs {
@@ -64,7 +64,7 @@
   }
   
   .activeTab {
-    background-color: #0070f3;
+    background-color: #60ac3a;
     color: white;
   }
   
@@ -75,7 +75,7 @@
   .addButton {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #0070f3;
+    background-color: #60ac3a;
     color: white;
     border: none;
     border-radius: 5px;
@@ -83,7 +83,7 @@
   }
   
   .addButton:hover {
-    background-color: #005bb5;
+    background-color: #60ac3a;
   }
   
   .recetasContainer {
@@ -142,5 +142,64 @@
   
   .menuItem:hover {
     background-color: #f0f0f0;
+  }
+  
+  .recetasContainer {
+    width: 100%;
+    overflow-x: auto; /* Habilita el scroll horizontal */
+  }
+  
+  .recetasScroll {
+    display: flex; /* Disposición horizontal */
+    gap: 16px; /* Espaciado entre tarjetas */
+    padding: 10px; /* Espacio interno */
+  }
+  
+  .recetaCard {
+    width: 100%; /* Tarjeta ocupa el 100% del ancho */
+    border: 1px solid #ccc; /* Bordes de las tarjetas */
+    border-radius: 8px; /* Esquinas redondeadas */
+    padding: 10px; /* Espacio interno */
+    background-color: #f9f9f9; /* Color de fondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    position: relative; /* Necesario para posicionar los botones */
+  }
+  
+  .buttonContainer {
+    position: absolute; /* Posiciona los botones en la esquina superior derecha */
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px; /* Espacio entre botones */
+  }
+  
+  .buttonBackground {
+    position: absolute; /* Fondo detrás de los botones */
+    top: -5px; /* Ajustar según sea necesario */
+    right: -5px; /* Ajustar según sea necesario */
+    width: 50px; /* Ancho del fondo */
+    height: 50px; /* Alto del fondo */
+    background-color: rgba(255, 255, 255, 0.8); /* Color de fondo con opacidad */
+    border-radius: 50%; /* Bordes redondeados */
+    z-index: -1; /* Asegura que esté detrás de los botones */
+  }
+  
+  .editButton,
+  .deleteButton {
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambia el cursor a mano */
+    font-size: 18px; /* Tamaño del icono */
+  }
+  
+  .recetaTitulo {
+    cursor: pointer; /* Cambia el cursor a mano */
+    color: #007bff; /* Color del título (puedes cambiarlo) */
+  }
+  
+  .recetaImagen {
+    width: 100%; /* Imagen ocupa todo el ancho de la tarjeta */
+    height: auto; /* Altura automática para mantener la proporción */
+    border-radius: 8px 8px 0 0; /* Esquinas redondeadas solo en la parte superior */
   }
   
