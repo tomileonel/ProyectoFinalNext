@@ -99,7 +99,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
           <p>Tiempo: {minutos} mins</p>
           <p>Precio: ${precio}</p>
           <p>🌟 {rating}</p>
-          <Bookmark recetaId={id}/> 
+          <Bookmark nombre={nombre}/> 
         </div>
       </div>
       <h1 className={styles.title}>{nombre}</h1>

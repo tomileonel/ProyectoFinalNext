@@ -302,10 +302,13 @@ const profilepic = comentario.imagen == null ? pfp : comentario.comentario;
     <div className={styles.comment}>
       <Image
       src={profilepic} 
+      width="20px"
+      height="20px"
       alt="avatar" 
       className={styles.avatar} />
       <div className={styles.commentContent}>
         <h3>{comentario.nombreusuario}</h3>
+        <p>-{comentario.rating}⭐</p>
         <p className={styles.fecha}>{comentario.fecha}</p>
         {isEditing ? (
           <div>
