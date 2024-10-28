@@ -34,10 +34,14 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
         <div className={styles.cards}>
           {recipes.map((recipe, index) => (
             <CardRecipe
-            id={recipe.id}
               key={index}
+              id={recipe.id}
               nombre={recipe.nombre || 'Recipe Name'}
-              image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
+              image={
+                recipe.imagen 
+                  ? `http://localhost:3000${recipe.imagen}`  // Construimos la URL completa de la imagen
+                  : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'
+              }
               prop={`⭐${recipe.rating || 'Rating'}`}
               mins={`${recipe.tiempoMins || 'Time'} Mins`}
               prop1={`${recipe.precio || 'Price'}$`}

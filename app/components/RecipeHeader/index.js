@@ -1,12 +1,9 @@
-// index.js
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Bookmark from "../BookmarkFavoritos";
 import styles from './styles.module.css';
 import ShareComponent from "../CompartirModal";
 import RatingComponent from "../RatingModal";
 import { useRouter } from 'next/navigation';
-import { Router } from "lucide-react";
 
 const DropdownMenu = ({ isOpen, onClose, openShare, openRating, openReviews }) => {
   if (!isOpen) return null;
@@ -33,7 +30,10 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
   const router = useRouter();
 
   const dropdownRef = useRef(null);
-  console.log(id);
+  
+  // Construir la URL completa de la imagen
+  const imageUrl = imagen ? `http://localhost:3000${imagen}` : '/path/to/default-image.jpg';  // Usar una imagen por defecto si no hay imagen
+
   const handleGoBack = () => {
     window.history.back();
   };
@@ -53,13 +53,12 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
     setShowShareComponent(false); // Ocultar compartir si se abre calificar
   };
   const openReviews = () => {
-    router.push(`${id}/Reviews`)
+    router.push(`${id}/Reviews`);
   };
 
   const closeRating = () => {
     setShowRatingComponent(false); // Cerrar el modal de calificación
   };
-  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -90,7 +89,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
       </div>
       <div className={styles.recipeImageContainer}>
         <img 
-          src={imagen} 
+          src={imageUrl}  // Aquí usamos la URL completa de la imagen
           alt={`Imagen de ${nombre}`} 
           className={styles.recipeImage}
         />
@@ -104,7 +103,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
       </div>
       <h1 className={styles.title}>{nombre}</h1>
       <div className={styles.creator}>
-        <img src={creador.imagen} alt={creador.nombreusuario} className={styles.creadorFoto} />
+        <img src={creador.imagen || '/path/to/default-pfp.jpg'} alt={creador.nombreusuario} className={styles.creadorFoto} />
         <p>Creado por: {creador.nombreusuario}</p>
       </div>
 
