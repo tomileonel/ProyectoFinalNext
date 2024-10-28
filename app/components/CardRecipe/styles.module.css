@@ -15,6 +15,17 @@
   
 
 }
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Asegura que ocupe el ancho completo */
+  padding: 0 10px; /* Espaciado interno opcional */
+}
+
+.buttons > * {
+  margin: 0; /* Elimina cualquier margen de los botones */
+}
 
 .carousel-container {
   width: 100%;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Importa useRouter
 import styles from './styles.module.css';
 import Bookmark from '../AgregarFavoritos';
+import ButtonCarrito from '../AgregarCarrito';
 
 const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -51,7 +52,10 @@ const CardRecipe = ({ nombre, image, prop, mins, prop1, kcal, id }) => {
         
       </div>
       </div>
+      <div className={styles.buttons}>
+      <ButtonCarrito/>
       <Bookmark nombre={nombre}/>
+      </div>
     </div>
     
   );
