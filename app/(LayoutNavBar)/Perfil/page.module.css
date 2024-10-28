@@ -144,27 +144,8 @@
     background-color: #f0f0f0;
   }
   
-  .recetasContainer {
-    width: 100%;
-    overflow-x: auto; /* Habilita el scroll horizontal */
-  }
-  
-  .recetasScroll {
-    display: flex; /* Disposición horizontal */
-    gap: 16px; /* Espaciado entre tarjetas */
-    padding: 10px; /* Espacio interno */
-  }
-  
-  .recetaCard {
-    width: 100%; /* Tarjeta ocupa el 100% del ancho */
-    border: 1px solid #ccc; /* Bordes de las tarjetas */
-    border-radius: 8px; /* Esquinas redondeadas */
-    padding: 10px; /* Espacio interno */
-    background-color: #f9f9f9; /* Color de fondo */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    position: relative; /* Necesario para posicionar los botones */
-  }
-  
+
+
   .buttonContainer {
     position: absolute; /* Posiciona los botones en la esquina superior derecha */
     top: 10px;
@@ -194,7 +175,7 @@
   
   .recetaTitulo {
     cursor: pointer; /* Cambia el cursor a mano */
-    color: #007bff; /* Color del título (puedes cambiarlo) */
+    color: rgb(36, 175, 36); /* Color del título (puedes cambiarlo) */
   }
   
   .recetaImagen {
@@ -202,4 +183,51 @@
     height: auto; /* Altura automática para mantener la proporción */
     border-radius: 8px 8px 0 0; /* Esquinas redondeadas solo en la parte superior */
   }
+
+
+  .recetaImagen {
+    width: 100%; /* Asegura que la imagen ocupe el ancho completo de la tarjeta */
+    height: auto; /* Mantiene la relación de aspecto */
+  }
+
+  .recetasContainer {
+    max-height: 400px; /* Altura máxima para el contenedor */
+    overflow-y: auto; /* Habilita el scroll vertical */
+    padding: 10px;
+  }
   
+  .recetasScroll {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    gap: 16px; /* Espaciado entre tarjetas */
+    padding: 10px; /* Espacio interno */
+  }
+  
+  .recetaCard {
+    width: calc(100% - 8px); /* Dos tarjetas por fila, ajustando por el gap */
+    border: 1px solid #ccc; /* Bordes de las tarjetas */
+    border-radius: 8px; /* Esquinas redondeadas */
+    background-color: #f9f9f9; /* Color de fondo */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    overflow: hidden; /* Para manejar el contenido que sobresale */
+  }
+  
+  .center {
+    margin: auto;
+  }
+  /* styles/Eventos.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  padding: 20px;
+}
+
+.calendar {
+  margin-top: 20px; /* Espaciado superior opcional */
+}
+
+.eventList {
+  margin-top: 20px; /* Espaciado superior opcional */
+  text-align: center; /* Centra el texto de la lista de eventos */
+}

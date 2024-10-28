@@ -5,7 +5,8 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import img from '../../img/pfp.png';
 import styles from './page.module.css'; // Archivo CSS
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 
 const ProfilePage = () => {
@@ -17,9 +18,11 @@ const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false); // Estado para mostrar el menú
   const menuRef = useRef(null); // Referencia al menú
   const router = useRouter();
-
+  const [eventos, setEventos] = useState([]);
+  const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date());
   // Fetch user profile
 
+  
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -52,6 +55,29 @@ const ProfilePage = () => {
     fetchUserProfile();
   }, []);
 
+
+  
+    useEffect(() => {
+      const fetchEventos = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/api/eventos');
+          setEventos(response.data);
+        } catch (error) {
+          console.error('Error al obtener eventos', error);
+        }
+      };
+  
+      fetchEventos();
+    }, []);
+  
+    const eventosPorFecha = eventos.filter(evento => {
+      const fechaEvento = new Date(evento.fecha);
+      return (
+        fechaEvento.getFullYear() === fechaSeleccionada.getFullYear() &&  
+        fechaEvento.getMonth() === fechaSeleccionada.getMonth() &&
+        fechaEvento.getDate() === fechaSeleccionada.getDate()
+      );
+    });
   // Fetch user recipes
   useEffect(() => {
     const fetchRecetas = async () => {
@@ -185,38 +211,66 @@ const ProfilePage = () => {
   
       <div className={styles.tabContent}>
         {selectedTab === 'recetas' && (
-          <div className={styles.recetasContainer}>
-            {recetas.length > 0 ? (
-              <div className={styles.recetasScroll}>
-                {recetas.slice(0, 3).map((receta) => (
-                  <div key={receta.id} className={styles.recetaCard}>
-                    <div className={styles.buttonContainer}>
-                      <div className={styles.buttonBackground}></div>
-                      <button onClick={() => handleEditRecipe(receta.id)} className={styles.editButton}>
-                        🖉 {/* Icono de edición */}
-                      </button>
-                      <button onClick={() => handleDeleteRecipe(receta.id)} className={styles.deleteButton}>
-                        🗑️ {/* Icono de eliminación */}
-                      </button>
-                    </div>
-                    <img src={receta.imagen} alt={receta.titulo} className={styles.recetaImagen} />
-                    <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
-                      {receta.nombre}
-                    </h3>
-                    <p>{receta.descripcion.length > 100 ? `${receta.descripcion.slice(0, 100)}...` : receta.descripcion}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No tienes recetas disponibles.</p>
-            )}
+          <div>
+<div className={styles.recetasContainer}>
+  {recetas.length > 0 ? (
+    <div className={styles.recetasScroll}>
+      {recetas.map((receta) => (
+        <div key={receta.id} className={styles.recetaCard}>
+          <div className={styles.buttonContainer}>
+            <div className={styles.buttonBackground}></div>
+            <button onClick={() => handleEditRecipe(receta.id)} className={styles.editButton}>
+              🖉 {/* Icono de edición */}
+            </button>
+            <button onClick={() => handleDeleteRecipe(receta.id)} className={styles.deleteButton}>
+              🗑️ {/* Icono de eliminación */}
+            </button>
+          </div>
+          <img src={receta.imagen} alt={receta.titulo} className={styles.recetaImagen} />
+          <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
+            {receta.nombre}
+          </h3>
+          <p>{receta.descripcion.length > 100 ? `${receta.descripcion.slice(0, 100)}...` : receta.descripcion}</p>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p>No tienes recetas disponibles.</p>
+  )}
+</div>
             <button onClick={handleAddRecipeClick} className={styles.addButton}>
               Agregar nueva receta
             </button>
           </div>
         )}
         {selectedTab === 'notificaciones' && <div>Contenido de Notificaciones</div>}
-        {selectedTab === 'eventos' && <div>Contenido de Eventos</div>}
+        {selectedTab === 'eventos' && 
+     <div className={styles.container}>
+     <div className={styles.calendar}>
+       <Calendar
+         onChange={setFechaSeleccionada}
+         value={fechaSeleccionada}
+       />
+     </div>
+     <h2>Eventos en {fechaSeleccionada.toDateString()}</h2>
+     <div className={styles.eventList}>
+       <ul>
+         {eventosPorFecha.length > 0 ? (
+           eventosPorFecha.map(evento => (
+             <li key={evento._id}>
+               <h3>{evento.titulo}</h3>
+               <p>{evento.descripcion}</p>
+               <p>Fecha: {new Date(evento.fecha).toLocaleString()}</p>
+               <p>Duración: {evento.duracionHrs} horas</p>
+             </li>
+           ))
+         ) : (
+           <p>No hay eventos para esta fecha.</p>
+         )}
+       </ul>
+     </div>
+   </div>
+        }
       </div>
     </div>
   );
