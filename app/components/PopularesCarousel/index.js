@@ -11,8 +11,15 @@ const PopularesCarousel = () => {
   useEffect(() => {
     const fetchPopulares = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/recetas/novedades/1'); 
-        setPopulares(response.data); 
+        const response = await axios.get('http://localhost:3000/api/recetas/novedades/1');
+
+        // Calcular el tiempo total de cada receta sumando los tiempos de los pasos
+        const popularesWithTotalTime = response.data.map(novedad => {
+          const totalTime = novedad.pasos?.reduce((acc, paso) => acc + (paso.duracionMin || 0), 0) || 0;
+          return { ...novedad, tiempoTotal: totalTime };
+        });
+
+        setPopulares(popularesWithTotalTime);
       } catch (error) {
         console.error('Error fetching novedades:', error);
       }
@@ -32,16 +39,14 @@ const PopularesCarousel = () => {
               nombre={novedad.nombre || 'Nombre de la Receta'}
               image={
                 novedad.imagen 
-                  ? `http://localhost:3000${novedad.imagen}`  // Construimos la URL completa de la imagen
+                  ? `http://localhost:3000${novedad.imagen}`
                   : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'
                }
-              tiempoMins={`${novedad.tiempoMins || 'Tiempo Desconocido'} Mins`}
+              tiempoMins={`${novedad.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}
               calorias={`${novedad.calorias || 'Calorías Desconocidas'} Kcal`}
               precio={novedad.precio ? `${novedad.precio}$` : 'Precio Desconocido'}
               imagenUsuario={novedad.imagenUsuario || 'https://example.com/default-user-image.jpg'}
               nombreusuario={novedad.nombreusuario || 'Usuario Desconocido'}
-            
-            
             />
           ))}             
         </div>
@@ -49,4 +54,5 @@ const PopularesCarousel = () => {
     </div>
   );
 };
+
 export default PopularesCarousel;

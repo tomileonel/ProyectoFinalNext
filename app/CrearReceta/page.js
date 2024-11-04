@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import IngredientSelector from '../components/IngredientSelector';
-import StepsList from '../components/StepsList/StepsList';  // Importar StepsList
-import TagSelector from '../components/TagsSelectorCrearReceta/tagsSelector.js';  // Importar TagSelector
+import IngredientSelector from '../../components/IngredientSelector';
+import StepsList from '../../components/StepsList/StepsList';  // Importar StepsList
+import TagSelector from '../../components/TagsSelectorCrearReceta/tagsSelector.js';  // Importar TagSelector
 import styles from './page.module.css';
-
 
 const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]);
@@ -17,7 +16,7 @@ const CrearReceta = () => {
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  
+  const router = useRouter();
 
   useEffect(() => {
     const fetchIngredients = async () => {
@@ -80,15 +79,9 @@ const CrearReceta = () => {
       setErrorMessage('Ocurrió un error al crear la receta. Por favor, intenta más tarde.');
     }
   };
-  const handleGoBack = () => {
-    window.history.back();
-  };
 
   return (
-    
-    
     <div className={styles.formContainer}>
-    <h1 onClick={handleGoBack} className={styles.goBack} style={{ cursor: 'pointer' }}>←</h1>
       <h1>Crear Receta</h1>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <form className={styles.form} onSubmit={handleSubmit}>
