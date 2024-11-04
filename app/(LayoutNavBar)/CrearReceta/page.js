@@ -4,15 +4,17 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import IngredientSelector from '../../components/IngredientSelector';
 import StepsList from '../../components/StepsList/StepsList';  // Importar StepsList
+import TagSelector from '../../components/TagsSelectorCrearReceta/tagsSelector.js';  // Importar TagSelector
 import styles from './page.module.css';
 
 const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [ingredientes, setIngredients] = useState([]);
   const [steps, setSteps] = useState([{ numero: 1, titulo: '', descripcion: '', duracionMin: 0 }]);
+  const [tags, setTags] = useState([]);  // Estado para almacenar tags seleccionados
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
-  const [imageFile, setImageFile] = useState(null);  
+  const [imageFile, setImageFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
@@ -36,6 +38,11 @@ const CrearReceta = () => {
     setImageFile(event.target.files[0]);
   };
 
+  // Maneja la selección de tags en TagSelector
+  const handleTagsChange = (selectedTags) => {
+    setTags(selectedTags);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -51,7 +58,7 @@ const CrearReceta = () => {
     formData.append('idcreador', parseInt(idCreador));
     formData.append('ingredientes', JSON.stringify(ingredientes));
     formData.append('pasos', JSON.stringify(steps));
-    formData.append('tags', JSON.stringify([]));  
+    formData.append('tags', JSON.stringify(tags));  // Agregar tags seleccionados
     if (imageFile) {
       formData.append('imagen', imageFile);
     }
@@ -112,6 +119,8 @@ const CrearReceta = () => {
         
         <StepsList steps={steps} setSteps={setSteps} />  {/* Uso de StepsList */}
         
+        <TagSelector onTagsChange={handleTagsChange} />  {/* Uso de TagSelector */}
+
         <button type="submit" className={styles.submitButton}>Publicar Receta</button>
       </form>
     </div>
