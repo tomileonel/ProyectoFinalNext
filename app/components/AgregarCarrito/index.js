@@ -1,73 +1,79 @@
-import React from 'react';
-import styled from 'styled-components';
+import styles from './styles.module.css';
+import { useEffect, useState } from 'react';
+import { ShoppingCart } from "lucide-react";
+import Counter from '../Contador';
 
-const Button = () => {
+const CartButton = ({ idRecipe }) => {
+  const [sparkle, setSparkle] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [itemCount, setItemCount] = useState(0); // Estado para el contador de artículos
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch('http://localhost:3000/api/auth/getUserProfile', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setUserId(data.id);
+          } else {
+            console.error('Error al obtener el perfil del usuario');
+          }
+        } catch (error) {
+          console.error('Error en la solicitud:', error);
+        }
+      } else {
+        console.error('Token no encontrado');
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  const handleClick = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/carrito/insertCarrito/${userId}/${idRecipe}`, {
+        method: 'POST'
+      });
+      if (response.ok) {
+        console.log("Receta insertada correctamente");
+        
+      } else {
+        console.log("Hubo un error insertando la receta");
+      }
+    } catch (error) {
+      console.log("Hubo un error insertando la receta", error);
+    }
+
+    setSparkle(true);
+    setTimeout(() => setSparkle(false), 700);
+  };
+
   return (
-    <StyledWrapper>
-      <button data-quantity={0} className="btn-cart">
-        <svg className="icon-cart" viewBox="0 0 24.38 30.52" height="30.52" width="24.38" xmlns="http://www.w3.org/2000/svg">
-          <title>icon-cart</title>
-          <path transform="translate(-3.62 -0.85)" d="M28,27.3,26.24,7.51a.75.75,0,0,0-.76-.69h-3.7a6,6,0,0,0-12,0H6.13a.76.76,0,0,0-.76.69L3.62,27.3v.07a4.29,4.29,0,0,0,4.52,4H23.48a4.29,4.29,0,0,0,4.52-4ZM15.81,2.37a4.47,4.47,0,0,1,4.46,4.45H11.35a4.47,4.47,0,0,1,4.46-4.45Zm7.67,27.48H8.13a2.79,2.79,0,0,1-3-2.45L6.83,8.34h3V11a.76.76,0,0,0,1.52,0V8.34h8.92V11a.76.76,0,0,0,1.52,0V8.34h3L26.48,27.4a2.79,2.79,0,0,1-3,2.44Zm0,0" />
-        </svg>
-        <span className="quantity" />
+    <div className={styles.container}>
+      <Counter itemCount={itemCount} setItemCount={setItemCount} />
+      <button 
+        className={styles['cart-button']} 
+        aria-label="Agregar al carrito"
+        onClick={handleClick}
+      >
+        <div className={styles['cart-button-inner']}>
+          <ShoppingCart className={styles['cart-icon']} />
+          {itemCount > 0 && (
+            <span className={styles['item-count']}>{itemCount}</span>
+          )}
+        </div>
+        {sparkle && <div className={styles.sparkle}></div>}
       </button>
-    </StyledWrapper>
+    </div>
   );
 }
 
-const StyledWrapper = styled.div`
-  .btn-cart {
-    position: absolute;
-    bottom: 1px;
- 
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    border: none;
-    background-color: transparent;
-  }
-
-  .btn-cart::after {
-    content: attr(data-quantity);
-    width: fit-content;
-    height: fit-content;
-    position: absolute;
-    font-size: 15px;
-    color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    opacity: 0;
-    visibility: hidden;
-    transition: .2s linear;
-    top: 115%;
-  }
-
-  .icon-cart {
-    width: 24.38px;
-    height: 30.52px;
-    transition: .2s linear;
-  }
-
-  .icon-cart path {
-    fill:#60AC3A;
-    transition: .2s linear;
-  }
-
-  .btn-cart:hover > .icon-cart {
-    transform: scale(1.2);
-  }
-
-  .btn-cart:hover > .icon-cart path {
-    fill: #60AC3A;
-  }
-
-  .btn-cart:hover::after {
-    visibility: visible;
-    opacity: 1;
-    top: 105%;
-  }
-
-  .quantity {
-    display: none;
-  }`;
-
-export default Button;
+export default CartButton;

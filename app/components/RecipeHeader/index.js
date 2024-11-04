@@ -3,6 +3,7 @@ import Bookmark from "../BookmarkFavoritos";
 import styles from './styles.module.css';
 import ShareComponent from "../CompartirModal";
 import RatingComponent from "../RatingModal";
+import CartButton from "../AgregarCarrito";
 import { useRouter } from 'next/navigation';
 
 const DropdownMenu = ({ isOpen, onClose, openShare, openRating, openReviews }) => {
@@ -99,6 +100,7 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
           <p>Precio: ${precio}</p>
           <p>🌟 {rating}</p>
           <Bookmark nombre={nombre}/> 
+          <CartButton idRecipe={id}/>
         </div>
       </div>
       <h1 className={styles.title}>{nombre}</h1>

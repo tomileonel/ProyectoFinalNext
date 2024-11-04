@@ -295,20 +295,19 @@ const ComentarioIndividual = ({ comentario, usuario, idComentario, onDelete, onU
     window.location.reload();
   };
 console.log("datos comentario", comentario)
-console.log(comentarioId, )
-const profilepic = comentario.imagen == null ? pfp : comentario.comentario;
-
+console.log(comentarioId )
+const profilepic = comentario.imagen == null ? pfp : comentario.imagen;
+console.log("foto", comentario.imagen)
   return (
     <div className={styles.comment}>
-      <Image
-      src={profilepic} 
-      width="20px"
-      height="20px"
+      <img
+      src={comentario.imagen} 
+      
       alt="avatar" 
       className={styles.avatar} />
       <div className={styles.commentContent}>
         <h3>{comentario.nombreusuario}</h3>
-        <p>-{comentario.rating}⭐</p>
+        <h3><strong>{comentario.rating}⭐</strong></h3>
         <p className={styles.fecha}>{comentario.fecha}</p>
         {isEditing ? (
           <div>

@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.cart-button, .counterButton {
+  width: 3rem; /* Ajusta el ancho según sea necesario */
+  height: 3rem; /* Ajusta la altura según sea necesario */
+  border-radius: 9999px;
+  background-color: #60ac3a;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0. 2s;
+}
+
+.cart-button:hover, .counterButton:hover {
+  background-color: #4f9a2a;
+}
+
+.cart-button:focus, .counterButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.cart-button-inner, .counterContainer {
+  width: 3rem; /* Ajusta el ancho según sea necesario */
+  height: 3rem; /* Ajusta la altura según sea necesario */
+  border-radius: 9999px;
+  background-color: #60ac3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.cart-icon, .counterValue {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: black;
+}
+  
+  .sparkle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    animation: sparkle 1.5s ease-out;
+  }
+  
+  @keyframes sparkle {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 0.7;
+    }
+    100% {
+      width: 200px;
+      height: 200px;
+      opacity: 0;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .sparkle {
+      animation: none;
+    }
+  }

@@ -5,7 +5,7 @@ export default function Carrito() {
     return (
         <div className={styles.body}>
       <div className={styles.text}>
-        Proximamente...
+       
       </div>
       </div>
     );
