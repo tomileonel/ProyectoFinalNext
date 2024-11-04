@@ -1,233 +1,239 @@
 .profileContainer {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
-    position: relative; /* Necesario para que el dropdown se posicione relativo a este contenedor */
-    padding: 20px; /* Espacio alrededor del header */
-  }
-  
-  .profileImage {
-    border-radius: 50%;
-    border: 2px solid #ccc;
-  }
-  
-  .userName {
-    margin-top: 10px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .description {
-    margin-top: 20px;
-    font-size: 16px;
-  }
-  
-  .moreButton {
-    background-color:#60ac3a;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .moreButton:hover {
-    background-color: #60ac3a;
-  }
-  
-  .tabs {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-  }
-  
-  .tabButton {
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
-    border: none;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .tabButton:hover {
-    background-color: #ddd;
-  }
-  
-  .activeTab {
-    background-color: #60ac3a;
-    color: white;
-  }
-  
-  .tabContent {
-    margin-top: 20px;
-  }
-  
-  .addButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #60ac3a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .addButton:hover {
-    background-color: #60ac3a;
-  }
-  
-  .recetasContainer {
-    max-height: 400px;
-    overflow-y: scroll;
-    padding: 10px;
-  }
-  
-  .recetaCard {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .recetaCard h3 {
-    margin: 0;
-    font-size: 18px;
-  }
-  
-  .recetaCard p {
-    margin: 5px 0;
-    font-size: 14px;
-  }
-  
-  /* Estilos para el botón del menú (tres puntos) */
-  .menuButton {
-    background: none;
-    border: none;
-    font-size: 24px; /* Aumenta el tamaño del ícono */
-    cursor: pointer;
-    color: #333; /* Cambia a tu color preferido */
-    padding: 5px; /* Espacio alrededor del botón */
-  }
-  
-  /* Estilos para el dropdown */
-  .dropdownMenu {
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-  }
-  
-  .menuItem {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #fff;
-    border: none;
-    width: 100%;
-    text-align: left;
-  }
-  
-  .menuItem:hover {
-    background-color: #f0f0f0;
-  }
-  
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 20px;
+}
 
-  .buttonContainer {
-    position: absolute; /* Posiciona los botones en la esquina superior derecha */
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 8px; /* Espacio entre botones */
-  }
-  
-  .buttonBackground {
-    position: absolute; /* Fondo detrás de los botones */
-    top: -5px; /* Ajustar según sea necesario */
-    right: -5px; /* Ajustar según sea necesario */
-    width: 50px; /* Ancho del fondo */
-    height: 50px; /* Alto del fondo */
-    background-color: rgba(255, 255, 255, 0.8); /* Color de fondo con opacidad */
-    border-radius: 50%; /* Bordes redondeados */
-    z-index: -1; /* Asegura que esté detrás de los botones */
-  }
-  
-  .editButton,
-  .deleteButton {
-    background: none; /* Sin fondo */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cambia el cursor a mano */
-    font-size: 18px; /* Tamaño del icono */
-  }
-  
-  .recetaTitulo {
-    cursor: pointer; /* Cambia el cursor a mano */
-    color: rgb(36, 175, 36); /* Color del título (puedes cambiarlo) */
-  }
-  
-  .recetaImagen {
-    width: 100%; /* Imagen ocupa todo el ancho de la tarjeta */
-    height: auto; /* Altura automática para mantener la proporción */
-    border-radius: 8px 8px 0 0; /* Esquinas redondeadas solo en la parte superior */
-  }
+.profileImage {
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
 
+.userName {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
 
-  .recetaImagen {
-    width: 100%; /* Asegura que la imagen ocupe el ancho completo de la tarjeta */
-    height: auto; /* Mantiene la relación de aspecto */
-  }
+.description {
+  margin-top: 20px;
+  font-size: 16px;
+}
 
-  .recetasContainer {
-    max-height: 400px; /* Altura máxima para el contenedor */
-    overflow-y: auto; /* Habilita el scroll vertical */
-    padding: 10px;
-  }
-  
-  .recetasScroll {
-    display: flex;
-    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
-    gap: 16px; /* Espaciado entre tarjetas */
-    padding: 10px; /* Espacio interno */
-  }
-  
-  .recetaCard {
-    width: calc(100% - 8px); /* Dos tarjetas por fila, ajustando por el gap */
-    border: 1px solid #ccc; /* Bordes de las tarjetas */
-    border-radius: 8px; /* Esquinas redondeadas */
-    background-color: #f9f9f9; /* Color de fondo */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    overflow: hidden; /* Para manejar el contenido que sobresale */
-  }
-  
-  .center {
-    margin: auto;
-  }
-  /* styles/Eventos.module.css */
+.moreButton {
+  background-color: #60ac3a;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.moreButton:hover {
+  background-color: #60ac3a;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.tabButton {
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.tabButton:hover {
+  background-color: #ddd;
+}
+
+.activeTab {
+  background-color: #60ac3a;
+  color: white;
+}
+
+.tabContent {
+  margin-top: 20px;
+}
+
+.addButton {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #60ac3a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #60ac3a;
+}
+
+.recetasContainer {
+  max-height: 400px;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.recetasScroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 10px;
+}
+
+.recetaCard {
+  width: calc(100% - 8px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.recetaCard h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.recetaCard p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.menuItem {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.menuItem:hover {
+  background-color: #f0f0f0;
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.buttonBackground {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.editButton,
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.recetaTitulo {
+  cursor: pointer;
+  color: rgb(36, 175, 36);
+}
+
+.recetaImagen {
+  width: 100%;
+  height: auto;
+  border-radius: 8px 8px 0 0;
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra horizontalmente */
+  align-items: center;
   padding: 20px;
 }
 
 .calendar {
-  margin-top: 20px; /* Espaciado superior opcional */
 }
 
 .eventList {
-  margin-top: 20px; /* Espaciado superior opcional */
-  text-align: center; /* Centra el texto de la lista de eventos */
+  text-align: center;
+  overflow-y: scroll;
+  max-height: 100px;
+  min-width: 300px;
+  border: 1px solid #60ac3a;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f9f9f9;
+  margin-bottom: 12%;
+}
+
+.eventList ul {
+  margin: auto;
+  padding: 0;
+}
+
+.eventItem {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.eventItem h3 {
+  margin: 0;
+  color: #60ac3a;
+}
+
+.eventItem p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.eventDate,
+.eventDuration {
+  margin: 5px 0;
+  color: #666;
+  font-style: italic;
 }
