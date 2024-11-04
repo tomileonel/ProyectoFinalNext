@@ -13,14 +13,20 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
       try {
         let url;
         if (selectedCategory == null || selectedCategory === 0) {
-          // Special case for category "Todas" or if selectedCategory is null/undefined
           url = `http://localhost:3000/api/recetas/byTag/${userId}`;
         } else {
           url = `http://localhost:3000/api/recetas/recipesByTag/${selectedCategory}/${userId}`;
         }
 
         const response = await axios.get(url);
-        setRecipes(response.data);
+        
+        // Calcular el tiempo total de cada receta sumando los tiempos de los pasos
+        const recipesWithTotalTime = response.data.map(recipe => {
+          const totalTime = recipe.pasos?.reduce((acc, paso) => acc + (paso.duracionMin || 0), 0) || 0;
+          return { ...recipe, tiempoTotal: totalTime };
+        });
+
+        setRecipes(recipesWithTotalTime);
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
@@ -33,20 +39,17 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
       <div className={styles.carousel}>
         <div className={styles.cards}>
           {recipes.map((recipe, index) => (
-            <CardRecipe
-              key={index}
-              id={recipe.id}
-              nombre={recipe.nombre || 'Recipe Name'}
-              image={
-                recipe.imagen 
-                  ? `http://localhost:3000${recipe.imagen}`  // Construimos la URL completa de la imagen
-                  : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'
-              }
-              prop={`⭐${recipe.rating || 'Rating'}`}
-              mins={`${recipe.tiempoMins || 'Time'} Mins`}
-              prop1={`${recipe.precio || 'Price'}$`}
-              kcal={`${recipe.calorias || 'Calories'} Kcal`}
-            />
+  <CardRecipe
+  key={index}
+  id={recipe.id}
+  nombre={recipe.nombre || 'Recipe Name'}
+  image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
+  prop={`⭐${recipe.rating || 'Rating'}`}
+  mins={`${recipe.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}  
+  prop1={`${recipe.precio || 'Price'}$`}
+  kcal={`${recipe.calorias || 'Calories'} Kcal`}
+/>
+
           ))}
         </div>
       </div>

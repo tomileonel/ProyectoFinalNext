@@ -3,19 +3,20 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import IngredientSelector from '../../components/IngredientSelector';
-import StepsList from '../../components/StepsList/StepsList';  // Importar StepsList
-import TagSelector from '../../components/TagsSelectorCrearReceta/tagsSelector.js';  // Importar TagSelector
+import StepsList from '../../components/StepsList/StepsList';
+import TagSelector from '../../components/TagsSelectorCrearReceta/tagsSelector.js';
 import styles from './page.module.css';
 
 const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [ingredientes, setIngredients] = useState([]);
   const [steps, setSteps] = useState([{ numero: 1, titulo: '', descripcion: '', duracionMin: 0 }]);
-  const [tags, setTags] = useState([]);  // Estado para almacenar tags seleccionados
+  const [tags, setTags] = useState([]);
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [currentStep, setCurrentStep] = useState(1);  // Controla la etapa actual
   const router = useRouter();
 
   useEffect(() => {
@@ -38,9 +39,16 @@ const CrearReceta = () => {
     setImageFile(event.target.files[0]);
   };
 
-  // Maneja la selección de tags en TagSelector
   const handleTagsChange = (selectedTags) => {
     setTags(selectedTags);
+  };
+
+  const handleNextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handlePreviousStep = () => {
+    setCurrentStep(currentStep - 1);
   };
 
   const handleSubmit = async (event) => {
@@ -58,7 +66,7 @@ const CrearReceta = () => {
     formData.append('idcreador', parseInt(idCreador));
     formData.append('ingredientes', JSON.stringify(ingredientes));
     formData.append('pasos', JSON.stringify(steps));
-    formData.append('tags', JSON.stringify(tags));  // Agregar tags seleccionados
+    formData.append('tags', JSON.stringify(tags));
     if (imageFile) {
       formData.append('imagen', imageFile);
     }
@@ -84,44 +92,88 @@ const CrearReceta = () => {
     <div className={styles.formContainer}>
       <h1>Crear Receta</h1>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <label>Nombre:</label>
-          <input
-            type="text"
-            value={recipeName}
-            onChange={(e) => setRecipeName(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Descripción:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
+        {currentStep === 1 && (
+          <div>
+            <h2>Información básica</h2>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input
+                type="text"
+                value={recipeName}
+                onChange={(e) => setRecipeName(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Descripción:</label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Imagen:</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </div>
+          </div>
+        )}
 
-        <div className={styles.formGroup}>
-          <label>Imagen:</label>
-          <input 
-            type="file" 
-            accept="image/*"  
-            onChange={handleImageChange}
-          />
+        {currentStep === 2 && (
+          <div>
+            <h2>Ingredientes</h2>
+            <IngredientSelector
+              options={ingredientOptions}
+              onIngredientsChange={setIngredients}
+            />
+          </div>
+        )}
+
+        {currentStep === 3 && (
+          <div>
+            <h2>Pasos</h2>
+            <StepsList steps={steps} setSteps={setSteps} />
+          </div>
+        )}
+
+        {currentStep === 4 && (
+          <div>
+            <h2>Tags</h2>
+            <TagSelector onTagsChange={handleTagsChange} />
+          </div>
+        )}
+
+        <div className={styles.actions}>
+          {currentStep > 1 && (
+            <button
+              type="button"
+              className={styles.previousButton}
+              onClick={handlePreviousStep}
+            >
+              Anterior
+            </button>
+          )}
+          {currentStep < 4 && (
+            <button
+              type="button"
+              className={styles.nextButton}
+              onClick={handleNextStep}
+            >
+              Siguiente
+            </button>
+          )}
+          {currentStep === 4 && (
+            <button type="submit" className={styles.submitButton}>
+              Publicar Receta
+            </button>
+          )}
         </div>
-
-        <IngredientSelector
-          options={ingredientOptions}
-          onIngredientsChange={setIngredients}
-        />
-        
-        <StepsList steps={steps} setSteps={setSteps} />  {/* Uso de StepsList */}
-        
-        <TagSelector onTagsChange={handleTagsChange} />  {/* Uso de TagSelector */}
-
-        <button type="submit" className={styles.submitButton}>Publicar Receta</button>
       </form>
     </div>
   );
