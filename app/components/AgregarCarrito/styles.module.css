@@ -1,6 +1,13 @@
 .container {
   display: flex;
   align-items: center;
+  background-color: #60ac3a;
+  border-radius: 5px;
+align-items: center;
+
+position:relative;
+
+left: -4rem;
 }
 
 .cart-button, .counterButton {
@@ -9,6 +16,7 @@
   border-radius: 9999px;
   background-color: #60ac3a;
   border: 1px solid #e5e7eb;
+
   display: flex;
   align-items: center;
   justify-content: center;

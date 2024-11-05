@@ -39,18 +39,27 @@ const CartButton = ({ idRecipe }) => {
 
   const handleClick = async () => {
     try {
+      if(itemCount > 0){
+      for(let i = 0; i<itemCount; i++){
       const response = await fetch(`http://localhost:3000/api/carrito/insertCarrito/${userId}/${idRecipe}`, {
         method: 'POST'
       });
+    
       if (response.ok) {
         console.log("Receta insertada correctamente");
         
       } else {
         console.log("Hubo un error insertando la receta");
       }
+    }
+    }
+      else{
+        console.log("Ingresa un valor correcto")
+      }
     } catch (error) {
       console.log("Hubo un error insertando la receta", error);
     }
+  
 
     setSparkle(true);
     setTimeout(() => setSparkle(false), 700);
@@ -66,9 +75,6 @@ const CartButton = ({ idRecipe }) => {
       >
         <div className={styles['cart-button-inner']}>
           <ShoppingCart className={styles['cart-icon']} />
-          {itemCount > 0 && (
-            <span className={styles['item-count']}>{itemCount}</span>
-          )}
         </div>
         {sparkle && <div className={styles.sparkle}></div>}
       </button>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './styles.module.css';
 import Bookmark from '../AgregarFavoritos';
-import CartButton from '../AgregarCarrito';
+
 
 
 
@@ -58,7 +58,7 @@ const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
       </div>
 
       <div className={styles.buttons}>
-        <ButtonCarrito />
+        
         <Bookmark nombre={nombre} />
 
       </div>
