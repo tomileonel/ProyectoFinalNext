@@ -97,11 +97,12 @@ const ProfilePage = () => {
           }
         }
       };
-
+     
       fetchRecetas();
     }, [userProfile]);
 
     return (
+      
       <div>
         <div className={styles.recetasContainer}>
           {recetas.length > 0 ? (
@@ -113,7 +114,7 @@ const ProfilePage = () => {
                     <button onClick={() => handleEditRecipe(receta.id)} className={styles.editButton}>🖉</button>
                     <button onClick={() => handleDeleteRecipe(receta.id)} className={styles.deleteButton}>🗑️</button>
                   </div>
-                  <img src={receta.imagen} alt={receta.titulo} className={styles.recetaImagen} />
+                  <img src={receta.imageUrl} alt={receta.titulo} className={styles.recetaImagen} />
                   <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
                     {receta.nombre}
                   </h3>
