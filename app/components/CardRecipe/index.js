@@ -28,7 +28,7 @@ const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
           <img 
             src={imageUrl} 
             alt={nombre} 
-            className={styles.imagen} 
+            className={styles.image} 
             style={imageSize} 
           />
           <div className={styles.titleButton}>

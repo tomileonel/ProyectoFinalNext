@@ -22,7 +22,7 @@ const CardRecipe = ({ id, nombre, tiempoMins, calorias, precio, imagenUsuario, n
       <img 
         src={imageUrl} 
         alt={nombre} 
-        className={styles.image} 
+        className={styles.foodImage} 
         style={imageSize}
       />
 
