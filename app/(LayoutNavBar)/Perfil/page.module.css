@@ -237,3 +237,18 @@
   color: #666;
   font-style: italic;
 }
+
+.eventTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333; /* Un color oscuro para destacar el título */
+  margin-bottom: 4px; /* Espacio debajo del título */
+  display: block; /* Asegura que ocupe toda la línea */
+}
+
+.eventDescription {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #666; /* Un color más claro para dar contraste con el título */
+  line-height: 1.5; /* Espaciado para mejorar la legibilidad */
+}
