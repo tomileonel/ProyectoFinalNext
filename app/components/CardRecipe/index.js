@@ -4,8 +4,6 @@ import styles from './styles.module.css';
 import Bookmark from '../AgregarFavoritos';
 
 
-
-
 const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const router = useRouter();
@@ -19,7 +17,8 @@ const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
   const handleCardClick = () => {
     router.push(`/Recetas/${id}`);
   };
-
+  console.log(image)
+  const imageUrl = image ? `http://localhost:3000${image}` : '/path/to/default-image.jpg';
   const imageSize = windowWidth > 600 ? { width: '150px', height: '150px' } : { width: '100px', height: '100px' };
 
   return (
@@ -27,9 +26,9 @@ const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
       <div onClick={handleCardClick}>
         <div className={styles.foodPhoto}>
           <img 
-            src={image} 
+            src={imageUrl} 
             alt={nombre} 
-            className={styles.image} 
+            className={styles.imagen} 
             style={imageSize} 
           />
           <div className={styles.titleButton}>
@@ -58,9 +57,8 @@ const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
       </div>
 
       <div className={styles.buttons}>
-        
+    
         <Bookmark nombre={nombre} />
-
       </div>
     </div>
   );
