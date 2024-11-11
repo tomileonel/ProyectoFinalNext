@@ -11,7 +11,7 @@ const CrearReceta = () => {
   const [ingredientOptions, setIngredientOptions] = useState([]);
   const [ingredientes, setIngredients] = useState([]);
   const [steps, setSteps] = useState([{ numero: 1, titulo: '', descripcion: '', duracionMin: 0 }]);
-  const [tags, setTags] = useState([]);  // Estado para almacenar tags seleccionados
+  const [tags, setTags] = useState([]);  
   const [recipeName, setRecipeName] = useState('');
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);

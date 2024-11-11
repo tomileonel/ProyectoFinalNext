@@ -1,0 +1,1 @@
+cambiar telefono en la base de datos por BIGINT 10/11

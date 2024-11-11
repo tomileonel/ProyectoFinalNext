@@ -77,6 +77,9 @@ const LoginPage = () => {
         {error && <p className={styles.error}>{error}</p>}
         <button type="submit" className={styles.submitButton}>Iniciar Sesión</button>
       </form>
+      <p className={styles.loginMessage}>
+      ¿No tienes cuenta? <a href="/Register" className={styles.loginLink}>Registrate</a>
+    </p>
     </div>
   );
 };

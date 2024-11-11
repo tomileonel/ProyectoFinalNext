@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css'; 
+import { TokenContext } from '../context/TokenContext.js';
+import countryCodes from '../utils/countrieCodes';
+import { Split } from 'lucide-react';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -12,54 +15,42 @@ const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
   const router = useRouter();
+  const { register } = useContext(TokenContext);
+  const [selectedCode, setSelectedCode] = useState('+54'); // Código por defecto
 
-  // Función para decodificar el token JWT y extraer el payload
-  const decodeJWT = (token) => {
-    const payloadBase64 = token.split('.')[1];  // El payload es la segunda parte del token
-    const decodedPayload = atob(payloadBase64); // Decodifica de base64 a string
-    return JSON.parse(decodedPayload);         // Convierte el string en objeto JSON
+  const handleCodeChange = (e) => {
+    setSelectedCode(e.target.value);
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    var PhonePlusCode = parseInt(selectedCode)+ phone
+alert(PhonePlusCode)
+if(phone.length != 10){
+  alert("Ingrese un telefono valido")
+}
+
     if (password !== confirmPassword) {
       alert('Las contraseñas no coinciden');
       return;
     }
-  
-    try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, name, lastName, phone, email, password }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        // Almacena el token
-        localStorage.setItem('token', data.token);
 
-        // Decodificar el token para extraer el idUsuario
-        const decodedToken = decodeJWT(data.token);
-        const idUsuario = decodedToken.id; // Extraer el ID del payload
-        localStorage.setItem('idUsuario', idUsuario); // Guardar el ID en localStorage
-        console.log('ID del Usuario guardado:', idUsuario);
+    
 
-        alert(data.message);
-        router.push('/Inicio'); 
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error('Error en el registro:', error);
-      alert('Error en el registro. Intenta nuevamente.');
+    const { status, message } = await register(username, name, lastName, PhonePlusCode, email, password);
+    
+    if (status === 200) {
+      router.push("/Inicio")
+      alert(message);
+    } else {
+      console.error(message);
     }
+ 
   };
 
   return (
@@ -96,16 +87,33 @@ const RegisterPage = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label htmlFor="phone">Teléfono:</label>
-          <input
-            type="text"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-        </div>
+    <label htmlFor="phone">Teléfono:</label>
+    <div className={styles.phoneInputContainer}>
+      <select
+        value={selectedCode}
+        onChange={handleCodeChange}
+        className={styles.areaCodeSelect}
+      >
+        {countryCodes.map((country, index) => (
+          <option key={index} value={country.code}>
+            {country.code} - {country.name}
+          </option>
+        ))}
+      </select>
+      <input
+        type="text"
+        id="phone"
+        value={phone}
+        onChange={handlePhoneChange}
+        required
+        placeholder="Ingrese su número"
+        className={styles.phoneInput}
+      />
+    </div>
+  </div>
+
         <div className={styles.formGroup}>
           <label htmlFor="email">Email:</label>
           <input
@@ -139,6 +147,9 @@ const RegisterPage = () => {
         
         <button type="submit" className={styles.submitButton}>Registrarse</button>
       </form>
+      <p className={styles.loginMessage}>
+      ¿Ya tienes cuenta? <a href="/Login" className={styles.loginLink}>Inicia sesión</a>
+    </p>
     </div>
   );
 };
