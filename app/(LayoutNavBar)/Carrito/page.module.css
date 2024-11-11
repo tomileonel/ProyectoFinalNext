@@ -1,14 +1,14 @@
-.body {
-    height: 100vh; /* Altura total de la ventana */
-    display: flex; /* Usamos flexbox para centrar */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    margin: 0; /* Elimina el margen por defecto */
+.container {
+    height: calc(100vh - 130px); /* Restar la altura de la navbar */
+    overflow-y: auto; /* Habilitar scroll vertical */
+    padding: 20px; /* Opcional, según el diseño */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar horizontalmente */
+     /* Centrar verticalmente */
 }
-.text {
-    text-align: center; /* Centra el texto dentro del div */
-    color: #60AC3A;
-    font-size: 3vw;
+.title{
+    font-size: 24px;
     font-family: 'Poppins', sans-serif; 
-    font-weight: 600;
+    font-weight: 600; 
 }

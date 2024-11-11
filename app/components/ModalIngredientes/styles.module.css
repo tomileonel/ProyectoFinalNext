@@ -1,0 +1,73 @@
+/* Los estilos para el modal son los mismos que antes */
+
+.ingredientsSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .chooseIngredients {
+    text-align: left;
+  }
+  
+  .arrow {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que el modal esté por encima de otros elementos */
+  }
+  
+  .modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .closeModal {
+   position: relative;
+    top: -10px;
+    right: -150px;
+    background: transparent;
+    border: none;
+    background-color: red;
+    border-radius: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+
+  }
+  
+  .closeModal:hover {
+    background-color: #c40000;
+  }
+  
+  .h2 {
+    margin-bottom: 10px;
+  }
+  
+  .p {
+    font-size: 14px;
+    color: #555;
+  }
+  

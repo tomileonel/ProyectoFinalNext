@@ -9,7 +9,7 @@ import Bookmark from '../AgregarFavoritos';
 const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const router = useRouter();
-
+  const imageUrl = image ? `http://localhost:3000${image}` : '/path/to/default-image.jpg';
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
@@ -27,7 +27,7 @@ const CardRecipe = ({ id, nombre, image, prop, mins, prop1, kcal }) => {
       <div onClick={handleCardClick}>
         <div className={styles.foodPhoto}>
           <img 
-            src={image} 
+            src={imageUrl} 
             alt={nombre} 
             className={styles.image} 
             style={imageSize} 

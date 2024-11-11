@@ -5,7 +5,7 @@ import FavoritesCarousel from "../../components/CarouselFavoritos";
 
 const Favorites = () => {
   const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario
-
+  
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token'); // Obtén el token del localStorage
