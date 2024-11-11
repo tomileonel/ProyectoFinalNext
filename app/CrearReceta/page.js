@@ -16,6 +16,7 @@ const CrearReceta = () => {
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  
   const router = useRouter();
 
   useEffect(() => {

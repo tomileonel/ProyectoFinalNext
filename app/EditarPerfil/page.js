@@ -6,6 +6,8 @@ import styles from './page.module.css';
 const EditProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imageFile, setImageFile] = useState(null);
+
   const [formData, setFormData] = useState({
     nombreusuario: '',
     contrasena: '',
@@ -89,15 +91,12 @@ const EditProfile = () => {
           apellido: formData.apellido,
           telefono: formData.telefono,
           descripcion: formData.descripcion,
-          imagen: formData.imagen,
-          tags: formData.tags,
+          contrasena: formData.contrasena,
+          imagen: imageFile,
+          // tags: formData.tags,
         };
   
-        if (formData.contrasena) {
-          userData.contrasena = formData.contrasena;
-        }
-  
-        const response = await fetch('http://localhost:3000/api/auth/updateUserProfile', {
+        const response = await fetch('http://localhost:3000/api/auth/editProfile', {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
