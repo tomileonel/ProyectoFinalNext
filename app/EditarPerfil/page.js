@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from 'react';
-import TagSelector from '../components/TagSelector/'; // Importa tu componente TagSelector
+import TagSelector from '../components/TagSelector/';
 import styles from './page.module.css';
 
 const EditProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imageFile, setImageFile] = useState(null);
+
   const [formData, setFormData] = useState({
     nombreusuario: '',
     contrasena: '',
@@ -17,7 +19,6 @@ const EditProfile = () => {
     imagen: '',
     tags: []
   });
-  
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -34,7 +35,6 @@ const EditProfile = () => {
           if (response.ok) {
             const data = await response.json();
             setUserProfile(data);
-            console.log(data)
             setFormData({
               nombreusuario: data.nombreusuario || '',
               contrasena: '',
@@ -81,47 +81,52 @@ const EditProfile = () => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        const userData = {
-          idusuario: userProfile.id,  
-          nombreusuario: formData.nombreusuario,
-          mail: formData.mail,
-          nombre: formData.nombre,
-          apellido: formData.apellido,
-          telefono: formData.telefono,
-          descripcion: formData.descripcion,
-          imagen: formData.imagen,
-          tags: formData.tags,
-        };
-  
-        if (formData.contrasena) {
-          userData.contrasena = formData.contrasena;
+        // Crear FormData y agregar los campos de usuario
+        const formPayload = new FormData();
+        formPayload.append('id', userProfile.id);
+        formPayload.append('username', formData.nombreusuario);
+        formPayload.append('email', formData.mail);
+        formPayload.append('name', formData.nombre);
+        formPayload.append('lastName', formData.apellido);
+        formPayload.append('phone', formData.telefono);
+        formPayload.append('description', formData.descripcion);
+        formPayload.append('password', formData.contrasena);
+        
+        // Agregar las etiquetas (tags) como JSON
+        formPayload.append('tags', JSON.stringify(formData.tags));
+
+        // Agregar la imagen si existe
+        if (imageFile) {
+          formPayload.append('img', imageFile);
         }
-  
-        const response = await fetch('http://localhost:3000/api/auth/updateUserProfile', {
+
+        // Realizar la solicitud PUT con FormData
+        const response = await fetch('http://localhost:3000/api/auth/editProfile', {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(userData),
+          body: formPayload,
         });
-  
+
         if (response.ok) {
-          console.log('Perfil actualizado con éxito');
+          console.log('Perfil actualizado correctamente');
+          // Realiza cualquier acción adicional después de la actualización
         } else {
-          console.error('Error al actualizar el perfil', await response.text());
+          console.error('Error al actualizar el perfil');
         }
       } catch (error) {
-        console.error('Error en la solicitud:', error);
+        console.error('Error al enviar el formulario:', error);
       }
     }
   };
-  
+
   if (loading) return <div>Cargando perfil...</div>;
 
   return (
     <div className={styles.editProfileContainer}>
       <h2 className={styles.title}>Editar Perfil</h2>
+      <form onSubmit={handleSubmit}>
         <div className={styles.field}>
           <label>Nombre de usuario</label>
           <input
@@ -132,7 +137,7 @@ const EditProfile = () => {
             className={styles.input}
           />
         </div>
-        
+
         <div className={styles.field}>
           <label>Contraseña</label>
           <input
@@ -199,7 +204,7 @@ const EditProfile = () => {
         </div>
 
         <div className={styles.field}>
-        <label>Imagen:</label>
+          <label>Imagen:</label>
           <input 
             type="file" 
             accept="image/*"  
@@ -212,7 +217,8 @@ const EditProfile = () => {
           <TagSelector onTagsChange={handleTagsChange} />
         </div>
 
-        <button  onClick={handleSubmit} className={styles.saveButton}>Guardar Cambios</button>
+        <button type="submit" className={styles.saveButton}>Guardar Cambios</button>
+      </form>
     </div>
   );
 };

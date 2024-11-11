@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import IngredientSelector from '../../components/IngredientSelector';
-import StepsList from '../../components/StepsList/StepsList';  // Importar StepsList
-import TagSelector from '../../components/TagsSelectorCrearReceta/tagsSelector.js';  // Importar TagSelector
+import IngredientSelector from '../components/IngredientSelector';
+import StepsList from '../components/StepsList/StepsList';  // Importar StepsList
+import TagSelector from '../components/TagsSelectorCrearReceta/tagsSelector.js';  // Importar TagSelector
 import styles from './page.module.css';
 
 const CrearReceta = () => {
@@ -16,6 +16,7 @@ const CrearReceta = () => {
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+
   const router = useRouter();
 
   useEffect(() => {

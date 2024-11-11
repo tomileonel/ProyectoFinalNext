@@ -1,1 +1,3 @@
 cambiar telefono en la base de datos por BIGINT 10/11
+npx -p node@18.17.0 next dev -p 3001
+    
