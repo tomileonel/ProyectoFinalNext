@@ -49,7 +49,7 @@ export default function Carrito() {
     };
     fetchRecetasCarrito();
   }, [userId])
-  console.log(recetas)
+
   return ( 
      <div className={styles.container}>
      <p className={styles.title}>Cesta</p> 
@@ -62,6 +62,7 @@ export default function Carrito() {
           minutos={receta.tiempoMins}
           precio={receta.precio}
           id={receta.id}
+          idReceta={receta.idReceta}
         />
       ))}
       </div>

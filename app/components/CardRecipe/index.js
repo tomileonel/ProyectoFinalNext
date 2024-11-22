@@ -20,7 +20,7 @@ const CardRecipe = ({ id, nombre, image, prop, tiempoMins, prop1, kcal }) => {
     router.push(`/Recetas/${id}`);
   };
 
-  const imageUrl = image ? `http://localhost:3000${image}` : '/path/to/default-image.jpg';
+  
   const imageSize = windowWidth > 600 ? { width: '150px', height: '150px' } : { width: '100px', height: '100px' };
 
   return (

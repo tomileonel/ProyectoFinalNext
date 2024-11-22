@@ -3,11 +3,11 @@ import styles from './styles.module.css';
 import React, { useState } from 'react';
 import Modal from '../ModalIngredientes';
 
-const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id }) => {
+const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id, idReceta }) => {
   const [isVisible, setIsVisible] = useState(true); // Estado para controlar la visibilidad de la tarjeta
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar si el modal está abierto
   const imageUrl = imagen ? `http://localhost:3000${imagen}` : '/path/to/default-image.jpg';
-
+  console.log(idReceta)
   const handleRemove = async (event) => {
     event.preventDefault();
     try {
@@ -62,9 +62,9 @@ const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id }) => {
           <p>Tiempo: {minutos} mins</p>
           <p>Precio: ${precio}</p>
         </div>
-        <div className={styles.ingredientsSection}>
+        <div className={styles.ingredientsSection} onClick={openModal}>
         <span className={styles.chooseIngredients}>Elegir ingredientes</span>
-        <span className={styles.arrow} onClick={openModal}>&gt;</span>
+        <span className={styles.arrow} >&gt;</span>
       </div>
       </div>
 
@@ -72,7 +72,7 @@ const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id }) => {
       
 
       
-      <Modal isOpen={isModalOpen} closeModal={closeModal} />
+      <Modal id={idReceta} isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 }

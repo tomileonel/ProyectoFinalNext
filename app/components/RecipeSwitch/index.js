@@ -42,7 +42,7 @@ const RecipeSwitch = ({ ingredientes, pasos, idreceta }) => {
             </div>
           </div>
           <div className={styles.unidad}>
-            {ing.cant}g - {ing.precio * (ing.cant/100)}$ - {ing.calorias * (ing.cant/100)}kcal 
+            {ing.cant}g - {(ing.precio * (ing.cant/100)).toFixed(2)}$ - {(ing.calorias * (ing.cant/100)).toFixed(2)}kcal 
           </div>
         </li>
       ))}
