@@ -1,0 +1,93 @@
+.tagSelector {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.loading {
+  color: #555;
+  font-style: italic;
+}
+
+.selectedTagsContainer {
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 0.9em;
+  color: #666;
+  margin: 5px 0;
+}
+
+.selectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.tagItem {
+  background-color: #e0f7fa;
+  border: 1px solid #009688;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.tagName {
+  margin-right: 10px;
+}
+
+.removeButton {
+  background-color: transparent;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.optionButton {
+  background-color: lightgray;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.optionButton:hover {
+  background-color: #009688;
+}
+
+.selected {
+  background-color: #4caf50;
+}
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 200px; /* Ajusta la altura máxima según sea necesario */
+  overflow-y: auto; /* Permite el scroll vertical */
+  border: 1px solid #ccc; /* Añadir borde para distinguir la sección */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 4px; /* Bordes redondeados */
+  background-color: #f9f9f9; /* Color de fondo */
+}

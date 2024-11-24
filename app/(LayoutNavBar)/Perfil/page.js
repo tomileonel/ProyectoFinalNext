@@ -17,8 +17,20 @@ const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();  const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date());
+  
+
+  const imageUrl = userProfile && userProfile.imagen 
+  ? `http://localhost:3000${userProfile.imagen}` 
+  : 'http://localhost:3000/img/DefaultProfile.jpg';
 
   // Fetch user profile data
+
+
+  
+    const toggleExpandir = () => {
+      setExpandida(!expandida);
+    };
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -118,8 +130,22 @@ const ProfilePage = () => {
                   <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
                     {receta.nombre}
                   </h3>
-                  <p>{receta.descripcion.length > 100 ? `${receta.descripcion.slice(0, 100)}...` : receta.descripcion}</p>
-                </div>
+                  <p>
+      {expandida 
+        ? receta.descripcion 
+        : receta.descripcion.length > 100 
+          ? `${receta.descripcion.slice(0, 100)}...` 
+          : receta.descripcion}
+      {receta.descripcion.length > 100 && (
+        <span 
+          onClick={toggleExpandir} 
+          style={{ color: '#4f9a2a', cursor: 'pointer', fontWeight: 'bold' }}
+        >
+          {expandida ? ' Ver menos' : ' Ver más'}
+        </span>
+      )}
+    </p>
+                  </div>
               ))}
             </div>
           ) : (
@@ -206,7 +232,11 @@ return (
   return (
     <div className={styles.profileContainer}>
       <div className={styles.header}>
-        <Image src={userProfile?.imagen || img} alt={userProfile?.nombre || 'Usuario'} className={styles.profileImage} width={150} height={150} />
+      <img 
+          src={imageUrl}  // Aquí usamos la URL completa de la imagen
+          alt={userProfile?.nombre || 'Usuario'}
+          className={styles.profileImage} width={150} height={150}
+        />
         <h2 className={styles.userName}>{userProfile?.nombre || 'Usuario'}</h2>
         <div className={styles.menuContainer} ref={menuRef}>
           <button onClick={toggleMenu} className={styles.menuButton}>⋮</button>

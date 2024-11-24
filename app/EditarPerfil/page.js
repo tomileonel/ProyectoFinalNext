@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from 'react';
-import TagSelector from '../components/TagSelector/';
+import { useRouter } from 'next/navigation';
+import TagSelector from '../components/TagSelectorEditarPerfil/';
 import styles from './page.module.css';
 
 const EditProfile = () => {
+  const router = useRouter(); // Para manejar la navegación
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageFile, setImageFile] = useState(null);
@@ -17,7 +19,7 @@ const EditProfile = () => {
     telefono: '',
     descripcion: '',
     imagen: '',
-    tags: []
+    tags: [],
   });
 
   useEffect(() => {
@@ -27,9 +29,7 @@ const EditProfile = () => {
         try {
           const response = await fetch('http://localhost:3000/api/auth/getUserProfile', {
             method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
+            headers: { 'Authorization': `Bearer ${token}` },
           });
 
           if (response.ok) {
@@ -44,7 +44,7 @@ const EditProfile = () => {
               telefono: data.telefono || '',
               descripcion: data.descripcion || '',
               imagen: data.imagen || '',
-              tags: data.tags || []
+              tags: data.tags || [],
             });
           } else {
             console.error('Error al obtener el perfil del usuario');
@@ -65,7 +65,7 @@ const EditProfile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (event) => {
@@ -73,7 +73,7 @@ const EditProfile = () => {
   };
 
   const handleTagsChange = (tags) => {
-    setFormData(prev => ({ ...prev, tags }));
+    setFormData((prev) => ({ ...prev, tags }));
   };
 
   const handleSubmit = async (e) => {
@@ -81,7 +81,6 @@ const EditProfile = () => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
-        // Crear FormData y agregar los campos de usuario
         const formPayload = new FormData();
         formPayload.append('id', userProfile.id);
         formPayload.append('username', formData.nombreusuario);
@@ -90,28 +89,21 @@ const EditProfile = () => {
         formPayload.append('lastName', formData.apellido);
         formPayload.append('phone', formData.telefono);
         formPayload.append('description', formData.descripcion);
-        formPayload.append('password', formData.contrasena);
-        
-        // Agregar las etiquetas (tags) como JSON
         formPayload.append('tags', JSON.stringify(formData.tags));
 
-        // Agregar la imagen si existe
         if (imageFile) {
           formPayload.append('img', imageFile);
         }
 
-        // Realizar la solicitud PUT con FormData
         const response = await fetch('http://localhost:3000/api/auth/editProfile', {
           method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+          headers: { 'Authorization': `Bearer ${token}` },
           body: formPayload,
         });
 
         if (response.ok) {
           console.log('Perfil actualizado correctamente');
-          // Realiza cualquier acción adicional después de la actualización
+          router.push("/Perfil")
         } else {
           console.error('Error al actualizar el perfil');
         }
@@ -124,7 +116,11 @@ const EditProfile = () => {
   if (loading) return <div>Cargando perfil...</div>;
 
   return (
+    
     <div className={styles.editProfileContainer}>
+        <button onClick={() => router.back()} className={styles.backButton}>
+        ← Volver
+      </button>
       <h2 className={styles.title}>Editar Perfil</h2>
       <form onSubmit={handleSubmit}>
         <div className={styles.field}>
@@ -133,17 +129,6 @@ const EditProfile = () => {
             type="text"
             name="nombreusuario"
             value={formData.nombreusuario}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.field}>
-          <label>Contraseña</label>
-          <input
-            type="password"
-            name="contrasena"
-            value={formData.contrasena}
             onChange={handleInputChange}
             className={styles.input}
           />
@@ -214,7 +199,10 @@ const EditProfile = () => {
 
         <div className={styles.field}>
           <label>Etiquetas</label>
-          <TagSelector onTagsChange={handleTagsChange} />
+          {userProfile && (
+  <TagSelector userId={userProfile.id} onTagsChange={handleTagsChange} />
+)}
+
         </div>
 
         <button type="submit" className={styles.saveButton}>Guardar Cambios</button>
