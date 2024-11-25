@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import React, { useState } from 'react';
 import Modal from '../ModalIngredientes';
 
-const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id, idReceta }) => {
+const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id, idReceta, idUsuario }) => {
   const [isVisible, setIsVisible] = useState(true); // Estado para controlar la visibilidad de la tarjeta
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar si el modal está abierto
   const imageUrl = imagen ? `http://localhost:3000${imagen}` : '/path/to/default-image.jpg';
@@ -72,7 +72,7 @@ const CarritoCard = ({ imagen, nombre, kcal, minutos, precio, id, idReceta }) =>
       
 
       
-      <Modal id={idReceta} isOpen={isModalOpen} closeModal={closeModal} />
+      <Modal id={idReceta}  isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 }

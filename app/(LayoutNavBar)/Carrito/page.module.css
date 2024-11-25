@@ -12,3 +12,27 @@
     font-family: 'Poppins', sans-serif; 
     font-weight: 600; 
 }
+.resumen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .pagarBtn {
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .pagarBtn:hover {
+    background-color: #45a049;
+  }
