@@ -71,6 +71,9 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
         setIsDropdownOpen(false);
       }
     };
+    const handleGoBack = () => {
+      router.back(); // Navega a la página anterior
+    };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
