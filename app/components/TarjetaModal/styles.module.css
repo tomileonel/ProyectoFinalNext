@@ -39,7 +39,7 @@
   }
   
   .input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ddd;
@@ -68,7 +68,7 @@
   }
   
   .submitButton {
-    background: #0070f3;
+    background: #22c55e;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -78,7 +78,7 @@
   }
   
   .submitButton:hover {
-    background: #005bb5;
+    background: #16a34a;
   }
   
   .error {

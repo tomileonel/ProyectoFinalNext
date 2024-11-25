@@ -36,7 +36,7 @@ const TarjetaModal = ({ isOpen, onClose, userId, onSave }) => {
       }
 
       const result = await response.json();
-      console.log('Tarjeta guardada:', result);
+      console.log('Tarjeta guardada:', result.id);
 
       onSave(result.id); // Devuelve el ID al componente principal
       onClose(); // Cierra el modal
