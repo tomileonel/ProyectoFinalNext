@@ -99,3 +99,14 @@
 .navigation button:last-child {
   margin-right: 0; /* Quita el margen derecho del último botón */
 }
+
+.return {
+  color: #60AC3A;
+  font-size: 36px;
+  font-family: 'Poppins', sans-serif;
+  position: absolute; /* Para posicionarlo de manera más precisa */
+  top: 20px; /* Separación desde arriba */
+  left: 20px; /* Separación desde la izquierda */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  z-index: 10; /* Asegura que esté por encima de otros elementos */
+}

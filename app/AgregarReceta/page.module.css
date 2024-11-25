@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .return {
+    color: #60AC3A;
+    font-size: 36px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+  }
+  
+  .title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
