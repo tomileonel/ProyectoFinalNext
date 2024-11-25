@@ -7,6 +7,7 @@ import CardFavorite from '../CardFavorites';
 const FavoritesCarousel = ({ userId }) => {
   const [favorite, setFavorite] = useState([]);
 
+  
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -35,23 +36,29 @@ const FavoritesCarousel = ({ userId }) => {
     <div className={styles.carouselContainer}>
       <div className={styles.carousel}>
         <div className={styles.cards}>
-          {favorite.map((favoritos, index) => (
-            <div key={index} className={styles.cardContainer}>
-              <CardFavorite
-                nombre={favoritos.nombre || 'Recipe Name'}
-                image={favoritos.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
-                prop={`⭐${favoritos.rating || 'Rating'}`}
-                mins={`${favoritos.tiempoMins || 'Time'} Mins`}
-                prop1={`${favoritos.precio || 'Price'}$`}
-                kcal={`${favoritos.calorias || 'Calories'} Kcal`}
-                onFavoriteChange={() => handleFavoriteChange(favoritos.id)} // Escucha cuando se cambia el estado del favorito
-              />
-            </div>
-          ))}
+          {favorite.map((favoritos, index) => {
+            // Verificamos si la imagen existe, si no, usamos la imagen predeterminada.
+            const imageUrl = favoritos.imagen 
+              ? `http://localhost:3000${favoritos.imagen}` 
+              : 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png';
+  
+            return (
+              <div key={index} className={styles.cardContainer}>
+                <CardFavorite
+                  nombre={favoritos.nombre || 'Recipe Name'}
+                  image={imageUrl}  // Asignamos la URL de la imagen (o la predeterminada)
+                  prop={`⭐${favoritos.rating || 'Rating'}`}
+                  mins={`${favoritos.tiempoMins || 'Time'} Mins`}
+                  prop1={`${favoritos.precio || 'Price'}$`}
+                  kcal={`${favoritos.calorias || 'Calories'} Kcal`}
+                  onFavoriteChange={() => handleFavoriteChange(favoritos.id)} // Escucha cuando se cambia el estado del favorito
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
   );
-};
-
+        };  
 export default FavoritesCarousel;
