@@ -23,10 +23,15 @@ const ProfilePage = () => {
   ? `http://localhost:3000${userProfile.imagen}` 
   : 'http://localhost:3000/img/DefaultProfile.jpg';
 
+  
+
+
+
   // Fetch user profile data
 
 
-  
+  const [expandida, setExpandida] = useState(false);
+
     const toggleExpandir = () => {
       setExpandida(!expandida);
     };
@@ -93,6 +98,7 @@ const ProfilePage = () => {
   const RecetasTab = () => {
     const [recetas, setRecetas] = useState([]);
 
+    
     useEffect(() => {
       const fetchRecetas = async () => {
         if (userProfile?.id) {
@@ -113,50 +119,78 @@ const ProfilePage = () => {
       fetchRecetas();
     }, [userProfile]);
 
+ 
     return (
       
-      <div>
-        <div className={styles.recetasContainer}>
-          {recetas.length > 0 ? (
-            <div className={styles.recetasScroll}>
-              {recetas.map((receta) => (
-                <div key={receta.id} className={styles.recetaCard}>
-                  <div className={styles.buttonContainer}>
-                    <div className={styles.buttonBackground}></div>
-                    <button onClick={() => handleEditRecipe(receta.id)} className={styles.editButton}>🖉</button>
-                    <button onClick={() => handleDeleteRecipe(receta.id)} className={styles.deleteButton}>🗑️</button>
-                  </div>
-                  <img src={receta.imageUrl} alt={receta.titulo} className={styles.recetaImagen} />
-                  <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
-                    {receta.nombre}
-                  </h3>
-                  <p>
-      {expandida 
-        ? receta.descripcion 
-        : receta.descripcion.length > 100 
-          ? `${receta.descripcion.slice(0, 100)}...` 
-          : receta.descripcion}
-      {receta.descripcion.length > 100 && (
-        <span 
-          onClick={toggleExpandir} 
-          style={{ color: '#4f9a2a', cursor: 'pointer', fontWeight: 'bold' }}
-        >
-          {expandida ? ' Ver menos' : ' Ver más'}
-        </span>
-      )}
-    </p>
-                  </div>
-              ))}
-            </div>
-          ) : (
-            <p>No tienes recetas disponibles.</p>
-          )}
+      
+        <div>
+          <div className={styles.recetasContainer}>
+            {recetas.length > 0 ? (
+              <div className={styles.recetasScroll}>
+                {recetas.map((receta) => {
+                  
+                  const imageUrlReceta = receta && receta.imagen
+                    ? `http://localhost:3000${receta.imagen}` 
+                    : 'http://localhost:3000/img/DefaultProfile.jpg';
+      
+                  return (
+                    <div key={receta.id} className={styles.recetaCard}>
+                      <div className={styles.buttonContainer}>
+                        <div className={styles.buttonBackground}></div>
+                        <button 
+                          onClick={() => handleEditRecipe(receta.id)} 
+                          className={styles.editButton}
+                        >
+                          🖉
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteRecipe(receta.id)} 
+                          className={styles.deleteButton}
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                      <img 
+                        src={imageUrlReceta} 
+                        alt={`Imagen de ${receta.titulo}`} 
+                        className={styles.recetaImagen}
+                      />
+                      <h3 
+                        onClick={() => router.push(`/Recetas/${receta.id}`)} 
+                        className={styles.recetaTitulo}
+                      >
+                        {receta.nombre}
+                      </h3>
+                      <p>
+                        {expandida 
+                          ? receta.descripcion 
+                          : receta.descripcion.length > 100 
+                            ? `${receta.descripcion.slice(0, 100)}...` 
+                            : receta.descripcion}
+                        {receta.descripcion.length > 100 && (
+                          <span 
+                            onClick={toggleExpandir} 
+                            style={{ color: '#4f9a2a', cursor: 'pointer', fontWeight: 'bold' }}
+                          >
+                            {expandida ? ' Ver menos' : ' Ver más'}
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  );
+                })}
+                  
+              </div>
+            ) : (
+              <p>No tienes recetas disponibles.</p>
+            )}
+          </div>
+          <button onClick={handleAddRecipeClick} className={styles.addButton}>
+            Agregar nueva receta
+          </button>
         </div>
-        <button onClick={handleAddRecipeClick} className={styles.addButton}>
-          Agregar nueva receta
-        </button>
-      </div>
-    );
+      );
+      
   };
 
   const NotificacionesTab = () => <div>Contenido de Notificaciones</div>;

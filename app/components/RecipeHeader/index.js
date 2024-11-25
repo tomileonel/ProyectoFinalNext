@@ -35,6 +35,10 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
   // Construir la URL completa de la imagen
   const imageUrl = imagen ? `http://localhost:3000${imagen}` : '/path/to/default-image.jpg';  // Usar una imagen por defecto si no hay imagen
 
+  const imageUrlProfile = creador && creador.imagen 
+  ? `http://localhost:3000${creador.imagen}` 
+  : 'http://localhost:3000/img/DefaultProfile.jpg';
+
   const handleGoBack = () => {
     window.history.back();
   };
@@ -105,7 +109,12 @@ const RecipeHeader = ({ id, nombre, kcal, minutos, precio, creador, imagen, rati
       </div>
       <h1 className={styles.title}>{nombre}</h1>
       <div className={styles.creator}>
-        <img src={creador.imagen || '/path/to/default-pfp.jpg'} alt={creador.nombreusuario} className={styles.creadorFoto} />
+        {/* <img src={creador.imagen || '/path/to/default-pfp.jpg'} alt={creador.nombreusuario} className={styles.creadorFoto} /> */}
+        <img 
+          src={imageUrlProfile}  // Aquí usamos la URL completa de la imagen
+          alt={`Imagen de ${creador.nombreusuario}`} 
+          className={styles.creadorFoto}
+        />
         <p>Creado por: {creador.nombreusuario}</p>
       </div>
 
