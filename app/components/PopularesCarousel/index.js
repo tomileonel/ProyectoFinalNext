@@ -45,6 +45,7 @@ const PopularesCarousel = () => {
               }
               tiempoMins={`${novedad.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}
               prop1={novedad.precio ? `${novedad.precio}$` : 'Precio Desconocido'}
+              prop={`⭐${novedad.rating || '0'}`}
               kcal={`${novedad.calorias || 'Calorías Desconocidas'} Kcal`}
             />
           ))}

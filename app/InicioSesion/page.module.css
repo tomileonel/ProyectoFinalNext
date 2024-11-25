@@ -4,8 +4,21 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-top: 50px;
     text-align: center;
   }
+  .title {
+    color: green; /* Cambia el color a verde */
+    text-align: center; /* Centra el texto horizontalmente */
+    position: fixed; /* Fija el título en su posición */
+    top: 20px; /* Ajusta la distancia desde la parte superior */
+    left: 50%; /* Ajusta la posición horizontal */
+    transform: translateX(-50%); /* Centra el elemento respecto al eje X */
+    font-size: 2rem; /* Tamaño de la fuente */
+    font-weight: bold; /* Fuente en negrita */
+    z-index: 1000; /* Asegura que el título esté en la capa superior */
+  }
+  
   
   .logo {
     width: 300px !important; 

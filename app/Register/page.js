@@ -55,9 +55,11 @@ if(phone.length != 10){
 
   return (
     <div className={styles.formContainer}>
-      <h1>Registrarse</h1>
+      <h1 >Registrarse</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
+        
         <div className={styles.formGroup}>
+          
           <label htmlFor="username">Nombre de Usuario:</label>
           <input
             type="text"
