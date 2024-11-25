@@ -161,6 +161,12 @@
   filter: brightness(1.5);
 }
 
+.tiempo, .kcal, .precio {
+  font-size: 15px; /* Tamaño de fuente más pequeño */
+  color: #555; /* Ajusta el color si quieres que sea más suave */
+  margin: 2px 0; /* Espaciado vertical menor entre líneas */
+}
+
 @media (max-width: 600px) {
 .card {
   width: 150px; /* Cambiado de 200px a 150px */
