@@ -252,3 +252,54 @@
   color: #666; /* Un color más claro para dar contraste con el título */
   line-height: 1.5; /* Espaciado para mejorar la legibilidad */
 }
+
+.recetaCard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative; /* Necesario para posicionar los botones */
+}
+
+.recetaImagen {
+  width: 100%;
+  object-fit:cover;
+  height: 180px; /* Altura fija para mantener un tamaño consistente */
+  border-radius: 8px 8px 0 0;
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 8px; /* Espaciado desde el borde superior */
+  right: 8px; /* Espaciado desde el borde derecho */
+  display: flex;
+  gap: 5px;
+  z-index: 2; /* Asegura que los botones estén encima de la imagen */
+}
+
+.buttonBackground {
+  display: none; /* Oculto porque no es necesario con este diseño */
+}
+
+.editButton,
+.deleteButton {
+  background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+  border: 1px solid #ccc; /* Bordes para un mejor contraste */
+  cursor: pointer;
+  font-size: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  transition: background-color 0.3s ease;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  background-color: #ddd; /* Fondo al pasar el mouse */
+}
+

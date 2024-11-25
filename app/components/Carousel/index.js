@@ -19,10 +19,10 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
         }
 
         const response = await axios.get(url);
-        
-        // Calcular el tiempo total de cada receta sumando los tiempos de los pasos
+
         const recipesWithTotalTime = response.data.map(recipe => {
-          const totalTime = recipe.pasos?.reduce((acc, paso) => acc + (paso.duracionMin || 0), 0) || 0;
+          const totalTime = recipe.tiempoMins || // Prioritize `tiempoMins` from backend if available
+            recipe.pasos?.reduce((acc, paso) => acc + (paso.duracionMin || 0), 0) || 0;
           return { ...recipe, tiempoTotal: totalTime };
         });
 
@@ -37,24 +37,28 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
   return (
     <div className={styles.carouselContainer}>
       <div className={styles.carousel}>
-        <div className={styles.cards}>
-          {recipes.map((recipe, index) => (
-  <CardRecipe
-  key={index}
-  id={recipe.id}
-  nombre={recipe.nombre || 'Recipe Name'}
-  image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
-  prop={`⭐${recipe.rating || 'Rating'}`}
-  mins={`${recipe.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}  
-  prop1={`${recipe.precio || 'Price'}$`}
-  kcal={`${recipe.calorias || 'Calories'} Kcal`}
-/>
-
-          ))}
-        </div>
+        {recipes.length === 0 ? (
+          <p className={styles.noRecipesMessage}>No se encontraron recetas</p>
+        ) : (
+          <div className={styles.cards}>
+            {recipes.map((recipe, index) => (
+              <CardRecipe
+                key={index}
+                id={recipe.id}
+                nombre={recipe.nombre || 'Recipe Name'}
+                image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
+                prop={`⭐${recipe.rating || '0'}`}
+                tiempoMins={`${recipe.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}
+                prop1={`${recipe.precio || 'Price'}$`}
+                kcal={`${recipe.calorias || 'Calories'} Kcal`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
+  
 };
 
 export default HomeRecipesCarousel;

@@ -17,8 +17,25 @@ const ProfilePage = () => {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();  const [fechaSeleccionada, setFechaSeleccionada] = useState(new Date());
+  
+
+  const imageUrl = userProfile && userProfile.imagen 
+  ? `http://localhost:3000${userProfile.imagen}` 
+  : 'http://localhost:3000/img/DefaultProfile.jpg';
+
+  
+
+
 
   // Fetch user profile data
+
+
+  const [expandida, setExpandida] = useState(false);
+
+    const toggleExpandir = () => {
+      setExpandida(!expandida);
+    };
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
@@ -75,12 +92,42 @@ const ProfilePage = () => {
     router.push('/');
   };
 
+  const handleDeleteRecipe = (recipeId) => {
+    const confirmDelete = window.confirm("¿Estás seguro de eliminar esta receta?");
+    
+    if (confirmDelete && userProfile) {
+      fetch(`http://localhost:3000/api/recetas/delete/${recipeId}`, {
+        method: 'delete',
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("Receta eliminada exitosamente.");
+            location.reload();
+          } else {
+            throw new Error("Error al eliminar la receta.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Hubo un problema al eliminar la receta.");
+        });
+    }
+  };
+  
+
+  const handleEditRecipe= (id) => {
+    router.push(`/EditarReceta/${id}`);
+
+  };
+
+
   const toggleMenu = () => setShowMenu(!showMenu);
 
   // Componentes de tabs
   const RecetasTab = () => {
     const [recetas, setRecetas] = useState([]);
 
+    
     useEffect(() => {
       const fetchRecetas = async () => {
         if (userProfile?.id) {
@@ -101,36 +148,78 @@ const ProfilePage = () => {
       fetchRecetas();
     }, [userProfile]);
 
+ 
     return (
       
-      <div>
-        <div className={styles.recetasContainer}>
-          {recetas.length > 0 ? (
-            <div className={styles.recetasScroll}>
-              {recetas.map((receta) => (
-                <div key={receta.id} className={styles.recetaCard}>
-                  <div className={styles.buttonContainer}>
-                    <div className={styles.buttonBackground}></div>
-                    <button onClick={() => handleEditRecipe(receta.id)} className={styles.editButton}>🖉</button>
-                    <button onClick={() => handleDeleteRecipe(receta.id)} className={styles.deleteButton}>🗑️</button>
-                  </div>
-                  <img src={receta.imageUrl} alt={receta.titulo} className={styles.recetaImagen} />
-                  <h3 onClick={() => router.push(`/Recetas/${receta.id}`)} className={styles.recetaTitulo}>
-                    {receta.nombre}
-                  </h3>
-                  <p>{receta.descripcion.length > 100 ? `${receta.descripcion.slice(0, 100)}...` : receta.descripcion}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>No tienes recetas disponibles.</p>
-          )}
+      
+        <div>
+          <div className={styles.recetasContainer}>
+            {recetas.length > 0 ? (
+              <div className={styles.recetasScroll}>
+                {recetas.map((receta) => {
+                  
+                  const imageUrlReceta = receta && receta.imagen
+                    ? `http://localhost:3000${receta.imagen}` 
+                    : 'http://localhost:3000/img/DefaultRecipe.jpg';
+      
+                  return (
+                    <div key={receta.id} className={styles.recetaCard}>
+                      <div className={styles.buttonContainer}>
+                        <div className={styles.buttonBackground}></div>
+                        <button 
+                          onClick={() => handleEditRecipe(receta.id)} 
+                          className={styles.editButton}
+                        >
+                          🖉
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteRecipe(receta.id)} 
+                          className={styles.deleteButton}
+                        >
+                          🗑️
+                        </button>
+                      </div>
+                      <img 
+                        src={imageUrlReceta} 
+                        alt={`Imagen de ${receta.titulo}`} 
+                        className={styles.recetaImagen}
+                      />
+                      <h3 
+                        onClick={() => router.push(`/Recetas/${receta.id}`)} 
+                        className={styles.recetaTitulo}
+                      >
+                        {receta.nombre}
+                      </h3>
+                      <p>
+                        {expandida 
+                          ? receta.descripcion 
+                          : receta.descripcion.length > 100 
+                            ? `${receta.descripcion.slice(0, 100)}...` 
+                            : receta.descripcion}
+                        {receta.descripcion.length > 100 && (
+                          <span 
+                            onClick={toggleExpandir} 
+                            style={{ color: '#4f9a2a', cursor: 'pointer', fontWeight: 'bold' }}
+                          >
+                            {expandida ? ' Ver menos' : ' Ver más'}
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  );
+                })}
+                  
+              </div>
+            ) : (
+              <p>No tienes recetas disponibles.</p>
+            )}
+          </div>
+          <button onClick={handleAddRecipeClick} className={styles.addButton}>
+            Agregar nueva receta
+          </button>
         </div>
-        <button onClick={handleAddRecipeClick} className={styles.addButton}>
-          Agregar nueva receta
-        </button>
-      </div>
-    );
+      );
+      
   };
 
   const NotificacionesTab = () => <div>Contenido de Notificaciones</div>;
@@ -206,7 +295,11 @@ return (
   return (
     <div className={styles.profileContainer}>
       <div className={styles.header}>
-        <Image src={userProfile?.imagen || img} alt={userProfile?.nombre || 'Usuario'} className={styles.profileImage} width={150} height={150} />
+      <img 
+          src={imageUrl}  // Aquí usamos la URL completa de la imagen
+          alt={userProfile?.nombre || 'Usuario'}
+          className={styles.profileImage} width={150} height={150}
+        />
         <h2 className={styles.userName}>{userProfile?.nombre || 'Usuario'}</h2>
         <div className={styles.menuContainer} ref={menuRef}>
           <button onClick={toggleMenu} className={styles.menuButton}>⋮</button>

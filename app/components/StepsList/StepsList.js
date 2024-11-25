@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './styles.module.css';
 
 const StepInput = ({ step, onStepChange, onRemove }) => {
   // Manejar el cambio de título
@@ -11,21 +12,21 @@ const StepInput = ({ step, onStepChange, onRemove }) => {
   const handleDuracionMinChange = (e) => onStepChange({ ...step, duracionMin: parseInt(e.target.value) || 0 });
 
   return (
-    <div>
+    <div className={styles.stepInputContainer}>
       <input 
         type="text" 
-        placeholder="Título del paso" 
+        placeholder="Ingresar Título" 
         value={step.titulo} 
         onChange={handleTituloChange} 
       />
       <textarea
-        placeholder="Descripción del paso"
+        placeholder="Ingresar Descripción"
         value={step.descripcion}
         onChange={handleDescripcionChange}
       />
       <input
         type="number"
-        placeholder="Duración (minutos)"
+        placeholder="Ingresar Tiempo (minutos)"
         value={step.duracionMin}
         onChange={handleDuracionMinChange}
       />
@@ -39,12 +40,17 @@ const StepInput = ({ step, onStepChange, onRemove }) => {
 const StepsList = ({ steps, setSteps }) => {
   // Agregar un nuevo paso
   const handleAddStep = () => {
-    setSteps([...steps, { numero: steps.length + 1, titulo: '', descripcion: '', duracionMin: 0 }]);
+    setSteps([
+      ...steps,
+      { nro: steps.length + 1, titulo: '', descripcion: '', duracionMin: 0 }, // Cambié 'numero' por 'nro'
+    ]);
   };
 
-  // Eliminar un paso
+  // Eliminar un paso y reasignar números
   const handleRemoveStep = (index) => {
-    setSteps(steps.filter((_, i) => i !== index));
+    const updatedSteps = steps.filter((_, i) => i !== index);
+    // Reasignar números de paso después de eliminar
+    setSteps(updatedSteps.map((step, i) => ({ ...step, nro: i + 1 })));
   };
 
   // Manejar cambios en un paso específico
@@ -65,7 +71,11 @@ const StepsList = ({ steps, setSteps }) => {
           onRemove={() => handleRemoveStep(index)}
         />
       ))}
-      <button type="button" onClick={handleAddStep}>
+      <button
+        type="button"
+        className={styles.addStepButton}
+        onClick={handleAddStep}
+      >
         Agregar Paso
       </button>
     </div>

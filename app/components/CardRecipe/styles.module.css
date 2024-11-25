@@ -125,29 +125,27 @@
 .time {
   display: flex;
   justify-content: space-between;
-  margin-top: -5px; /* Ajustado para subir la sección de tiempo, precio y calorías */
-  
+  margin-top: 5px; /* Reduce el margen */
+  font-size: 12px !important; 
 }
 
-.tiempo {
-  font-weight: bold;
-  color: #666;
-}
+
 
 .mins {
-  font-weight: normal;
+
   color: #333;
 }
 
 .time1, .time2, .time3 {
   text-align: center;
-  font-size: 12px;
+  font-size: 12px !important; 
+  margin: 0 2px; /* Reduce el espacio horizontal */
 }
 
 .time1 p, .time2 p, .time3 p {
-  margin: 2px 0;
+  margin: 1px 0; /* Reduce el espacio vertical entre líneas */
+  font-size: 12px !important; 
 }
-
 .bookmarkButton {
   background: transparent;
   border: none;
@@ -161,6 +159,12 @@
 
 .bookmarkIcon.bookmarked {
   filter: brightness(1.5);
+}
+
+.tiempo, .kcal, .precio {
+  font-size: 15px; /* Tamaño de fuente más pequeño */
+  color: #555; /* Ajusta el color si quieres que sea más suave */
+  margin: 2px 0; /* Espaciado vertical menor entre líneas */
 }
 
 @media (max-width: 600px) {
@@ -235,13 +239,11 @@
 .time {
   display: flex;
   justify-content: space-between;
-  margin-top: -5px;
+  margin-top: 5px; /* Reduce el margen */
+  font-size: 12px !important; 
 }
 
-.tiempo {
-  font-weight: bold;
-  color: #666;
-}
+
 
 .mins {
   font-weight: normal;
@@ -250,11 +252,14 @@
 
 .time1, .time2, .time3 {
   text-align: center;
-  font-size: 10px; /* Cambiado de 12px a 10px */
+  font-size: 12px !important; 
+  margin: 0 2px; /* Reduce el espacio horizontal */
 }
 
 .time1 p, .time2 p, .time3 p {
-  margin: 2px 0;
+  margin: 1px 0; /* Reduce el espacio vertical entre líneas */
+  font-size: 10px; /* Ajusta el tamaño de la fuente */
+  font-size: 12px !important; 
 }
 
 .bookmarkButton {
@@ -270,5 +275,11 @@
 
 .bookmarkIcon.bookmarked {
   filter: brightness(1.5);
+}
+
+.tiempo, .mins, .kcal {
+  font-size: 10px; /* Tamaño más pequeño */
+  line-height: 1.2; /* Reduce la altura de línea */
+  color: #555;
 }
 }
