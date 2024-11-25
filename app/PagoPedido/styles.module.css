@@ -22,6 +22,7 @@
   
   .title {
     font-size: 1.125rem;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
   }
   
@@ -129,6 +130,7 @@
   .section-title {
     font-weight: 600;
     margin-bottom: 0.25rem;
+    font-family: 'Poppins', sans-serif;
     margin-top: 0;
   }
   
@@ -136,6 +138,7 @@
     font-size: 0.875rem;
     color: #6b7280;
     margin-bottom: 0.75rem;
+    font-family: 'Poppins', sans-serif;
     margin-top: 0;
   }
   
@@ -236,6 +239,13 @@
   .add-card-button:hover{
     background-color: #16a34a;
    
+  }.date-input{
+    height: 25px;
+    width: auto;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #22c55e;
+    color: white;
   }
   .pay-button {
     width: 100%;

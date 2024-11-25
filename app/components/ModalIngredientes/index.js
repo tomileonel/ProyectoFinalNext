@@ -30,12 +30,7 @@ const Modal = ({ id, isOpen, closeModal }) => {
   }, [id]);
 
   // Manejar el cambio en el checkbox
-  const handleCheckboxChange = (idIngrediente) => {
-    setSeleccionados((prev) => ({
-      ...prev,
-      [idIngrediente]: !prev[idIngrediente], // Alternar solo el checkbox seleccionado
-    }));
-  };
+
 
   // Guardar los ingredientes seleccionados
   

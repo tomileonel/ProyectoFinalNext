@@ -68,8 +68,31 @@ export default function Carrito() {
   }, [userId]);
 
   // Manejar clic en el botón "Pagar"
-  const handlePagar = () => {
-    router.push("/PagoPedido");
+  const handlePagar = async () => {
+    if (userId && recetas.length > 0) {
+      try {
+        // Insertar todas las recetas en la tabla RecetaCarrito
+        await Promise.all(
+          recetas.map((receta) =>
+            axios.post(
+              `http://localhost:3000/api/carrito/InsertIntoRecetaCarrito/${userId}/${receta.idReceta}`,{
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+          )
+        );
+
+        // Redirigir a la página de pago
+        router.push("/PagoPedido");
+      } catch (error) {
+        console.error("Error al insertar recetas en RecetaCarrito:", error);
+        alert("Hubo un error al procesar el pedido. Inténtalo de nuevo.");
+      }
+    } else {
+      alert("El carrito está vacío o el usuario no está identificado.");
+    }
   };
 
   return (
