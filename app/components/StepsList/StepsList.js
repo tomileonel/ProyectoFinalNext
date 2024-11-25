@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from './styles.module.css';
 
 const StepInput = ({ step, onStepChange, onRemove }) => {
   // Manejar el cambio de título
@@ -11,21 +12,21 @@ const StepInput = ({ step, onStepChange, onRemove }) => {
   const handleDuracionMinChange = (e) => onStepChange({ ...step, duracionMin: parseInt(e.target.value) || 0 });
 
   return (
-    <div>
+    <div className={styles.stepInputContainer}>
       <input 
         type="text" 
-        placeholder="Título del paso" 
+        placeholder="Ingresar Título" 
         value={step.titulo} 
         onChange={handleTituloChange} 
       />
       <textarea
-        placeholder="Descripción del paso"
+        placeholder="Ingresar Descripción"
         value={step.descripcion}
         onChange={handleDescripcionChange}
       />
       <input
         type="number"
-        placeholder="Duración (minutos)"
+        placeholder="Ingresar Tiempo (minutos)"
         value={step.duracionMin}
         onChange={handleDuracionMinChange}
       />
@@ -65,7 +66,11 @@ const StepsList = ({ steps, setSteps }) => {
           onRemove={() => handleRemoveStep(index)}
         />
       ))}
-      <button type="button" onClick={handleAddStep}>
+      <button
+        type="button"
+        className={styles.addStepButton}
+        onClick={handleAddStep}
+      >
         Agregar Paso
       </button>
     </div>

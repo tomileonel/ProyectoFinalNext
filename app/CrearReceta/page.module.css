@@ -79,3 +79,23 @@
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
 }
+
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation button {
+  flex: 1;
+  margin: 0 10px; /* Agrega espacio horizontal entre los botones */
+}
+
+.navigation button:first-child {
+  margin-left: 0; /* Quita el margen izquierdo del primer botón */
+}
+
+.navigation button:last-child {
+  margin-right: 0; /* Quita el margen derecho del último botón */
+}
