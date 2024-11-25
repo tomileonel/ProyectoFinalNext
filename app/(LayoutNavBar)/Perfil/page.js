@@ -92,6 +92,34 @@ const ProfilePage = () => {
     router.push('/');
   };
 
+  const handleDeleteRecipe = (recipeId) => {
+    const confirmDelete = window.confirm("¿Estás seguro de eliminar esta receta?");
+    
+    if (confirmDelete && userProfile) {
+      fetch(`http://localhost:3000/api/recetas/delete/${recipeId}`, {
+        method: 'delete',
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert("Receta eliminada exitosamente.");
+            location.reload();
+          } else {
+            throw new Error("Error al eliminar la receta.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Hubo un problema al eliminar la receta.");
+        });
+    }
+  };
+  
+
+  const handleEditRecipe= () => {
+
+  };
+
+
   const toggleMenu = () => setShowMenu(!showMenu);
 
   // Componentes de tabs
