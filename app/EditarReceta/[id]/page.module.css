@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.formGroup input, 
+.formGroup textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.submitButton {
+  background-color: #60ac3a;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.submitButton:hover {
+  background-color: #4f9a2a;
+}
+.goBack{
+  justify-content: flex-start;
+  align-items: start;
+  color:#60ac3a;
+}
+.goBack:hover{
+  color: #4f9a2a;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.checkboxContainer label {
+  margin-left: 5px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation button {
+  flex: 1;
+  margin: 0 10px; /* Agrega espacio horizontal entre los botones */
+}
+
+.navigation button:first-child {
+  margin-left: 0; /* Quita el margen izquierdo del primer botón */
+}
+
+.navigation button:last-child {
+  margin-right: 0; /* Quita el margen derecho del último botón */
+}

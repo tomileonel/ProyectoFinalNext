@@ -37,23 +37,28 @@ const HomeRecipesCarousel = ({ selectedCategory, userId }) => {
   return (
     <div className={styles.carouselContainer}>
       <div className={styles.carousel}>
-        <div className={styles.cards}>
-          {recipes.map((recipe, index) => (
-            <CardRecipe
-              key={index}
-              id={recipe.id}
-              nombre={recipe.nombre || 'Recipe Name'}
-              image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
-              prop={`⭐${recipe.rating || 'Rating'}`}
-              tiempoMins={`${recipe.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}
-              prop1={`${recipe.precio || 'Price'}$`}
-              kcal={`${recipe.calorias || 'Calories'} Kcal`}
-            />
-          ))}
-        </div>
+        {recipes.length === 0 ? (
+          <p className={styles.noRecipesMessage}>No se encontraron recetas</p>
+        ) : (
+          <div className={styles.cards}>
+            {recipes.map((recipe, index) => (
+              <CardRecipe
+                key={index}
+                id={recipe.id}
+                nombre={recipe.nombre || 'Recipe Name'}
+                image={recipe.imagen || 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'}
+                prop={`⭐${recipe.rating || '0'}`}
+                tiempoMins={`${recipe.tiempoTotal || 'Tiempo Total Desconocido'} Mins`}
+                prop1={`${recipe.precio || 'Price'}$`}
+                kcal={`${recipe.calorias || 'Calories'} Kcal`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
+  
 };
 
 export default HomeRecipesCarousel;

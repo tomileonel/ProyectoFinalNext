@@ -1,14 +1,13 @@
-// src/components/TagSelector.js
 "use client";
 
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
-const TagSelector = ({ onTagsChange }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const TagSelector = ({ initialTags = [], onTagsChange }) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState(initialTags); // Inicializar con tags existentes
   const [loading, setLoading] = useState(false);
 
   // Fetch tags based on search term
@@ -17,12 +16,16 @@ const TagSelector = ({ onTagsChange }) => {
       const fetchTags = async () => {
         setLoading(true);
         try {
-          const response = await axios.get('http://localhost:3000/api/tags', {
-            params: { nombre: searchTerm }
+          const response = await axios.get("http://localhost:3000/api/tags", {
+            params: { nombre: searchTerm },
           });
-          setFilteredOptions(response.data);
+          // Filtrar opciones que ya están seleccionadas
+          const availableOptions = response.data.filter(
+            (tag) => !selectedTags.some((item) => item.id === tag.id)
+          );
+          setFilteredOptions(availableOptions);
         } catch (error) {
-          console.error('Error al buscar tags:', error);
+          console.error("Error al buscar tags:", error);
         }
         setLoading(false);
       };
@@ -32,14 +35,14 @@ const TagSelector = ({ onTagsChange }) => {
     } else {
       setFilteredOptions([]);
     }
-  }, [searchTerm]);
+  }, [searchTerm, selectedTags]);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
   const handleAddTag = (tag) => {
-    if (!selectedTags.some(item => item.id === tag.id)) {
+    if (!selectedTags.some((item) => item.id === tag.id)) {
       const updatedSelectedTags = [...selectedTags, tag];
       setSelectedTags(updatedSelectedTags);
       onTagsChange(updatedSelectedTags); // Send updated list to parent component
@@ -47,11 +50,10 @@ const TagSelector = ({ onTagsChange }) => {
   };
 
   const handleRemoveTag = (tag) => {
-    const updatedSelectedTags = selectedTags.filter(item => item.id !== tag.id);
+    const updatedSelectedTags = selectedTags.filter((item) => item.id !== tag.id);
     setSelectedTags(updatedSelectedTags);
     onTagsChange(updatedSelectedTags); // Send updated list to parent component
   };
-
   return (
     <div>
       <label>
@@ -89,6 +91,12 @@ const TagSelector = ({ onTagsChange }) => {
 };
 
 TagSelector.propTypes = {
+  initialTags: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      nombre: PropTypes.string.isRequired,
+    })
+  ),
   onTagsChange: PropTypes.func.isRequired,
 };
 

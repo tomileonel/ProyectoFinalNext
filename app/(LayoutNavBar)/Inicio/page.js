@@ -59,7 +59,6 @@ const HomePage = () => {
       <FoodCategoriesCarousel onCategorySelect={handleCategorySelect} />
       <HomeRecipesCarousel selectedCategory={selectedCategory} userId={userProfile?.id || 1} />
       <PopularesCarousel />
-      <h1>{userProfile?.nombreusuario || 'No registrado'}</h1>
     </div>
   );
 };

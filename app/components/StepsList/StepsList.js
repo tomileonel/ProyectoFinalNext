@@ -40,12 +40,17 @@ const StepInput = ({ step, onStepChange, onRemove }) => {
 const StepsList = ({ steps, setSteps }) => {
   // Agregar un nuevo paso
   const handleAddStep = () => {
-    setSteps([...steps, { numero: steps.length + 1, titulo: '', descripcion: '', duracionMin: 0 }]);
+    setSteps([
+      ...steps,
+      { nro: steps.length + 1, titulo: '', descripcion: '', duracionMin: 0 }, // Cambié 'numero' por 'nro'
+    ]);
   };
 
-  // Eliminar un paso
+  // Eliminar un paso y reasignar números
   const handleRemoveStep = (index) => {
-    setSteps(steps.filter((_, i) => i !== index));
+    const updatedSteps = steps.filter((_, i) => i !== index);
+    // Reasignar números de paso después de eliminar
+    setSteps(updatedSteps.map((step, i) => ({ ...step, nro: i + 1 })));
   };
 
   // Manejar cambios en un paso específico

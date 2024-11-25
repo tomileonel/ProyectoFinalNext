@@ -159,3 +159,9 @@
   line-height: 1.2;
   color: #555;
 }
+.noRecipesMessage {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 20px;
+}

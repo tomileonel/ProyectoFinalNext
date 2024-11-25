@@ -115,7 +115,8 @@ const ProfilePage = () => {
   };
   
 
-  const handleEditRecipe= () => {
+  const handleEditRecipe= (id) => {
+    router.push(`/EditarReceta/${id}`);
 
   };
 
@@ -159,7 +160,7 @@ const ProfilePage = () => {
                   
                   const imageUrlReceta = receta && receta.imagen
                     ? `http://localhost:3000${receta.imagen}` 
-                    : 'http://localhost:3000/img/DefaultProfile.jpg';
+                    : 'http://localhost:3000/img/DefaultRecipe.jpg';
       
                   return (
                     <div key={receta.id} className={styles.recetaCard}>
