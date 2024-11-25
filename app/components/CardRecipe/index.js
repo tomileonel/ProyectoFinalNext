@@ -29,7 +29,7 @@ const CardRecipe = ({ id, nombre, image, prop, tiempoMins, prop1, kcal }) => {
           <p className={styles.tiempo}>Tiempo: {tiempoMins}</p>
           <p className={styles.rating}>{prop}</p>
           <p className={styles.kcal}>Calorías: {kcal}</p>
-          <p className={styles.precio}>{prop1}</p>
+          <p className={styles.precio}>Precio:{prop1}</p>
         </div>
       </div>
       <div className={styles.buttons}>

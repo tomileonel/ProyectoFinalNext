@@ -6,29 +6,28 @@ import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import styles from './styles.module.css'; // Asegúrate de crear este archivo CSS
 
-const IngredientSelector = ({ onIngredientsChange }) => {
+const IngredientSelector = ({ onIngredientsChange, selectedIngredients }) => {
     const searchParams = useSearchParams();
     const [searchTerm, setSearchTerm] = useState('');
     const [allIngredients, setAllIngredients] = useState([]);
     const [filteredOptions, setFilteredOptions] = useState([]);
-    const [selectedIngredients, setSelectedIngredients] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // Se establece los ingredientes seleccionados desde los parámetros de búsqueda en la URL.
     useEffect(() => {
         const ingredientsParam = searchParams.get('ingredients') ? searchParams.get('ingredients').split(',').map(Number) : [];
-        setSelectedIngredients(ingredientsParam);
-
         const selectedIngredientsDetails = allIngredients.filter(ingredient => ingredientsParam.includes(ingredient.id));
-        setFilteredOptions(prev => [...prev, ...selectedIngredientsDetails]);
+        setFilteredOptions(selectedIngredientsDetails); // Filtrar solo los seleccionados
     }, [searchParams, allIngredients]);
 
+    // Fetch todos los ingredientes al inicio
     useEffect(() => {
         const fetchAllIngredients = async () => {
             setLoading(true);
             try {
                 const response = await axios.get('http://localhost:3000/api/ingredientes');
                 setAllIngredients(response.data);
-                setFilteredOptions(response.data);
+                setFilteredOptions(response.data); // Inicializa las opciones con todos los ingredientes
             } catch (error) {
                 console.error('Error al cargar ingredientes:', error);
             }
@@ -38,6 +37,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
         fetchAllIngredients();
     }, []);
 
+    // Filtra los ingredientes a medida que se escribe en el input de búsqueda
     useEffect(() => {
         const fetchIngredients = async () => {
             setLoading(true);
@@ -48,7 +48,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
                     });
                     setFilteredOptions(response.data);
                 } else {
-                    setFilteredOptions(allIngredients);
+                    setFilteredOptions(allIngredients); // Si no hay búsqueda, muestra todos
                 }
             } catch (error) {
                 console.error('Error al buscar ingredientes:', error);
@@ -56,7 +56,8 @@ const IngredientSelector = ({ onIngredientsChange }) => {
             setLoading(false);
         };
 
-        const debounceTimeout = setTimeout(fetchIngredients, 300);
+        const debounceTimeout = setTimeout(fetchIngredients, 300); // Se hace un debounce para no hacer peticiones innecesarias
+        console.log(allIngredients)
         return () => clearTimeout(debounceTimeout);
     }, [searchTerm, allIngredients]);
 
@@ -70,14 +71,12 @@ const IngredientSelector = ({ onIngredientsChange }) => {
             ? selectedIngredients.filter(id => id !== ingredient.id)
             : [...selectedIngredients, ingredient.id];
 
-        setSelectedIngredients(updatedSelectedIngredients);
-        onIngredientsChange(updatedSelectedIngredients);
+        onIngredientsChange(updatedSelectedIngredients); // Llamar la función pasada por props para actualizar el estado en el componente padre
     };
 
     const handleRemoveIngredient = (ingredientId) => {
         const updatedSelectedIngredients = selectedIngredients.filter(id => id !== ingredientId);
-        setSelectedIngredients(updatedSelectedIngredients);
-        onIngredientsChange(updatedSelectedIngredients);
+        onIngredientsChange(updatedSelectedIngredients); // Llamar la función pasada por props para actualizar el estado en el componente padre
     };
 
     return (
@@ -107,7 +106,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
                             return (
                                 ingredient && (
                                     <div key={ingredient.id} className={styles.ingredientItem}>
-                                        <span className={styles.ingredientName}>{ingredient.name}</span>
+                                        <span className={styles.ingredientName}>{ingredient.nombre}</span>
                                         <button type="button" onClick={() => handleRemoveIngredient(ingredient.id)} className={styles.removeButton}>
                                             Eliminar
                                         </button>
@@ -130,7 +129,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
                         onClick={() => handleToggleIngredient(option)}
                         className={`${styles.optionButton} ${selectedIngredients.includes(option.id) ? styles.selected : ''}`}
                     >
-                        {option.name}
+                        {option.nombre}
                     </button>
                 ))}
             </div>
@@ -140,6 +139,7 @@ const IngredientSelector = ({ onIngredientsChange }) => {
 
 IngredientSelector.propTypes = {
     onIngredientsChange: PropTypes.func.isRequired,
+    selectedIngredients: PropTypes.array.isRequired, // Hacer que `selectedIngredients` también sea un prop
 };
 
 export default IngredientSelector;

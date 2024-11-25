@@ -146,9 +146,18 @@ const CrearReceta = () => {
     },
   ];
 
+ 
+  const handleGoBack = () => {
+    router.back(); 
+  };
+
   return (
     <div className={styles.formContainer}>
-      <h1>Crear Receta</h1>
+      <header className={styles.header}>
+        <h1 onClick={handleGoBack} className={styles.return} style={{ cursor: 'pointer' }}>←</h1>
+        <h2 className={styles.title}>Crear Receta</h2>
+      </header>
+
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -168,8 +177,8 @@ const CrearReceta = () => {
               Siguiente
             </button>
           ) : (
-            <button type="button" className={styles.submitButton}>
-              <button type='submit' className={styles.submitButton}> Publicar Receta</button>
+            <button type="submit" className={styles.submitButton}>
+              Publicar Receta
             </button>
           )}
         </div>
@@ -177,5 +186,6 @@ const CrearReceta = () => {
     </div>
   );
 };
+
 
 export default CrearReceta;

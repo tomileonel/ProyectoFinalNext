@@ -190,18 +190,22 @@ const EditarReceta = () => {
       content: <TagSelector initialTags={tags} onTagsChange={handleTagsChange} />,
     },
   ];
+  const handleGoBack = () => {
+    router.back(); 
+  };
 
   return (
     <div className={styles.formContainer}>
+      <h1 onClick={() => router.back()} className={styles.return}>←</h1>
       <h1>Editar Receta</h1>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
+  
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.section}>
           <h2>{sections[currentSection].title}</h2>
           {sections[currentSection].content}
         </div>
-
+  
         <div className={styles.navigation}>
           {currentSection > 0 && (
             <button type="button" onClick={handlePreviousSection} className={styles.submitButton}>
@@ -214,8 +218,8 @@ const EditarReceta = () => {
             </button>
           ) : (
             <button type="button" className={styles.submitButton}>
-              <button type='submit' className={styles.submitButton}> Guardar Cambios</button>
-              </button>
+              <button type="submit" className={styles.submitButton}>Guardar Cambios</button>
+            </button>
           )}
         </div>
       </form>

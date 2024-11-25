@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './styles.module.css';
-import CardRecipe from '../CardRecipe';
+import CardRecipe from '../CardNovedades';
 
 const PopularesCarousel = () => {
   const [populares, setPopulares] = useState([]);
@@ -47,6 +47,7 @@ const PopularesCarousel = () => {
               prop1={novedad.precio ? `${novedad.precio}$` : 'Precio Desconocido'}
               prop={`⭐${novedad.rating || '0'}`}
               kcal={`${novedad.calorias || 'Calorías Desconocidas'} Kcal`}
+              nombreusuario={novedad.nombreusuario}
             />
           ))}
         </div>

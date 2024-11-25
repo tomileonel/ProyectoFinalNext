@@ -85,6 +85,7 @@
   font-size: 14px;
   color: #666;
   margin-top: 10px;
+  margin-left: 50px;
 }
 
 .bookmark {
@@ -106,6 +107,20 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+.rating {
+  position: absolute;
+  top: 20px;
+  left: 80px;
+  background-color: #FFE1B3;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
 }
 
 .tiempo {
@@ -131,7 +146,7 @@
 .userImage {
   position: absolute;
   bottom: 10px; 
-  left: 100px; 
+  left: 20px; 
   width: 40px;
   height: 40px;
   border-radius: 50%;
